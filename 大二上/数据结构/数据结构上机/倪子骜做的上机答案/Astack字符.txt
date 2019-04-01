@@ -1,0 +1,88 @@
+#include <iostream.h>
+#include <string.h>
+
+
+
+class AStack
+{
+public:
+	int size;
+	char c;
+	char * A;
+	int top;
+
+public:
+
+	AStack(int max=0)
+	{
+		size=max;
+		A=new char[max];
+		top=-1;
+	}
+    
+
+	~AStack() {delete []A;}
+
+
+
+	void output()
+	{
+         for(int i=0;i<size;i++)
+		 {
+			 cout<<A[i]<<" ";
+		 }
+
+	}
+
+	 void Push(char item)
+	 {
+		 if(top==size-1) cout<<"FULL"<<endl;
+		 else
+		 {
+			 top++;
+			 A[top]=item;
+			 cout<<"压入 : "<<item<<endl;
+		 }
+	 }
+
+	 void Pop(char item)
+	 {
+		 if(top==-1) cout<<"Empty"<<endl;
+		 else
+		 {
+			 item=A[top];
+			 top--;
+			 cout<<"弹出 : "<<item<<endl;
+		 }
+	 }
+
+	 void Peek(char item)
+	 {
+		 if(top==-1) cout<<"Empty"<<endl;
+		 else
+		 {
+			 item=A[top];
+			 cout<<"栈顶元素为 : "<<item<<endl;
+		 }
+	 }
+};
+
+int main()
+{
+	AStack a(4);
+	char t;
+	a.Push('a');
+	a.Push('b');
+	a.Push('c');
+	a.Push('d');
+	a.Push('e');
+	a.Pop(t);
+	a.Push('e');
+	a.Peek(t);
+
+	a.output();
+
+
+	
+	return 0;
+}

@@ -1,0 +1,27 @@
+//《数据结构（C++版）（第3版）》 作者：叶核亚
+//【例4.5】  求n！。
+
+#include <iostream>
+using namespace std;
+
+int factorial(int n)                                       //求阶乘，递归函数
+{
+    if (n>=0)
+        if(n==0 || n==1)                                   //边界条件，递归结束条件
+            return 1;
+        else
+            return n*factorial(n-1);                       //递归调用，计算递推通式
+    throw invalid_argument("n<0时n!无定义");               //抛出无效参数异常
+}
+
+int main()
+{
+    int n=5;
+    cout<<n<<"!="<<factorial(n)<<"\n";
+    return 0;
+}
+
+/*
+程序运行结果如下：
+5!=120
+*/

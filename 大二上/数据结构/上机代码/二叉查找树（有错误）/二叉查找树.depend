@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1512542995 source:c:\users\sjw\desktop\二叉查找树\main.cpp
+	<iostream>
+	<cstdlib>
+	<ctime>
+	"BinarySearchTree.h"
+	<queue>
+
+1512543627 source:c:\users\sjw\desktop\二叉查找树\binarysearchtree.cpp
+	"BinarySearchTree.h"
+	<queue>
+
+1512540696 c:\users\sjw\desktop\二叉查找树\binarysearchtree.h
+	<iostream>
+

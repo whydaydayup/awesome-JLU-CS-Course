@@ -1,0 +1,21 @@
+//【习3.1】 C/C++语言的string.h中strcpy()和strcat()函数存在下标越界错误。
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+    char src[]="abcdefghijklmn", dest[3]="", *p=NULL;
+//    printf("&src=0x%08x, src=\"%s\"，", &src, src);        //以十六进制整数显示地址
+//    printf("&dest0x08=%x, dest=\"%s\"\n", &dest, dest);
+    p = strcpy(dest, src);                                 //复制src串（包括'\0'）到dest，两者地址不变
+    printf("src=\"%s\", dest=\"%s\", p=\"%s\"\n", src, dest, p);
+//    printf("&src=0x%08x, src=\"%s\"，", &src, src);
+//    printf("&dest0x08=%x, dest=\"%s\"，", &dest, dest);
+//    printf("p=0x%08x, dest=\"%s\"\n", &dest, dest);     
+
+    system("pause");
+	return 0;
+          //之后有运行错
+}

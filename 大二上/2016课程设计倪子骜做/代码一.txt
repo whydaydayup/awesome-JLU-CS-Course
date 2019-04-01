@@ -1,0 +1,548 @@
+#include <graphics.h>
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <queue>
+#include <stack>
+#include <time.h>
+#include <string.h>
+using namespace std;
+double PI = 3.14159265358979323846;
+int MaxVertex=100;
+int Max=100;
+
+
+
+void huaxian(int i,int j,int n)
+{
+	int x1,x2,y1,y2;
+	x1=200*cos(i*2*PI/n)+350;
+	y1=200*sin(i*2*PI/n)+300;
+
+	x2=200*cos(j*2*PI/n)+350;
+	y2=200*sin(j*2*PI/n)+300;
+
+	line(x1,y1,x2,y2);				// 画线
+
+}
+
+
+void huadian(int n)
+{
+	char num[2];
+	int i;
+	
+	for(i=1;i<=n;i++)
+	{
+      int x,y;
+	  x=200*cos(i*2*PI/n)+350;
+	  y=200*sin(i*2*PI/n)+300;
+	  circle(x, y, 30);
+	  sprintf(num, "%d", i);
+      outtextxy(x , y , num);
+
+	}
+
+}
+
+void filldian(int i,int n)
+{
+	  int x,y;
+	  x=200*cos(i*2*PI/n)+350;
+	  y=200*sin(i*2*PI/n)+300;
+      fillcircle(x, y, 30);
+}
+
+
+
+
+
+
+struct Edge
+{
+	friend class GraphList;
+	int VerAdj;
+	int cost;
+	Edge * link;
+};
+
+
+struct Vertex
+  {
+	friend class GraphList;
+	int VerName;
+	Edge * adjacent;
+  };
+
+
+
+
+class GraphList
+{
+    public:
+		  int graphsize;
+		  Vertex * head;
+		  int edgenumber1;  //正常的线的数量
+		  int edgenumber2;  //冗余的线的数量
+		  int e;            //线的总数量
+		  int * edge1;
+		  int * edge2;
+
+		  GraphList(int n=0,int m=0)
+		  {
+			  edgenumber1=0;
+		      edgenumber2=0;
+			  edge1=new int[MaxVertex];
+		      edge2=new int[MaxVertex];
+			  e=m;
+		      graphsize=n;
+		      head=new Vertex[MaxVertex];
+
+		  }
+
+
+
+		    void Create()
+        {
+            int i=0,from,to;
+            for(i=0;i<graphsize;i++)
+            {
+                head[i].VerName=i;
+                head[i].adjacent=NULL;
+            }
+
+
+            i=0;
+
+	         srand((unsigned) time(NULL));
+            while(i<e)
+            {
+		       from=rand()%(graphsize);
+		       to=rand()%(graphsize);
+		       cout<<endl<<"准备加入的边为"<<from+1<<" --> "<<to+1<<endl;
+		       if((from==to)||(GetWeight(from,to)==1)) cout<<"不是边或者已经存在此边"<<endl;
+		       else
+		       {
+		           i++;
+
+			      if(DFS(from,to)==1)
+                  {
+					  edgenumber2++;
+                      cout<<"冗余的边为："<<from+1<<" --> "<<to+1<<endl;
+                      edge2[2*edgenumber2-2]=from;
+                      edge2[2*edgenumber2-1]=to;
+                  }
+				  else
+				  {
+					  edgenumber1++;
+                      cout<<"没有冗余的边为："<<from+1<<" --> "<<to+1<<endl;
+                      edge1[2*edgenumber1-2]=from;
+                      edge1[2*edgenumber1-1]=to;
+
+				  }
+                cout<<"已经加入的边为"<<from+1<< " --> "<<to+1<<endl;
+                Edge * p=new Edge;
+                p->VerAdj=to;
+                p->cost=1;
+                p->link=NULL;
+                Edge * q=head[from].adjacent;
+                if(q==NULL)
+                {head[from].adjacent=p;}
+                else
+                {
+                    while(q->link!=NULL) q=q->link;
+                    q->link=p;
+                }
+
+                p=new Edge;
+                p->VerAdj=from;
+                p->cost=1;
+                p->link=NULL;
+                q=head[to].adjacent;
+                if(q==NULL)
+                {head[to].adjacent=p;}
+                else
+                {
+                    while(q->link!=NULL) q=q->link;
+                    q->link=p;
+                }
+
+
+
+               }
+             }
+        }
+
+
+
+
+
+
+		  int GetWeight(int  v1,int  v2)
+		  {
+		      if(v1<0||v2<0) return 0;
+		      Edge * p=head[v1].adjacent;
+		      while(p!=NULL)
+              {
+                  if(p->VerAdj==v2) return 1;
+                  p=p->link;
+              }
+              return 0;
+		  }
+
+		  void output()
+		  {
+			  int i=0;
+			  for(i=0;i<graphsize;i++)
+			  {
+				  cout<<i+1<<"   ";
+				  Edge * p=head[i].adjacent;
+				  while(p!=NULL) 
+				  {cout<<p->VerAdj+1<<"  ";p=p->link;}
+				  cout<<endl;
+			  }
+		  }
+
+int  DFS(const int v0,const int v2)
+{
+    int * visited=new int[graphsize];
+    for(int i=0;i<graphsize;i++)
+        visited[i]=0;
+    visited[v0]=1;
+    queue<int> q;
+    q.push(v0);
+    while(!q.empty())
+    {
+        int v;
+		v=q.front();
+        q.pop();
+
+        Edge * p=head[v].adjacent;
+        while(p!=NULL)
+        {
+            int w=p->VerAdj;
+            if(visited[w]!=1)
+            {
+                if(w==v2)
+                    return 1;
+                visited[w]=1;
+                q.push(w);
+            }
+            p=p->link;
+        }
+    }
+    delete[]visited;
+    return 0;
+}
+
+
+
+
+
+		  void BFS(int v)
+	      {
+	          int  visited[50];
+	          int i;
+	          for(i=0;i<graphsize;i++) visited[i]=0;
+
+	          queue <int >qq;
+
+	          visited[v]=1;
+	          qq.push(v);
+	          while( !qq.empty() )
+              {
+                  int x=qq.front();
+                  cout<<"["<<x+1<<"]  ";
+                  qq.pop();
+                  Edge * p=head[x].adjacent;
+                  while(p!=NULL)
+                  {
+                      if(visited[p->VerAdj]==0)
+                      {
+                          visited[p->VerAdj]=1;
+                          qq.push(p->VerAdj);
+                      }
+                      p=p->link;
+                  }
+              }
+
+        }
+
+
+	      int GetNeighbor(int v)
+	      {
+	          if(v<0) return -1;
+	          Edge * p=head[v].adjacent;
+	          if(p!=NULL) return p->VerAdj;
+	          else return -1;
+	      }
+
+
+
+	      void InsertEdge(int v1,int v2)
+{
+    
+    Edge*p=new Edge;
+    p->VerAdj=v2;
+    p->cost=1;
+    p->link=NULL;
+    Edge* q=head[v1].adjacent;
+        if(q==NULL)
+            head[v1].adjacent=p;
+        else if(q!=NULL)
+        {
+            if(q->link==NULL)
+            {
+                q->link=p;
+            }
+            else if(q->link!=NULL)
+            {
+                while(q->link!=NULL)
+                {
+                q=q->link;
+                }
+                q->link=p;
+            }
+        }
+
+
+}
+
+int GetFirstNeighbor(const int v)
+{
+    if(v==-1)return -1;
+    Edge* p=head[v].adjacent;
+    if(p!=NULL)
+        {
+        return p->VerAdj;
+        }
+    else return -1;
+}
+
+
+void DelEdge(int from,int to)
+	      {
+                Edge * p=head[from].adjacent;
+				if(p->VerAdj==to)  head[from].adjacent=p->link;
+				
+				else
+				{
+                while(p->link!=NULL)
+                {
+                      if(p->link->VerAdj==to)
+                      {
+                          Edge * q=p->link;
+                          p->link=q->link;
+                          delete q;
+                      }
+					  else p=p->link;
+                  }
+				}
+
+          }
+
+	     
+
+
+		  
+
+
+	      int * Dshortest(int v)
+	      {
+	          int u,k,i,j;
+	          Edge *p ;
+	          int *path=new int[graphsize-1];
+	          int *dist=new int[graphsize-1];
+	          int *s=new int[graphsize-1];
+	          for(i=0;i<graphsize;i++)
+              {
+                  s[i]=0;
+                  dist[i]=Max;
+                  path[i]=-1;
+              }
+              dist[v]=0;
+              s[v]=1;
+              p=head[v].adjacent;
+              u=v;
+              for(j=0;j<graphsize-1;j++)
+              {
+                  while(p!=NULL)
+                  {
+                      k=p->VerAdj;
+                      if(s[k]!=1&&dist[u]+p->cost<dist[k])
+                      {
+                          dist[k]=dist[u]+p->cost;
+                          path[k]=u;
+                      }
+                      p=p->link;
+                  }
+                  int ldist=Max;
+                  for(i=0;i<graphsize;i++)
+                  {
+                      if(dist[i]>0&&(dist[i]<ldist)&&s[i]==0)
+                      {
+                          ldist=dist[u];
+                          u=i;
+                      }
+                  }
+                  s[u]=1;
+                p=head[u].adjacent;
+
+              }
+
+                  return dist;
+	      }
+
+  };
+
+
+
+
+
+int main()
+ {
+    int m,n,kekaoxing;
+	cout<<"please input n:"<<endl;
+    cin>>n;
+	cout<<"please input m:"<<endl;
+    cin>>m;
+	int kekao=0;
+    int i=0,j=0;
+      GraphList aaa(n,m);
+	  cout<<aaa.e<<"   "<<aaa.graphsize<<endl;
+	  
+	  aaa.Create();
+
+	  cout<<aaa.edgenumber1<<aaa.edgenumber2;
+	  aaa.BFS(0);
+	  cout<<endl;
+      aaa.output();
+
+      cout<<"现在验证可靠性"<<endl;
+
+	  kekaoxing=1;
+	  for(i=0;i<2*aaa.edgenumber1;i+=2)
+	  {
+		  cout<<i<<"  "<<2*aaa.edgenumber1<<endl;
+		  int a=aaa.edge1[i];
+		  int b=aaa.edge1[i+1];
+		  cout<<a+1<<"    "<<b+1<<endl;
+		  aaa.DelEdge(a,b);
+		  aaa.DelEdge(b,a);
+		  cout<<"已删除"<<a+1<<b+1<<endl;
+
+
+
+		  if(aaa.DFS(a,b)==0) 
+		  {
+			  cout<<"不可靠，若"<<a+1<<"-->"<<b+1<<"断掉，则全部中断"<<endl;
+			  aaa.InsertEdge(a,b);
+		      aaa.InsertEdge(b,a);
+			  kekaoxing=0;
+		      break;
+		  }
+		 aaa.InsertEdge(a,b);
+		 aaa.InsertEdge(b,a);
+		 cout<<"已加入"<<a+1<<b+1<<endl;
+		 getch();
+		 aaa.output();
+		 aaa.BFS(0);
+		 cout<<endl;
+
+
+		  
+	  }
+	  if(kekaoxing==1) cout<<"可靠\n";cout<<endl<<endl;
+
+
+	  cout<<"现在寻找需要交换机的重要城市\n\n";
+
+	  int liantong[30][30];
+	  int mm=0;
+	  for(i=1;i<n;i++)
+	  {
+		  for(j=0;j<i;j++)
+		  {
+			  mm=aaa.DFS(i,j);
+			  liantong[i][j]=mm;
+		  }
+	  }
+
+	  for(i=0;i<n;i++)
+	  {
+		  int * dv=new int ;//记录删过的边；
+		  int x=0;
+		  Edge * p=aaa.head[i].adjacent;
+		  if(p!=NULL)
+		  
+		  {
+		  while(p->link!=NULL)
+		  {
+			  dv[x]=p->VerAdj;
+			  x++;
+			  aaa.DelEdge(i,p->VerAdj);
+			  aaa.DelEdge(p->VerAdj,i);
+			  p=p->link;
+		  }
+		  
+
+		  int j,r;
+
+		  for(j=1;j<n;j++)
+		  {
+			  for(r=0;r<j;r++)
+			  {
+			    if(j!=i&&r!=i)
+				{
+                  if(aaa.DFS(j,r)!=liantong[j][r])
+				  {
+					  cout<<i+1<<"是重要城市"<<endl;
+					  break;
+				  }
+				}
+			  }
+		  }
+
+		for(x=x-1;x>=0;x--)
+		{
+          aaa.InsertEdge(i,dv[x]);
+		  aaa.InsertEdge(dv[x],i);
+		}
+		  }
+		  
+	  }
+
+
+
+	  getch();
+	  
+	  initgraph(700,600);				// 初始化 640 x 480 的绘图窗口
+	  setwritemode(R2_XORPEN);			// 设置 XOR 绘图模式
+	  setfillcolor(0x24c097);
+	  huadian(aaa.graphsize);
+	  setlinecolor(GREEN);					// 设置画线颜色为红色
+
+	  for(i=0;i<2*aaa.edgenumber1;i+=2) huaxian(aaa.edge1[i]+1,aaa.edge1[i+1]+1,aaa.graphsize);
+	  getch();
+
+	  filldian(3,aaa.graphsize);
+	  getch();
+
+	  setlinecolor(RED);					// 设置画线颜色为红色
+	  for(i=0;i<2*aaa.edgenumber2;i+=2) huaxian(aaa.edge2[i]+1,aaa.edge2[i+1]+1,aaa.graphsize);
+	  
+
+      getch();
+      closegraph();						// 关闭绘图窗口
+
+	  
+	
+	  
+	 
+      
+
+ 	 return 0;
+}
+

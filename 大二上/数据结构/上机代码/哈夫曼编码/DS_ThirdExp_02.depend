@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1510040199 source:d:\codeblocksprojects\datastructureexp\ds_exp3\ds_thirdexp_02\main.cpp
+	<iostream>
+	<fstream>
+	<stdlib.h>
+	<time.h>
+	<HuffmanTree.h>
+
+1510040460 source:d:\codeblocksprojects\datastructureexp\ds_exp3\ds_thirdexp_02\src\huffmantree.cpp
+	<iostream>
+	<string>
+	<fstream>
+	<queue>
+	"HuffmanTree.h"
+
+1510046382 d:\codeblocksprojects\datastructureexp\ds_exp3\ds_thirdexp_02\include\huffmantree.h
+	<stack>
+
+1510040199 source:c:\users\sjw\desktop\¹þ·òÂü\main.cpp
+	<iostream>
+	<fstream>
+	<stdlib.h>
+	<time.h>
+	<HuffmanTree.h>
+
+1510046382 c:\users\sjw\desktop\¹þ·òÂü\include\huffmantree.h
+	<stack>
+
+1510040460 source:c:\users\sjw\desktop\¹þ·òÂü\src\huffmantree.cpp
+	<iostream>
+	<string>
+	<fstream>
+	<queue>
+	"HuffmanTree.h"
+

@@ -1,0 +1,133 @@
+#include <graphics.h>
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <queue>
+#include <stack>
+#include <time.h>
+#include <string.h>
+using namespace std;
+double PI = 3.14159265358979323846;
+int MaxVertex=100;
+int Max=100;
+
+
+void huaxian(int i,int j,int n)    // 图形输出画线
+{
+	int x1,x2,y1,y2;
+	x1=200*cos(i*2*PI/n)+350;
+	y1=200*sin(i*2*PI/n)+300;
+
+	x2=200*cos(j*2*PI/n)+350;
+	y2=200*sin(j*2*PI/n)+300;
+
+	line(x1,y1,x2,y2);				
+
+}
+
+
+void huadian(int n)                    //图形输出画点
+{
+	char num[2];
+	int i;
+	
+	for(i=1;i<=n;i++)
+	{
+      int x,y;
+	  x=200*cos(i*2*PI/n)+350;
+	  y=200*sin(i*2*PI/n)+300;
+	  circle(x, y, 30);
+	  sprintf(num, "%d", i);
+      outtextxy(x , y , num);
+
+	}
+
+}
+
+
+
+
+void filldian(int i,int n)                  //显示重要城市的图形界面
+{
+	  int x,y;
+	  x=200*cos(i*2*PI/n)+350;
+	  y=200*sin(i*2*PI/n)+300;
+      fillcircle(x, y, 30);
+}
+
+
+void kekao(Graphlist aaa)                    //第二问可靠性判断函数
+{
+          int kekaoxing=1;
+          int i;
+ 	  cout<<"现在验证可靠性"<<endl;
+	  for(i=0;i<2*aaa.edgenumber1;i+=2)
+	  {
+		  int a=aaa.edge1[i];
+		  int b=aaa.edge1[i+1];
+		  cout<<a+1<<"    "<<b+1<<endl;
+		  aaa.DelEdge(a,b);
+		  aaa.DelEdge(b,a);
+		  if(aaa.DFS(a,b)==0) 
+		  {
+			  cout<<"不可靠，若"<<a+1<<"-->"<<b+1<<"断掉，则全部中断"<<endl;
+			  aaa.InsertEdge(a,b);
+		      aaa.InsertEdge(b,a);
+			  kekaoxing=0;
+		      break;
+		  }
+		 aaa.InsertEdge(a,b);
+		 aaa.InsertEdge(b,a);
+		 cout<<"已加入"<<a+1<<b+1<<endl;
+		 getch();
+		 cout<<endl;
+	  }
+
+
+	  if(kekaoxing==1) cout<<"可靠\n";cout<<endl<<endl;
+}
+
+
+void tuxingzhanshi(Graphlist aaa)     //图形展示
+{
+ char ch;
+
+	  getch();
+	  initgraph(700,600);				
+	  setwritemode(R2_XORPEN);			
+	  setfillcolor(0x24c097);
+	  huadian(aaa.graphsize);
+	  setlinecolor(GREEN);					
+	  for(i=0;i<2*aaa.edgenumber1;i+=2)
+	  {
+		  huaxian(aaa.edge1[i]+1,aaa.edge1[i+1]+1,aaa.graphsize);
+		  
+	  }
+      
+      
+       setlinecolor(RED);					
+	   for(i=0;i<2*aaa.edgenumber2;i+=2)
+	   {
+		   huaxian(aaa.edge2[i]+1,aaa.edge2[i+1]+1,aaa.graphsize);
+		   
+	   }
+	   getch();
+
+      int i1;
+	  for(i1=0;i1<musttotol;i1++)
+	  {
+		  filldian(citymust[i1],aaa.graphsize);
+	  }
+	  saveimage("text1.bmp");
+
+      
+	  getch();
+
+	   closegraph();					
+}
+
+
+
+	

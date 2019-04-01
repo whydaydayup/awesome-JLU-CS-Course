@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1508860702 source:c:\users\sjw\desktop\多项式加法最新版\main.cpp
+	<iostream>
+	"SLlist.h"
+	"SLnode.h"
+
+1508909193 c:\users\sjw\desktop\多项式加法最新版\sllist.h
+	<iostream>
+	"SLnode.h"
+
+1508766151 c:\users\sjw\desktop\多项式加法最新版\slnode.h
+	<iostream>
+

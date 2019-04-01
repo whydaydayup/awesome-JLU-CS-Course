@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1510068242 source:c:\users\sjw\desktop\¹ş·òÂü±àÂë×îĞÂ°æ\huffmantree.cpp
+	<iostream>
+	<string>
+	<fstream>
+	<queue>
+	"HuffmanTree.h"
+
+1510068242 c:\users\sjw\desktop\¹ş·òÂü±àÂë×îĞÂ°æ\huffmantree.h
+	<stack>
+
+1510068257 source:c:\users\sjw\desktop\¹ş·òÂü±àÂë×îĞÂ°æ\main.cpp
+	<iostream>
+	<fstream>
+	<stdlib.h>
+	<time.h>
+	"HuffmanTree.h"
+

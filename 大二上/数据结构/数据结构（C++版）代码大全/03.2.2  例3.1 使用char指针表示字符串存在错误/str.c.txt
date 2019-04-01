@@ -1,0 +1,82 @@
+//VC++ 2008
+//C/C++语言中字符串问题讨论
+
+#include <iostream>
+using namespace std;
+#include <string.h>
+
+int main()
+{
+    src[0]='x';                                                 //可行
+//    dest=src;                                                   //不行，dest是指针常量
+    cout<<"&src="<<&src<<"，src=\""<<src<<"\""<<endl;
+    cout<<"&dest="<<&dest<<"，dest=\""<<dest<<"\""<<endl;
+
+
+    char *src="abcdefghij", *dest;
+    src[0]='x';                                                 //不行，运行错
+    dest=src;                                                   //可行，dest是指针变量
+    cout<<"&src="<<&src<<"，src=\""<<src<<"\""<<endl;
+    cout<<"&dest="<<&dest<<"，dest=\""<<dest<<"\""<<endl;
+
+}
+
+/*
+//C/C++语言中字符串问题讨论
+       //补充讨论
+    dest[0]='x';                                           //可行，字符数组可更改
+    printf("dest=\"%s\"\n", dest);
+
+
+    char *src="abcdefghij";                                //常量字符串
+//    src[0]='x';                                          //运行错，常量字符串，不可更改
+//    *(src+1)='x';                                        //运行错
+//    change(src);
+    char *dest=src;                                        //可行，dest是指针变量，常量字符串赋值传值，&dest与&src不同，但dest与src字符串相同
+//    dest[0]='x';                                         //不行，运行错
+    printf("&src=%x, src=\"%s\"\n", &src, src);
+    printf("&dest=%x, dest=\"%s\"\n", &dest, dest);
+
+
+    int n=10, i=0;
+    char *src=(char*)malloc(sizeof(n)), *dest=(char*)malloc(sizeof(n));
+    printf("&src=0x%08x, src=\"%s\"\n", &src, src);
+    src[0]='x';                                            //可行，动态字符数组对元素赋值
+    src[1]='\0';
+    printf("&src=0x%08x, src=\"%s\"\n", &src, src);
+    for (i=0; i<n-1; i++)
+        src[i]='a'+i;                                      //可行
+    src[n-1]='\0';
+    src[0]='x';                                            //可行，
+    printf("&src=0x%08x, src=\"%s\"\n", &src, src);
+
+    src="abcdefghijk";                                     //字符串变量赋值为字符串常量，地址没变，超长，下标越界错
+//    src[0]='x';                                            //运行错，不能更改字符串常量
+/*    for (i=0; i<n-1; i++)
+        src[i]='0'+i;                                      //不行
+    src[n-1]='\0';
+    printf("&src=0x%08x, src=\"%s\"\n", &src, src);
+
+//    char *dest=src;                                        //编译错，dest没有自己的数组空间
+//    char *dest=(char*)malloc(sizeof(n));                   //编译错，此处再声明动态数组，不知为什么
+    printf("&dest=0x%08x, dest=\"%s\"\n", &dest, dest);
+//    dest=src;                                             //字符串变量赋值，地址没变，超长，下标越界错
+//    dest[0]='x';                                          //运行错
+//    printf("&dest=0x%08x, dest=\"%s\"\n", &dest, dest);
+/*    for (int i=0; i<n-1; i++)
+        dest[i]=src[i];                                             //可行，包括'\0'
+    dest[n-1]='\0';
+    printf("&dest=0x%08x, dest=\"%s\"\n", &dest, dest);
+
+    system("pause");
+	return 0;
+}*/
+
+
+/*
+/*
+程序运行 ：
+
+
+
+*/

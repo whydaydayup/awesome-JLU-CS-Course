@@ -1,0 +1,286 @@
+#include <iostream>
+#include <queue>
+#include <stack>
+#include <stdio.h>
+using namespace std;
+
+
+
+
+class TreeNode
+{
+public:
+	TreeNode * firstchild;
+	TreeNode * nextbrother;
+	char data;
+public:
+
+	TreeNode(char c,TreeNode * a=NULL,TreeNode * b=NULL)
+	{
+
+		data=c;
+		firstchild=a;
+		nextbrother=b;
+	}
+
+
+	void dataout()
+	{
+		cout<<data<<" ";
+	}
+
+	void Setfirstchild(TreeNode * a=NULL)
+	{
+		firstchild=a;
+	}
+
+	void Setnextbrother(TreeNode * a=NULL)
+	{
+		nextbrother=a;
+	}
+
+
+	void Setdata(char c)
+	{
+		data=c;
+	}
+
+};
+
+
+
+
+class Tree
+{
+public:
+	TreeNode * root;
+public:
+    Tree(TreeNode * t=NULL):root(t){}
+
+
+    TreeNode * Create()
+    {
+	   TreeNode * t,*t1,*t2;
+	   char item;
+	   cin>>item;
+	   if(item=='#')
+	   {
+		   t=NULL;
+		   return t;
+	   }
+	   else
+	   {
+		   t=new TreeNode (item,NULL,NULL);
+		   t1=Create();
+		   t->Setfirstchild(t1);
+		   t2=Create();
+		   t->Setnextbrother(t2);
+		   return t;
+
+	   }
+
+    }
+
+
+
+   TreeNode * FindFather(TreeNode * t,TreeNode * p)
+   {
+
+	   if(t==NULL||p==NULL) return NULL;
+	   TreeNode * q=t->firstchild;
+	   TreeNode * result=NULL;
+	   while(q!=NULL&&q!=p)
+       {
+           result=FindFather(q,p);
+           if(result==NULL) q=q->nextbrother;
+           else return result;
+       }
+	   if(q==p) return t;
+	   else return NULL;
+   }
+
+
+
+   void PreOrder(TreeNode * t)
+   {
+	   if(t!=NULL)
+	   {
+		   t->dataout();
+		   TreeNode * child=t->firstchild;
+		   while(child)
+           {
+               PreOrder(child);
+               child=child->nextbrother;
+           }
+	   }
+   }
+
+   void DieDaiPre(TreeNode * t)
+   {
+       cout<<"迭代法前根遍历";
+       stack<TreeNode * > s;
+       int i;
+       TreeNode * p=t;
+       do
+       {
+          while(p!=NULL)
+          {
+              p->dataout();
+              s.push(p);
+              p=p->firstchild;
+
+          }
+          while(p==NULL&&!s.empty())
+          {
+              p=s.top();
+              s.pop();
+              p=p->nextbrother;
+          }
+       }while(!s.empty());
+       cout<<endl;
+
+
+   }
+
+
+    void PostOrder(TreeNode * t)
+   {
+
+	   if(t!=NULL)
+	   {
+		   TreeNode * child=t->firstchild;
+		   while(child)
+           {
+               PostOrder(child);
+               child=child->nextbrother;
+           }
+            t->dataout();
+	   }
+   }
+
+
+   void DieDaiPost(TreeNode * t)
+   {
+       cout<<"迭代法后根遍历";
+       stack<TreeNode * > s;
+       TreeNode * p=t;
+       do
+       {
+          while(p!=NULL)
+          {
+              s.push(p);
+              p=p->firstchild;
+
+          }
+          while(p==NULL&&!s.empty())
+          {
+              p=s.top();
+              s.pop();
+              p->dataout();
+              p=p->nextbrother;
+          }
+       }while(!s.empty());
+       cout<<endl;
+
+
+   }
+
+   void LevelOrder(TreeNode * t)
+   {
+       cout<<"层次遍历为";
+       queue<TreeNode *> q;
+       if(t!=NULL)
+       {
+           TreeNode * p;
+
+           q.push(t);
+           while(!q.empty())
+           {
+               p=q.front();
+               p->dataout();
+               q.pop();
+               p=p->firstchild;
+               while(p!=NULL)
+               {
+                   q.push(p);
+                   p=p->nextbrother;
+               }
+           }
+       }
+       cout<<endl;
+   }
+
+
+
+};
+
+class SenLin
+{
+public:
+    TreeNode * senlinroot;
+    int treenumber;
+public:
+    SenLin(int a=0):treenumber(a){senlinroot=new TreeNode('@');}
+    void SenLinCreate()
+    {
+        Tree * ArrayTree;
+        int i=0;
+        for(i=0;i<treenumber;i++)
+        {
+            Tree t;
+            t.root=t.Create();
+            ArrayTree[i].root=t.root;
+            ArrayTree[i].PostOrder(ArrayTree[i].root);
+
+        }
+        senlinroot->firstchild=ArrayTree[0].root;
+        for(i=1;i<treenumber;i++)
+        {
+            ArrayTree[i-1].root->nextbrother=ArrayTree[i].root;
+        }
+        cout<<"已经创建好森林分别有以下几个根的树组成";
+        for(i=0;i<treenumber;i++)
+        {
+            ArrayTree[i].root->dataout();cout<<"  ";
+
+        }
+        cout<<endl;
+    }
+    void SenLinPreOrder(TreeNode * t)
+   {
+	   if(t!=NULL)
+	   {
+		   t->dataout();
+		   TreeNode * child=t->firstchild;
+		   while(child)
+           {
+               SenLinPreOrder(child);
+               child=child->nextbrother;
+           }
+	   }
+   }
+
+
+};
+
+
+
+
+
+
+int main()
+{
+    int x;
+    cout<<"请输入几棵树组成的森林";
+    cin>>x;
+    SenLin senlin(x);
+    cout<<senlin.treenumber<<senlin.senlinroot->data;
+    senlin.SenLinCreate();
+    cout<<"sdfasdg";
+    senlin.SenLinPreOrder(senlin.senlinroot);
+	return 0;
+
+
+}
+
+

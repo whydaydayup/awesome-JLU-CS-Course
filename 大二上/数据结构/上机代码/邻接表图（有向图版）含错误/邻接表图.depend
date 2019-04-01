@@ -1,0 +1,70 @@
+# depslib dependency file v1.0
+1512528388 source:c:\users\sjw\desktop\邻接表图\main.cpp
+	<iostream>
+	<windows.h>
+	"Graph.h"
+	"Edgenode.h"
+	"Vertex.h"
+
+1512487273 source:c:\users\sjw\desktop\上机代码\邻接表图\main.cpp
+	<iostream>
+	<windows.h>
+	"Graph.h"
+	"Edgenode.h"
+	"Vertex.h"
+
+1512487352 c:\users\sjw\desktop\上机代码\邻接表图\graph.h
+	<iostream>
+	<stack>
+	<queue>
+	<cstdlib>
+	<ctime>
+	"Vertex.h"
+	"Edgenode.h"
+
+1511279716 c:\users\sjw\desktop\上机代码\邻接表图\vertex.h
+	"Edgenode.h"
+
+1511268697 c:\users\sjw\desktop\上机代码\邻接表图\edgenode.h
+
+1512528545 c:\users\sjw\desktop\邻接表图\graph.h
+	<iostream>
+	<stack>
+	<queue>
+	<cstdlib>
+	<ctime>
+	"Vertex.h"
+	"Edgenode.h"
+	"Node.h"
+
+1511279716 c:\users\sjw\desktop\邻接表图\vertex.h
+	"Edgenode.h"
+
+1511268697 c:\users\sjw\desktop\邻接表图\edgenode.h
+
+1512487792 c:\users\sjw\desktop\邻接表图\node.h
+
+1512528388 source:c:\users\sjw\desktop\邻接表图（有向图版）\main.cpp
+	<iostream>
+	<windows.h>
+	"Graph.h"
+	"Edgenode.h"
+	"Vertex.h"
+
+1512528545 c:\users\sjw\desktop\邻接表图（有向图版）\graph.h
+	<iostream>
+	<stack>
+	<queue>
+	<cstdlib>
+	<ctime>
+	"Vertex.h"
+	"Edgenode.h"
+	"Node.h"
+
+1511279716 c:\users\sjw\desktop\邻接表图（有向图版）\vertex.h
+	"Edgenode.h"
+
+1511268697 c:\users\sjw\desktop\邻接表图（有向图版）\edgenode.h
+
+1512487792 c:\users\sjw\desktop\邻接表图（有向图版）\node.h
+

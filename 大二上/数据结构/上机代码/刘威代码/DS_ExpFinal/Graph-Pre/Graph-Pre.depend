@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1512448153 source:d:\codeblocksprojects\datastructureexp\ds_expfinal\graph-pre\main.cpp
+	<iostream>
+	<Graph.h>
+
+1512448240 source:d:\codeblocksprojects\datastructureexp\ds_expfinal\graph-pre\src\graph.cpp
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<queue>
+	<list>
+	<algorithm>
+	<windows.h>
+	"Graph.h"
+
+1512447732 d:\codeblocksprojects\datastructureexp\ds_expfinal\graph-pre\include\graph.h
+	<list>
+	<vector>
+

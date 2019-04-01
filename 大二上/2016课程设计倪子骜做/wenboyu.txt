@@ -1,0 +1,119 @@
+void GraphList::Create()                              //创建随机网络
+        {
+            int i=0,from,to;
+            for(i=0;i<graphsize;i++)
+            {
+                head[i].VerName=i;
+                head[i].adjacent=NULL;
+            }
+
+
+            i=0;
+
+	         srand((unsigned) time(NULL));
+            while(i<e)
+            {
+		       from=rand()%(graphsize);
+		       to=rand()%(graphsize);
+		       cout<<endl<<"准备加入的边为"<<from+1<<" --> "<<to+1<<endl;
+		       if((from==to)||(GetWeight(from,to)==1)) cout<<"不是边或者已经存在此边"<<endl;
+		       else
+		       {
+		           i++;
+
+			      if(DFS(from,to)==1)
+                  {
+					  edgenumber2++;
+                      cout<<"冗余的边为："<<from+1<<" --> "<<to+1<<endl;
+                      edge2[2*edgenumber2-2]=from;
+                      edge2[2*edgenumber2-1]=to;
+                  }
+				  else
+				  {
+					  edgenumber1++;
+                      cout<<"没有冗余的边为："<<from+1<<" --> "<<to+1<<endl;
+                      edge1[2*edgenumber1-2]=from;
+                      edge1[2*edgenumber1-1]=to;
+
+				  }
+                cout<<"已经加入的边为"<<from+1<< " --> "<<to+1<<endl;
+                Edge * p=new Edge;
+                p->VerAdj=to;
+                p->cost=1;
+                p->link=NULL;
+                Edge * q=head[from].adjacent;
+                if(q==NULL)
+                {head[from].adjacent=p;}
+                else
+                {
+                    while(q->link!=NULL) q=q->link;
+                    q->link=p;
+                }
+
+                p=new Edge;
+                p->VerAdj=from;
+                p->cost=1;
+                p->link=NULL;
+                q=head[to].adjacent;
+                if(q==NULL)
+                {head[to].adjacent=p;}
+                else
+                {
+                    while(q->link!=NULL) q=q->link;
+                    q->link=p;
+                }
+
+
+
+               }
+             }
+        }
+
+
+
+
+int main()
+ {
+	FILE * file;
+	file=fopen("text.txt","w");
+	int m,n,i,j;
+	int liantongxing=1;
+	cout<<"please input n:"<<endl;
+    cin>>n;
+	cout<<"please input m:"<<endl;
+    cin>>m;
+	GraphList aaa(n,m);
+	aaa.Create();
+	for(i=1;i<n;i++)
+	{
+		  for(j=0;j<i;j++)
+		  {
+			  if(aaa.DFS(i,j)==0) liantongxing=0;
+		  }
+	 }
+
+
+	while(liantongxing==0)
+	{
+               int liantongxing=1;
+		cout<<"输入不符合要求请重新输入";
+		cout<<"please input n:"<<endl;
+        cin>>n;
+	    cout<<"please input m:"<<endl;
+        cin>>m;
+
+	    GraphList aaa(n,m);
+	    aaa.Create();
+	    for(i=1;i<n;i++)
+		{
+		  for(j=0;j<i;j++)
+		  {
+			  if(aaa.DFS(i,j)==0) liantongxing=0;
+		  }
+		}
+	}
+     citymust(aaa);
+     kekao(aaa);
+     tuxingzhanshi(aaa);
+     return 0;
+}

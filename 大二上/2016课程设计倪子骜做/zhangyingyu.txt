@@ -1,0 +1,161 @@
+
+struct Edge
+{
+	friend class GraphList;
+	int VerAdj;
+	int cost;
+	Edge * link;
+};
+
+
+struct Vertex
+  {
+	friend class GraphList;
+	int VerName;
+	Edge * adjacent;
+  };
+
+
+
+
+class GraphList
+{
+    public:
+		  int graphsize;
+		  Vertex * head;
+		  int edgenumber1;  //正常的线的数量
+		  int edgenumber2;  //冗余的线的数量
+		  int e;            //线的总数量
+		  int * edge1;
+		  int * edge2;
+          void Create();    //创建随机网络
+		  int  DFS(const int v0,const int v2) ;         //判断两个点是否连通
+
+		  GraphList(int n=0,int m=0)
+		  {
+			  edgenumber1=0;
+		      edgenumber2=0;
+			  edge1=new int[MaxVertex];
+		      edge2=new int[MaxVertex];
+			  e=m;
+		      graphsize=n;
+		      head=new Vertex[MaxVertex];
+
+		  }
+
+		 int GetWeight(int  v1,int  v2)
+		  {
+		      if(v1<0||v2<0) return 0;
+		      Edge * p=head[v1].adjacent;
+		      while(p!=NULL)
+              {
+                  if(p->VerAdj==v2) return 1;
+                  p=p->link;
+              }
+              return 0;
+		  }
+
+          void BFS(int v)
+		  {
+	          int  visited[1000];
+	          int i;
+	          for(i=0;i<graphsize;i++) visited[i]=0;
+
+	          queue <int >qq;
+
+	          visited[v]=1;
+	          qq.push(v);
+	          while( !qq.empty() )
+              {
+                  int x=qq.front();
+                  cout<<"["<<x+1<<"]  ";
+                  qq.pop();
+                  Edge * p=head[x].adjacent;
+                  while(p!=NULL)
+                  {
+                      if(visited[p->VerAdj]==0)
+                      {
+                          visited[p->VerAdj]=1;
+                          qq.push(p->VerAdj);
+                      }
+                      p=p->link;
+                  }
+              }
+
+		  }
+
+
+	      int GetNeighbor(int v)
+	      {
+	          if(v<0) return -1;
+	          Edge * p=head[v].adjacent;
+	          if(p!=NULL) return p->VerAdj;
+	          else return -1;
+	      }
+
+
+
+          void InsertEdge(int v1,int v2)
+		  {
+    
+             Edge*p=new Edge;
+             p->VerAdj=v2;
+             p->cost=1;
+             p->link=NULL;
+             Edge* q=head[v1].adjacent;
+             if(q==NULL)
+                   head[v1].adjacent=p;
+             else if(q!=NULL)
+			 {
+               if(q->link==NULL)
+			   {
+                q->link=p;
+			   }
+               else if(q->link!=NULL)
+			   {
+                while(q->link!=NULL)
+                {
+                q=q->link;
+                }
+                q->link=p;
+			   }
+			 }
+
+
+		  }
+
+int GetFirstNeighbor(const int v)
+{
+    if(v==-1)return -1;
+    Edge* p=head[v].adjacent;
+    if(p!=NULL)
+        {
+        return p->VerAdj;
+        }
+    else return -1;
+}
+
+
+void DelEdge(int from,int to)
+	      {
+                Edge * p=head[from].adjacent;
+				if(p->VerAdj==to)  head[from].adjacent=p->link;
+				
+				else
+				{
+                while(p->link!=NULL)
+                {
+                      if(p->link->VerAdj==to)
+                      {
+                          Edge * q=p->link;
+                          p->link=q->link;
+                          delete q;
+                      }
+					  else p=p->link;
+                  }
+				}
+
+          }
+
+
+  };

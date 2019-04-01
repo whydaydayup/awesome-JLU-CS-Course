@@ -1,0 +1,278 @@
+#include <stdio.h>
+#include<iostream>
+#include <stdlib.h>
+#include <time.h>
+#include <queue>
+#include <stack>
+#include<algorithm>
+using namespace std;
+
+
+class BtreeNode
+{
+public:
+	BtreeNode * left;
+	BtreeNode * right;
+	int ccc;
+public:
+
+	BtreeNode(int c=NULL,BtreeNode * a=NULL,BtreeNode * b=NULL)
+	{
+
+		ccc=c;
+		left=a;
+		right=b;
+	}
+
+
+	void dataout()
+	{
+		cout<<ccc<<" ";
+	}
+
+	void Setleft(BtreeNode * a=NULL)
+	{
+		left=a;
+	}
+
+	void Setright(BtreeNode * a=NULL)
+	{
+		right=a;
+	}
+
+
+	void Setdata(char c=NULL)
+	{
+		ccc=c;
+	}
+
+};
+
+
+
+
+class BinTree
+{
+public:
+	BtreeNode * root;
+public:
+	BinTree(BtreeNode * t=NULL):root(t){}
+
+
+
+
+   virtual ~BinTree()
+   {
+        Del(root);
+   }
+
+
+   void Del(BtreeNode * t)
+   {
+		if(t!=NULL)
+		{
+			Del(t->left);
+			Del(t->right);
+			delete t;
+		}
+   }
+
+   BtreeNode * Father(BtreeNode * t,BtreeNode * p)
+   {
+	   BtreeNode * q;
+	   if(t==NULL||p==NULL) return NULL;
+	   if(t->left==p||t->right==p) return t;
+
+	   if((q=Father(t->left,p))!=NULL) return q;
+	   else return Father(t->right,p);
+   }
+
+
+
+   void PreOrder(BtreeNode * t)
+   {
+	   if(t!=NULL)
+	   {
+		   t->dataout();
+		   PreOrder(t->left);
+		   PreOrder(t->right);
+	   }
+   }
+
+   void InOrder(BtreeNode * t)
+	{
+       if(t!=NULL)
+	   {
+		   InOrder(t->left);
+		   t->dataout();
+		   InOrder(t->right);
+	   }
+	}
+
+
+    void PostOrder(BtreeNode * t)
+   {
+	   if(t!=NULL)
+	   {
+		   PreOrder(t->left);
+		   PreOrder(t->right);
+		   t->dataout();
+	   }
+   }
+
+	BtreeNode * SearchDndInsert(int k)
+	{
+		if(root==NULL)
+        {
+            root=new BtreeNode(k);
+            return NULL;
+        }
+		BtreeNode * p=root;
+		while(p!=NULL)
+        {
+            if(k==p->ccc) return p;
+            if(k<p->ccc)
+            {
+                if(p->left==NULL) break;
+                else p=p->left;
+            }
+            else
+            {
+                if(p->right==NULL) break;
+                else p=p->right;
+            }
+        }
+        BtreeNode * q=new BtreeNode(k);
+        if(k<p->ccc) p->left=q;
+        else p->right=q;
+		return NULL;
+
+	}
+
+	void Deletenode(BtreeNode * p )
+	{
+	    if(p==NULL) return;
+	    BtreeNode * t=p;
+	    if(t->right==NULL) t=t->left;
+	    else
+        {
+            BtreeNode * r=t->right;
+            if(r->left==NULL)
+            {
+                r->left=p->left;
+                t=r;
+            }
+            else
+            {
+                BtreeNode * s=r->left;
+                while(s->left!=NULL)
+                {
+                    r=s;
+                    s=r->left;
+                }
+                s->left=t->left;
+                r->left=s->right;
+                s->right=t->right;
+                t=s;
+            }
+        }
+
+        if(p==root) root=t;
+        else
+        {
+            BtreeNode * f=Father(root,p);
+            if(f->left==p) f->left=t;
+            else f->right=t;
+
+        }
+        delete p;
+	}
+
+
+	 int depth(BtreeNode * t)  //求树的高度
+	 {
+		 int  hl,hr;
+		 if(t!=NULL)
+		 {
+			 hl=depth(t->left);
+			 hr=depth(t->right);
+			 if(hl>=hr) return hl+1;
+			 else return hr+1;
+		 }
+		 else return 0;
+	 }
+
+
+
+
+};
+
+
+
+
+
+
+int main()
+{
+
+    BinTree t1;
+    int i,j;
+    int totol;
+    cin>>totol;
+    int * a=new int [100];
+    for(i=0;i<totol;i++)
+    {
+        cin>>j;
+        a[i]=j;
+        t1.SearchDndInsert(j);
+    }
+
+    int sum=0;
+	 for(i=0;i<totol;i++)
+    {
+        sum=sum+a[i];
+    }
+
+
+	cout<<"二叉树的根T1为：";
+    t1.root->dataout();
+    cout<<endl;
+	cout<<"前根遍历为：";
+    t1.PreOrder(t1.root);cout<<endl;
+	cout<<"中根遍历为：";
+	t1.InOrder(t1.root);cout<<endl;
+	cout<<"后根遍历为：";
+	t1.PostOrder(t1.root);cout<<endl;
+
+	cout<<t1.depth(t1.root)<<endl;
+
+	int x=50;
+	if(t1.SearchDndInsert(x)==NULL)
+    {
+        totol++;
+        sum+=x;
+        cout<<"不存在 x 已插入"<<endl;
+    }
+	else cout<<"存在"<<endl;
+    cout<<"中根遍历为：";
+	t1.InOrder(t1.root);cout<<endl;
+
+
+    t1.Deletenode(t1.root->right);
+    totol--;
+    sum-=t1.root->right->ccc;
+    cout<<"中根遍历为：";
+	t1.InOrder(t1.root);cout<<endl;
+
+
+
+
+	cout<<"平均值为："<<sum/totol;
+
+
+
+
+
+	return 0;
+
+}

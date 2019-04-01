@@ -1,0 +1,157 @@
+#include <iostream.h>
+#include <stdio.h>
+
+class T
+{
+public:
+	T(char a=NULL) {ccc=a;}
+	void out()
+	{
+		cout<<ccc<<"  ";
+	}
+	char ccc;
+
+};
+
+
+struct SLNode
+{
+	T data;
+	SLNode * next;
+	SLNode(const T& item=NULL,SLNode * nextNode=NULL)
+	{
+		data=item;
+		next=nextNode;
+	}
+};
+
+
+class DLlist
+{
+public:
+	SLNode * head;       //哨兵指针
+	SLNode * tail;       //尾指针
+	SLNode * p;          //用于操作的一个指针
+	int size;            //链表长度
+public:
+//构造
+	DLlist()
+	{
+		head=tail=p=new SLNode();
+		size=0;
+	}
+
+
+
+//析构
+	~DLlist() 
+	{
+		p=head->next;
+		while(p!=head)
+		{
+			SLNode * ptr=p;
+			p=p->next;
+			delete ptr;
+		}
+		delete head;
+	}
+
+
+
+//向尾部和头指针中间添加
+	void addToTail(const T & item)
+	{
+			tail->next=new SLNode(item,NULL);
+	    	tail=tail->next;
+			tail->next=head;
+		    size++;
+	}
+
+
+	//获得尾节点
+	void Tail(T & item)
+	{
+		item=tail->data;
+
+	}
+
+
+
+
+
+	void deletetail()
+	{
+		if(head==tail)
+		{
+			cout<<" ";
+		}
+		else
+		{
+		  while(p->next!=tail)
+		  {
+				p=p->next;
+		  }
+		  tail=p;
+	    	p->next=head;
+		    size--;
+		}
+		
+
+	}
+
+
+//输出全体（除了哨兵节点）
+	void output()
+	{
+		p=head->next;
+		while (p!=head)
+		{
+            p->data.out();
+			p=p->next;
+		}
+		cout<<endl;
+	}
+
+
+
+};
+
+
+bool match(char aa,char bb)
+{
+	if((aa=='('&&bb==')')||(aa=='['&&bb==']')||(aa=='{'&&bb=='}')) return true;
+	else return false;
+}
+
+int main()
+{
+	int count=0;
+	DLlist a;
+	char c;
+	
+	c=getchar();
+	while(c!='#')
+	{
+		if((c=='{')||(c=='[')||(c=='(') )
+		{
+			T tt(c);
+			a.addToTail(tt);
+		}
+		else if ( (c=='}')||(c==']')||(c==')') )
+		{
+			T temp;
+			a.Tail(temp);
+			a.deletetail();
+			if(!match(temp.ccc,c))
+			{
+				cout<<"不匹配：在 "<<c<<" 这里"<<endl;
+				count=1;
+				break;
+			}
+		}
+		c=getchar();
+	}
+	if(a.tail==a.head&&count==0) cout<<"匹配";
+	else if(a.tail!=a.tail&&count==0)  cout<<"不匹配(左括号多)";
+    return 0;
+}

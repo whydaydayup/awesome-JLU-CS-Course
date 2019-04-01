@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1510372696 source:d:\codeblocksprojects\datastructureexp\ds_exp5\ds_fifthexp_01\main.cpp
+	<iostream>
+	<windows.h>
+	<Graph.h>
+
+1510644526 source:d:\codeblocksprojects\datastructureexp\ds_exp5\ds_fifthexp_01\src\graph.cpp
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<queue>
+	<list>
+	<windows.h>
+	"Graph.h"
+
+1510643804 d:\codeblocksprojects\datastructureexp\ds_exp5\ds_fifthexp_01\include\graph.h
+	<list>
+
+1510372696 source:c:\users\sjw\desktop\datastructureexp\ds_exp5\ds_fifthexp_01\main.cpp
+	<iostream>
+	<windows.h>
+	<Graph.h>
+
+1510643804 c:\users\sjw\desktop\datastructureexp\ds_exp5\ds_fifthexp_01\include\graph.h
+	<list>
+
+1510644526 source:c:\users\sjw\desktop\datastructureexp\ds_exp5\ds_fifthexp_01\src\graph.cpp
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<queue>
+	<list>
+	<windows.h>
+	"Graph.h"
+

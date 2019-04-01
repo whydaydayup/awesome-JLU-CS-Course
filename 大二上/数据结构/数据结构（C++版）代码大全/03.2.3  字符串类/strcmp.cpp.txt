@@ -1,0 +1,20 @@
+//测试strcmp()函数
+//int strcmp(const char *s1, const char *s2); //比较两个字符串是否相等及大小
+                          //若s1较小，返回-1；若s1与s2相等，返回0；若s1较大，返回1
+/*
+int main() 
+{
+    char *s1="abc", *s2="abcdef", *s3="xyz", *s4="abc";
+    cout<<"strcmp(\""<<s1<<"\", \""<<s2<<"\")="<<strcmp(s1,s2)<<endl;
+    cout<<"strcmp(\""<<s3<<"\", \""<<s1<<"\")="<<strcmp(s3,s1)<<endl;
+    cout<<"strcmp(\""<<s1<<"\", \""<<s4<<"\")="<<strcmp(s1,s4)<<endl;
+
+    system("pause");
+    return 0;
+}
+/*
+程序运行结果如下：
+strcmp("abc", "abcdef")=-1
+strcmp("xyz", "abc")=1
+strcmp("abc", "abc")=0
+*/

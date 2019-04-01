@@ -1,0 +1,247 @@
+#include <iostream>
+#include <queue>
+#include <stack>
+using namespace std;
+
+
+
+
+
+
+
+
+
+class TreeNode
+{
+public:
+	TreeNode * firstchild;
+	TreeNode * nextbrother;
+	char data;
+public:
+
+	TreeNode(char c,TreeNode * a=NULL,TreeNode * b=NULL)
+	{
+
+		data=c;
+		firstchild=a;
+		nextbrother=b;
+	}
+
+
+	void dataout()
+	{
+		cout<<data<<" ";
+	}
+
+	void Setfirstchild(TreeNode * a=NULL)
+	{
+		firstchild=a;
+	}
+
+	void Setnextbrother(TreeNode * a=NULL)
+	{
+		nextbrother=a;
+	}
+
+
+	void Setdata(char c)
+	{
+		data=c;
+	}
+
+};
+
+
+
+
+class Tree
+{
+public:
+	TreeNode * root;
+public:
+    Tree(TreeNode * t=NULL):root(t){}
+
+
+    TreeNode * Create()
+    {
+	   TreeNode * t,*t1,*t2;
+	   char item;
+	   cin>>item;
+	   if(item=='#')
+	   {
+		   t=NULL;
+		   return t;
+	   }
+	   else
+	   {
+		   t=new TreeNode (item,NULL,NULL);
+		   t1=Create();
+		   t->Setfirstchild(t1);
+		   t2=Create();
+		   t->Setnextbrother(t2);
+		   return t;
+
+	   }
+
+    }
+
+
+
+   TreeNode * FindFather(TreeNode * t,TreeNode * p)
+   {
+
+	   if(t==NULL||p==NULL) return NULL;
+	   TreeNode * q=t->firstchild;
+	   TreeNode * result=NULL;
+	   while(q!=NULL&&q!=p)
+       {
+           result=FindFather(q,p);
+           if(result==NULL) q=q->nextbrother;
+           else return result;
+       }
+	   if(q==p) return t;
+	   else return NULL;
+   }
+
+
+
+   void PreOrder(TreeNode * t)
+   {
+	   if(t!=NULL)
+	   {
+		   t->dataout();
+		   TreeNode * child=t->firstchild;
+		   while(child)
+           {
+               PreOrder(child);
+               child=child->nextbrother;
+           }
+	   }
+   }
+
+   void DieDaiPre(TreeNode * t)
+   {
+       stack<TreeNode * > s;
+       int i;
+       TreeNode * p=t;
+       do
+       {
+          while(p!=NULL)
+          {
+              p->dataout();
+              s.push(p);
+              p=p->firstchild;
+
+          }
+          while(p==NULL&&!s.empty())
+          {
+              p=s.top();
+              s.pop();
+              p=p->nextbrother;
+          }
+       }while(!s.empty());
+
+
+   }
+
+
+    void PostOrder(TreeNode * t)
+   {
+	   if(t!=NULL)
+	   {
+		   TreeNode * child=t->firstchild;
+		   while(child)
+           {
+               PostOrder(child);
+               child=child->nextbrother;
+           }
+            t->dataout();
+	   }
+   }
+
+
+   void DieDaiPost(TreeNode * t)
+   {
+       stack<TreeNode * > s;
+       int i;
+       TreeNode * p=t;
+       do
+       {
+          while(p!=NULL)
+          {
+              s.push(p);
+              p=p->firstchild;
+
+          }
+          while(p==NULL&&!s.empty())
+          {
+              p=s.top();
+              s.pop();
+              p->dataout();
+              p=p->nextbrother;
+          }
+       }while(!s.empty());
+
+
+   }
+
+  void LevelOrder(TreeNode * t)
+   {
+       cout<<"层次遍历为";
+       queue<TreeNode *> q;
+       if(t!=NULL)
+       {
+           TreeNode * p;
+
+           q.push(t);
+           while(!q.empty())
+           {
+               p=q.front();
+               p->dataout();
+               q.pop();
+               p=p->firstchild;
+               while(p!=NULL)
+               {
+                   q.push(p);
+                   p=p->nextbrother;
+               }
+           }
+       }
+       cout<<endl;
+   }
+
+
+
+
+
+};
+
+
+
+
+int main()
+{
+
+    Tree t1;
+	t1.root=t1.Create();
+	cout<<"树的根T1为";
+    t1.root->dataout();cout<<endl;
+    cout<<"前根遍历为";
+    t1.PreOrder(t1.root);cout<<endl;
+	cout<<"后根遍历为";
+	t1.PostOrder(t1.root);cout<<endl;
+	cout<<"迭代法前根遍历";
+	t1.DieDaiPre(t1.root);cout<<endl;
+	cout<<"迭代法后根遍历";
+	t1.DieDaiPost(t1.root);cout<<endl;
+
+	TreeNode * p=t1.root->firstchild->nextbrother->firstchild;//书中的例子找E的父结点
+	t1.FindFather(t1.root,p)->dataout();
+
+
+
+	return 0;
+
+}
+
+

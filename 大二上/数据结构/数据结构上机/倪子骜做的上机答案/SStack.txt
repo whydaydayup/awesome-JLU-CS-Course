@@ -1,0 +1,116 @@
+#include <iostream.h>
+#include <string.h>
+
+class T
+{
+public:
+	T(char a=NULL) {c=a;}
+	void out()
+	{
+		cout<<c<<"  ";
+	}
+	char c;
+
+};
+
+
+struct SLNode
+{
+	T data;
+	SLNode * next;
+	SLNode(const T& item=NULL,SLNode * nextNode=NULL)
+	{
+		data=item;
+		next=nextNode;
+	}
+};
+
+
+
+class LStack
+{
+public:
+	SLNode * top;
+
+public:
+
+	LStack() {	top=NULL;	}
+	~LStack() 
+	{
+		SLNode * temp;
+		while(top!=NULL)
+		{
+			temp=top->next;
+			delete top;
+			top=temp;
+		}
+	}
+
+
+
+	void output()
+	{
+		SLNode * temp=top;
+        while(temp!=NULL)
+		{
+			temp->data.out();
+			temp=temp->next;
+		}
+		cout<<endl;
+	}
+
+	 void Push(T & item)
+	 {
+		 top=new SLNode (item,top);
+		 cout<<"压入 : "<<item.c<<endl;
+	 }
+
+	 void Pop(T & item)
+	 {
+		 if(top==NULL) cout<<"EMPTY"<<endl;
+		 else
+		 {
+			 item=top->data;
+			 SLNode * temp=top;
+			 top=top->next;
+			 delete temp;
+
+		 }
+	 }
+
+	 void Peek(T & item)
+	 {
+		 if(top==NULL) cout<<"Empty"<<endl;
+		 else
+		 {
+			 item=top->data;
+		 }
+	 }
+};
+
+int main()
+{
+	LStack a;
+	T t1('a');
+	T t2('b');
+	T t3('c');
+
+	a.Push(t1);
+	a.Push(t2);
+	a.Push(t3);
+	a.Push(t2);
+	a.output();
+
+	a.Pop(t3);
+
+	cout<<"删除的栈顶元素为";
+	t3.out();
+	cout<<endl;
+
+
+	a.output();
+
+
+	
+	return 0;
+}

@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1512402021 source:d:\codeblocksprojects\datastructureexp\ds_expfinal\binarysearchtree-pre\main.cpp
+	<iostream>
+	<BinarySearchTree.h>
+
+1512280184 source:d:\codeblocksprojects\datastructureexp\ds_expfinal\binarysearchtree-pre\src\binarysearchtree.cpp
+	"BinarySearchTree.h"
+	<queue>
+
+1512277517 d:\codeblocksprojects\datastructureexp\ds_expfinal\binarysearchtree-pre\include\binarysearchtree.h
+	<iostream>
+
+1512402021 source:c:\users\sjw\desktop\datastructureexp\ds_expfinal\binarysearchtree-pre\main.cpp
+	<iostream>
+	<BinarySearchTree.h>
+
+1512277517 c:\users\sjw\desktop\datastructureexp\ds_expfinal\binarysearchtree-pre\include\binarysearchtree.h
+	<iostream>
+
+1512280184 source:c:\users\sjw\desktop\datastructureexp\ds_expfinal\binarysearchtree-pre\src\binarysearchtree.cpp
+	"BinarySearchTree.h"
+	<queue>
+

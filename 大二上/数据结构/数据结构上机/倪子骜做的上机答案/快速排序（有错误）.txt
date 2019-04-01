@@ -1,0 +1,62 @@
+#include <iostream>
+
+using namespace std;
+class element
+{public:
+    int key;
+
+};
+
+void QSort(element r[],int m,int n)
+{
+
+  if(m<n)
+  {
+      int i,j,k;
+      i=m;
+     j=n+1;
+     k=r[m].key;
+  while(i<j)
+  {
+      i=i+1;
+      while(r[i].key<k) i++;
+      j--;
+
+      while (r[j].key>k) j--;
+      if(i<j)
+      {
+          int temp=r[i].key;
+          r[i].key=r[j].key;
+          r[j].key=temp;
+      }
+  }
+  int temp=r[m].key;
+  r[m].key=r[j].key;
+  r[j].key=temp;
+  QSort(r,m,j-1);
+  QSort(r,j+1,n);
+ }
+}
+
+int main()
+{
+    element * r;
+    int n;
+    cout<<"please input totol"<<endl;
+    cin>>n;
+    int i;
+    for(i=0;i<n;i++)
+    {
+       cin>>r[i].key;
+    }
+    r[n].key=10000;
+
+    QSort(r,0,n-1);
+
+    for(i=0;i<n;i++)
+    {
+       cout<<r[i].key<<"  ";
+    }
+    cout<<endl;
+    return 0;
+}

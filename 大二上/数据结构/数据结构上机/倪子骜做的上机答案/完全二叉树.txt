@@ -1,0 +1,329 @@
+#include<iostream.h>
+#include<stdio.h>
+
+class BtreeNode
+{
+public:
+	BtreeNode * left;
+	BtreeNode * right;
+	char ccc;
+public:
+
+	BtreeNode(char c=NULL,BtreeNode * a=NULL,BtreeNode * b=NULL)
+	{
+		
+		ccc=c;
+		left=a;
+		right=b;
+	}
+
+
+	void dataout()
+	{
+		cout<<ccc;
+	}
+	
+	void Setleft(BtreeNode * a=NULL)
+	{
+		left=a;
+	}
+
+	void Setright(BtreeNode * a=NULL)
+	{
+		right=a;
+	}
+
+
+	void Setdata(char c=NULL)
+	{
+		ccc=c;
+	}
+
+};
+
+
+
+class BinTree
+{
+public:
+	BtreeNode * root;
+public:
+	BinTree(BtreeNode * t=NULL):root(t){}
+	
+    
+
+
+   virtual ~BinTree()
+   {
+        Del(root);
+   }
+
+
+   void Del(BtreeNode * t)                             //删除这棵树
+   {
+		if(t!=NULL)
+		{
+			Del(t->left);
+			Del(t->right);
+			delete t;
+		}	
+   }
+
+   BtreeNode * Father(BtreeNode * t,BtreeNode * p)   //返回父结点
+   {
+	   BtreeNode * q;
+	   if(t==NULL||p==NULL) return NULL;
+	   if(t->left==p||t->right==p) return t;
+	   
+	   if((q=Father(t->left,p))!=NULL) return q;
+	   else return Father(t->right,p);
+   }
+    
+
+   BtreeNode * Create()                           //创建二叉树
+   {
+	   BtreeNode * t,*t1,*t2;
+	   char item;
+	   cin>>item;
+	   if(item=='#')
+	   {
+		   t=NULL;
+		   return t;
+	   }
+	   else
+	   {
+		   t=new BtreeNode (item,NULL,NULL);
+		   t1=Create();
+		   t->Setleft(t1);
+		   t2=Create();
+		   t->Setright(t2);
+		   return t;
+
+	   }
+
+
+   }
+
+
+   void PreOrder(BtreeNode * t)   //先根
+   {
+	   if(t!=NULL) 
+	   {
+		   t->dataout();
+		   PreOrder(t->left);
+		   PreOrder(t->right);
+	   }
+   }
+
+   void InOrder(BtreeNode * t)   //中根
+	{
+       if(t!=NULL)
+	   {
+		   InOrder(t->left);
+		   t->dataout();
+		   InOrder(t->right);
+	   }
+	}
+
+
+    void PostOrder(BtreeNode * t)   //后根
+   {
+	   if(t!=NULL) 
+	   {
+		   PreOrder(t->left);
+		   PreOrder(t->right);
+		   t->dataout();
+	   }
+   }
+
+	BtreeNode * Find(BtreeNode * t,char x)   //找到以t为艮的树中的字符x
+	{
+		BtreeNode * p;
+		if(t==NULL) return NULL;
+		if(t->ccc==x) return t;
+		if((p=Find(t->left,x))!=NULL) return p;
+		else return Find(t->right,x);
+		return NULL;
+
+	}
+
+	 int depth(BtreeNode * t)  //求树的高度
+	 {
+		 int  hl,hr;
+		 if(t!=NULL)
+		 {
+			 hl=depth(t->left);
+			 hr=depth(t->right);
+			 if(hl>=hr) return hl+1;
+			 else return hr+1;
+		 }
+		 else return 0;
+	 }
+     
+
+	 
+
+
+};
+
+
+
+
+struct SLNode
+{
+	BtreeNode * tr;
+	SLNode * next;
+	SLNode(BtreeNode * p=NULL,SLNode * nextNode=NULL)
+	{
+		tr=new BtreeNode;
+		tr=p;
+		next=nextNode;
+	}
+};
+
+
+
+class LQueue
+{
+    public:
+        SLNode *front,*rear;
+
+        int count;
+
+        LQueue()
+        {
+            front=rear=NULL;
+            count=0;
+        }
+
+        ~LQueue()
+        {
+            QClear();
+        }
+
+        void Insert(BtreeNode * t)
+        {
+            if(front==NULL)
+            {
+                front=rear=new SLNode(t,NULL);
+                count=1;
+            }
+            else
+            {
+                rear->next=new SLNode(t,NULL);
+                rear=rear->next;
+                count++;
+            }
+        }
+
+
+        bool Delete(BtreeNode* & t)
+        {
+            if(front==NULL)
+            {
+                cout<<"empty"<<endl;
+                return false;
+            }
+            SLNode * temp=front;
+            t=(temp->tr);
+            front=front->next;
+            count--;
+            delete temp;
+            if(count==0) rear=NULL;
+            return true;
+        }
+
+        bool ReadF(BtreeNode* & t)
+        {
+            if(front==NULL)
+            {
+                cout<<"empty"<<endl;
+                return false;
+            }
+            t=(front->tr);
+            return true;
+        }
+
+        void QClear()
+        {
+            while(front!=NULL)
+            {
+                rear=front;
+                front=front->next;
+                delete rear;
+                count--;
+            }
+            rear=NULL;
+        }
+
+};
+
+
+
+
+
+int wqecs(BtreeNode * t)
+{
+    LQueue lq;
+	BtreeNode * p;
+
+    if (t==NULL) return 1;
+    else lq.Insert(t);
+
+    while (1)
+	{ 
+        lq.Delete(p);
+        if ((p->left == NULL)|| (p->right == NULL))  break;   
+		else
+		{
+			lq.Insert(p->left);
+			lq.Insert(p->right);
+		}
+    }                              //除了队首应该剩下的都是叶节点
+
+	if ((p->left==NULL&&p->right != NULL)) return 0;  //左空 右不空 --》不是
+    else if (p->left != NULL) lq.Insert(p->left);     //判断队首是不是
+
+    while (lq.front!=NULL) 
+	{ 
+        lq.Delete(p);
+
+        if (( p->left!=NULL) || (p->right!=NULL))  return 0;
+
+    }    //判断剩下的是不是叶节点
+
+    return 1;
+}
+
+
+
+
+
+
+int main()
+{
+	
+    BinTree t1;
+	t1.root=t1.Create();
+	cout<<"二叉树的根T1为：";
+    t1.root->dataout();
+    cout<<endl;
+	cout<<"前根遍历为：";
+    t1.PreOrder(t1.root);
+	cout<<endl;
+
+	cout<<"中根遍历为：";
+	t1.InOrder(t1.root);
+	cout<<endl;
+
+	cout<<"后根遍历为：";
+	t1.PostOrder(t1.root);
+	cout<<endl;
+
+	cout<<"树的高度为："<<t1.depth(t1.root)<<endl;
+
+	if(wqecs(t1.root)==1) cout<<"是完全";
+	else cout<<"不是";
+	return 0;
+
+}

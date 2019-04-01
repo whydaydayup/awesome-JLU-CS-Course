@@ -1,0 +1,86 @@
+//《数据结构（C++版）（第3版）》 作者：叶核亚
+//8.5.1   二叉排序树
+
+#include "Array.h"                      //
+#include "BinarySortTree.h"                      //二叉排序树类
+#include <iomanip>                                         //包含setw(6)设置输出格式
+
+int main()
+{
+     //第3版图8.13~8.17
+    const int N=12;
+    int values[]={54,18,81,99,36,12,12,76,57,6,66,40};
+//    int values[N];
+//    random(values, N, 100);                                  //数组元素，声明在Array.h
+    cout<<"插入： ";
+    print(values, N);                                      //输出数组元素，声明在Array.h
+    BinarySortTree<int> bstree(values, N);                 //将values数组元素依次插入构造一棵二叉排序树
+    bstree.inOrder();                                      //中序遍历二叉排序树
+
+    int keys[]={99,50};
+    for (int i=0; i<2; i++)
+    {
+        int *find = bstree.search(keys[i]);
+        cout<<"查找"<<keys[i]<<"结果，";
+        if (find==NULL)
+            cout<<"NULL"<<endl;
+        else
+            cout<<*find<<endl;
+    }
+
+    cout<<"删除"<<values[0]<<"，";
+    bstree.remove(values[0]);
+    bstree.inOrder();
+    cout<<"插入"<<values[0]<<"，";
+    bstree.insert(values[0]);
+    bstree.inOrder();
+
+    for (int i=0; i<N; i++)
+    {
+        cout<<"删除"<<setw(2)<<values[i]<<"，";
+        bstree.remove(values[i]);
+        bstree.inOrder();
+    }
+
+    //
+//    int keys[N];
+ //   random(keys, N, 100);
+    const int N=12;
+    int values[]={54,18,81,99,36,12,12,76,57,6,66,40};
+    cout<<"插入： ";
+    print(values, N);                                      //输出数组元素，声明在Array.h
+    BinarySortTree<int> bstree(values, N);                 //将values数组元素依次插入构造一棵二叉排序树
+    bstree.inOrder();                                      //中序遍历二叉排序树
+    system("pause");
+    return 0;
+}
+
+/*
+程序运行结果如下：
+插入： 54  18  81  99  36  12  12  76  57  6  66  40  
+中根次序遍历二叉树:  6 12 18 36 40 54 57 66 76 81 99 
+查找99结果，99
+查找50结果，NULL
+删除54，中根次序遍历二叉树:  6 12 18 36 40 57 66 76 81 99 
+插入54，中根次序遍历二叉树:  6 12 18 36 40 54 57 66 76 81 99 
+删除54，中根次序遍历二叉树:  6 12 18 36 40 57 66 76 81 99 
+删除18，中根次序遍历二叉树:  6 12 36 40 57 66 76 81 99 
+删除81，中根次序遍历二叉树:  6 12 36 40 57 66 76 99 
+删除99，中根次序遍历二叉树:  6 12 36 40 57 66 76 
+删除36，中根次序遍历二叉树:  6 12 40 57 66 76 
+删除12，中根次序遍历二叉树:  6 40 57 66 76 
+删除12，中根次序遍历二叉树:  6 40 57 66 76 
+删除76，中根次序遍历二叉树:  6 40 57 66 
+删除57，中根次序遍历二叉树:  6 40 66 
+删除 6，中根次序遍历二叉树:  40 66 
+删除66，中根次序遍历二叉树:  40 
+删除40，中根次序遍历二叉树:  
+请按任意键继续. . . 
+撤销二叉树: 
+
+插入： 41  67  34  0  69  24  78  58  62  64  
+中根次序遍历二叉树:  0 24 34 41 58 62 64 67 69 78 
+删除41，中根次序遍历二叉树:  0 24 34 58 62 64 67 69 78 
+插入41，中根次序遍历二叉树:  0 24 34 41 58 62 64 67 69 78 
+
+*/

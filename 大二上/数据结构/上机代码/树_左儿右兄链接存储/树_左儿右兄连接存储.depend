@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1510576001 source:c:\users\sjw\desktop\Ê÷_×ó¶ùÓÒĞÖÁ´½Ó´æ´¢\main.cpp
+	<iostream>
+	"Treenode.h"
+	"Tree.h"
+
+1510576022 c:\users\sjw\desktop\Ê÷_×ó¶ùÓÒĞÖÁ´½Ó´æ´¢\treenode.h
+
+1511189148 c:\users\sjw\desktop\Ê÷_×ó¶ùÓÒĞÖÁ´½Ó´æ´¢\tree.h
+	"Treenode.h"
+	"IterateLastOrderNode.h"
+	<iostream>
+	<stack>
+	<queue>
+
+1510674535 c:\users\sjw\desktop\Ê÷_×ó¶ùÓÒĞÖÁ´½Ó´æ´¢\iteratelastordernode.h
+
+1510576001 source:c:\users\sjw\desktop\ÉÏ»ú´úÂë\Ê÷_×ó¶ùÓÒĞÖÁ´½Ó´æ´¢\main.cpp
+	<iostream>
+	"Treenode.h"
+	"Tree.h"
+
+1510576022 c:\users\sjw\desktop\ÉÏ»ú´úÂë\Ê÷_×ó¶ùÓÒĞÖÁ´½Ó´æ´¢\treenode.h
+
+1511189148 c:\users\sjw\desktop\ÉÏ»ú´úÂë\Ê÷_×ó¶ùÓÒĞÖÁ´½Ó´æ´¢\tree.h
+	"Treenode.h"
+	"IterateLastOrderNode.h"
+	<iostream>
+	<stack>
+	<queue>
+
+1510674535 c:\users\sjw\desktop\ÉÏ»ú´úÂë\Ê÷_×ó¶ùÓÒĞÖÁ´½Ó´æ´¢\iteratelastordernode.h
+

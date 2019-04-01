@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1508913233 source:c:\users\sjw\desktop\链式队列\main.cpp
+	<iostream>
+	"SLnode.h"
+	"Queue.h"
+
+1508912885 c:\users\sjw\desktop\链式队列\slnode.h
+	<iostream>
+
+1508913361 c:\users\sjw\desktop\链式队列\queue.h
+	"SLnode.h"
+

@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1508678727 source:c:\users\sjw\desktop\单链表类\main.cpp
+	<iostream>
+	"SLlist.h"
+	"SLnode.h"
+
+1508678944 c:\users\sjw\desktop\单链表类\sllist.h
+	<iostream>
+	"SLnode.h"
+
+1508339902 c:\users\sjw\desktop\单链表类\slnode.h
+	<iostream>
+

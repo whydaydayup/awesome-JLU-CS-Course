@@ -1,0 +1,124 @@
+#include <iostream.h>
+#include <string.h>
+
+
+
+
+struct SLNode
+{
+	char data;
+	SLNode * next;
+	SLNode(char item=NULL,SLNode * nextNode=NULL)
+	{
+		data=item;
+		next=nextNode;
+	}
+};
+
+
+
+ class LQueue
+    {
+    public:
+        SLNode *front,*rear;
+
+        int count;
+
+        LQueue()
+        {
+            front=rear=NULL;
+            count=1;
+        }
+
+        ~LQueue()
+        {
+            QClear();
+        }
+
+        void Insert(char item)
+        {
+            if(front==NULL)
+            {
+                front=rear=new SLNode(item,NULL);
+                count=1;
+            }
+            else
+            {
+                rear->next=new SLNode(item,NULL);
+                rear=rear->next;
+                count++;
+            }
+        }
+
+
+        bool Delete(char item)
+        {
+            if(front==NULL)
+            {
+                cout<<"empty"<<endl;
+                return false;
+            }
+            SLNode * temp=front;
+            item=temp->data;
+			cout<<"删除队首的元素为"<<item<<endl;
+            front=front->next;
+            count--;
+            delete temp;
+            if(count==0) rear=NULL;
+            return true;
+        }
+
+        bool ReadF(char item)
+        {
+            if(front==NULL)
+            {
+                cout<<"empty"<<endl;
+                return false;
+            }
+            item=front->data;
+			cout<<"队首元素为"<<item<<endl;
+            return true;
+        }
+
+        void QClear()
+        {
+            while(front!=NULL)
+            {
+                rear=front;
+                front=front->next;
+                delete rear;
+                count--;
+            }
+            rear=NULL;
+        }
+
+        void show()
+        {
+            SLNode *temp=front;
+            while(temp!=NULL)
+            {
+                cout<<temp->data<<" ";
+                temp=temp->next;
+            }
+            cout<<endl;
+        }
+    };
+    int main()
+    {
+        LQueue a;
+		char x;
+        a.Insert('a');
+        a.Insert('b');
+        a.Insert('c');
+		a.Insert('d');
+        a.show();
+		a.ReadF(x);
+		cout<<endl;
+		
+		a.Delete(x);
+		a.show();
+		a.ReadF(x);
+		
+        return 0;
+
+    }

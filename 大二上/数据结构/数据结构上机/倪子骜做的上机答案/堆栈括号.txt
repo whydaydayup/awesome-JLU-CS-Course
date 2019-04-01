@@ -1,0 +1,115 @@
+#include <iostream.h>
+#include <stdio.h>
+#include <string.h>
+
+class T
+{
+public:
+	T(char a=NULL) {ccc=a;}
+	void out()
+	{
+		cout<<ccc<<"  ";
+	}
+	char ccc;
+
+};
+
+class AStack
+{
+public:
+	int size;
+	T * A;
+	int top;
+
+public:
+
+	AStack(int max=0)
+	{
+		size=max;
+		A=new T[max];
+		top=-1;
+	}
+    
+
+	~AStack() {delete []A;}
+
+
+
+	void output()
+	{
+         for(int i=0;i<size;i++)
+		 {
+			 A[i].out();
+		 }
+
+	}
+
+	 void Push(T & item)
+	 {
+		 if(top==size-1) cout<<"FULL"<<endl;
+		 else
+		 {
+			 top++;
+			 A[top]=item;
+		 }
+	 }
+
+	 void Pop(T & item)
+	 {
+		 if(top==-1) cout<<"Empty"<<endl;
+		 else
+		 {
+			 item=A[top];
+			 top--;
+		 }
+	 }
+
+	 void Peek(T & item)
+	 {
+		 if(top==-1) cout<<"Empty"<<endl;
+		 else
+		 {
+			 item=A[top];
+		 }
+	 }
+};
+
+
+
+bool match(char aa,char bb)
+{
+	if((aa=='('&&bb==')')||(aa=='['&&bb==']')||(aa=='{'&&bb=='}')) return true;
+	else return false;
+}
+
+int main()
+{
+	int count=0;
+	AStack a(100);
+	char c;
+	
+	c=getchar();
+	while(c!='#')
+	{
+		if((c=='{')||(c=='[')||(c=='(') )
+		{
+			T tt(c);
+			a.Push(tt);
+		}
+		else if ( (c=='}')||(c==']')||(c==')') )
+		{
+			T temp;
+			a.Pop(temp);
+			if(!match(temp.ccc,c))
+			{
+				cout<<"不匹配：在 "<<c<<" 这里"<<endl;
+				count=1;
+				break;
+			}
+		}
+		c=getchar();
+	}
+	if(a.top==-1&&count==0) cout<<"匹配";
+	else if(a.top!=-1&&count==0)  cout<<"不匹配(左括号多)";
+    return 0;
+}

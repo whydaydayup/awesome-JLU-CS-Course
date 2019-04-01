@@ -1,0 +1,218 @@
+#include <iostream.h>
+
+class T
+{
+public:
+	T(int a=0) {number=a;}
+	~T() {}
+	int number;
+	void out()
+	{
+		cout<<"["<<number<<"]";
+	}
+
+}; 
+
+struct SLNode
+{
+	T data;
+	SLNode * next;
+	SLNode(const T& item=NULL,SLNode * nextNode=NULL)
+	{
+		data=item;
+		next=nextNode;
+	}
+};
+
+
+class SLList
+{
+public:
+	SLNode * head;       //哨兵指针
+	SLNode * tail;       //尾指针
+	SLNode * p;          //用于操作的一个指针
+	int size;            //链表长度
+public:
+//构造
+	SLList()
+	{
+		head=tail=p=new SLNode();
+		size=0;
+	}
+
+
+
+//析构
+	~SLList() 
+	{
+		p=head->next;
+		while(p!=NULL)
+		{
+			SLNode * ptr=p;
+			p=p->next;
+			delete ptr;
+		}
+		delete head;
+	}
+
+
+
+//向尾部添加
+	void addToTail(const T & item)
+	{
+			tail->next=new SLNode(item,NULL);
+	    	tail=tail->next;
+		    size++;
+	}
+
+	//向第k个节点后插入节点（哨兵节点为第0个） 
+	void Insert(int k,const T& item)
+	{
+     if(k<0)
+	   {
+	      cout<<"插入不合法!"<<endl ; 
+	   }
+	 else
+	   {
+	   SLNode * ptr=head->next  ;
+	   SLNode * p1=new SLNode(item) ;
+	   int i=1 ;
+	   if(k==0)
+	   {
+		   
+		   p1->next=head->next;
+  		   head->next=p1 ;
+	   }
+	   else
+	   {
+		   while((i<k)&&(ptr!=NULL))
+		   {
+			   ptr=ptr->next ;
+               i=i+1 ;
+		   }
+		   p1->next=ptr->next;
+  		   ptr->next=p1 ;
+	   }
+       
+       size++;
+	   }
+}
+
+
+
+
+//是否为空链表
+	bool IsEmpty()
+	{
+		return head->next==NULL;
+	}
+
+//删除当前指针,无需遍历
+	void deleteNowptr()
+	{
+        if(IsEmpty())
+		{
+		    cout<<"空表"<<endl;
+		}
+		else
+		{
+		p->data=(p->next)->data;
+		p->next=(p->next)->next;
+		size--;
+		}
+	}
+
+
+//输出全体（除了哨兵节点）
+	void output()
+	{
+		p=head->next;
+		while (p->next!=NULL)
+		{
+            p->data.out();
+			cout<<"->";
+			p=p->next;
+		}
+		tail->data.out();
+		cout<<endl;
+	}
+
+//储存K
+	void Find(int k ,T & item )
+	{
+       if(k<1) cout<<"no no no!"<<endl;
+	   else
+	   {
+		   p=head;
+		   int i=0;
+		   while(p!=NULL&&i<k)
+		   {
+			   p=p->next;
+			   i=i+1;
+		   }
+		   item=p->data;
+	   }
+	}
+
+
+//查找item，返回位置（哨兵为0）,-1代表没有，注意？没有T的==和!=重载
+	int Search(T & item)
+	{
+		p=head->next;
+		int i=1;
+		while((p!=NULL)&&((p->data).number!=item.number))
+		{
+			p=p->next;
+			i++;
+		}
+		if (p!=NULL) return i;
+		else return -1;
+
+	}
+
+
+
+
+
+
+
+};
+
+
+
+
+
+int main()
+{
+	SLList a;
+	int i;
+	for(i=1;i<=5;i++)
+	{
+		T t(i);
+		a.addToTail(t);
+	}
+
+	a.output();
+	T t1(999);
+	a.Insert(3,t1);
+	a.output();
+	a.p=a.head;
+	for(i=0;i<=3;i++)
+	{
+		a.p=a.p->next;
+	}
+	a.deleteNowptr();
+	a.output();
+
+	T temp;
+	a.Find(2,temp);
+	cout<<"储存第二个节点值为:";
+	temp.out();
+    cout<<endl;
+
+	T ttemp(5);
+	cout<<"ttemp 位于第 "<<a.Search(ttemp)<<"  位"<<endl;
+
+	return 0;
+
+}

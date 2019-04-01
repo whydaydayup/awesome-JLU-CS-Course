@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<!-- saved from url=(0133)http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000 -->
+<html xmlns:itranswarp="http://www.itranswarp.com/" xmlns:wb="http://open.weibo.com/wb" class="uk-notouch"><!--
+
+--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>正则表达式 - 廖雪峰的官方网站</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="keywords" content="javascript,node,jquery,git,python,java,sql,linux,ios,android,教程,软件,编程,开发,运维,云计算,网络,互联网">
+    <meta name="description" content="研究互联网产品和技术，提供原创中文精品教程">
+    <meta property="x-nav" content=" /wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000 ">
+    <link rel="alternate" href="http://www.liaoxuefeng.com/feed" title="廖雪峰的官方网站" type="application/rss+xml">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000">
+    <meta property="og:title" content="正则表达式">
+    <meta property="og:description" content="小白的Python新手教程，基于最新的Python 3.5！">
+    <meta property="og:image" content="http://www.liaoxuefeng.com/files/attachments/001431608955727f25be118770e460fad1296261e01213d000/l">
+
+    <!-- BEGIN CSS COMPRESS -->
+    <link rel="stylesheet" href="./正则表达式 - 廖雪峰的官方网站_files/codemirror.css">
+    <link rel="stylesheet" href="./正则表达式 - 廖雪峰的官方网站_files/highlight.css">
+    <link rel="stylesheet" href="./正则表达式 - 廖雪峰的官方网站_files/itranswarp.css">
+    <!-- END CSS COMPRESS -->
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="/static/themes/default/css/ie.css" />
+    <![endif]-->
+    
+    <script src="./正则表达式 - 廖雪峰的官方网站_files/underscore.js"></script><script src="./正则表达式 - 廖雪峰的官方网站_files/hm.js"></script><script src="./正则表达式 - 廖雪峰的官方网站_files/all.js"></script>
+    
+    <script id="tplComment" type="text/plain">
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="/user/{ user.id }"><img class="uk-comment-avatar uk-border-circle x-avatar" src="{ user.image_url }" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="/discuss/{ board_id }/{ id }">{ name }</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="/user/{ user.id }">{ user.name }</a> created at { created_at.toSmartDate() }, Last updated at { updated_at.toSmartDate() }</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                { content|safe }
+            </div>
+        </div>
+    </script>
+
+    <script id="tplCommentReply" type="text/plain">
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="/user/{ user.id }"><img class="uk-comment-avatar uk-border-circle x-avatar" src="{ user.image_url }" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="/user/{ user.id }">{ user.name }</a></div>
+                <div class="uk-comment-meta">Created at { created_at.toSmartDate() }, Last updated at { updated_at.toSmartDate() }</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                { content|safe }
+            </div>
+        </div>
+    </script>
+
+    <script id="tplCommentInfo" type="text/plain">
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="/discuss/{ board_id }/{ id }"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="/discuss/{ board_id }/{ id }#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </script>
+
+    <script id="tplCommentArea" type="text/plain">
+        <div class="x-display-if-signin">
+            <p><button id="comment-make-button" type="button" class="uk-button uk-button-primary"><i class="uk-icon-comment"></i> 发表评论</button></p>
+            <form id="comment-form" class="uk-form" style="display:none;">
+                <fieldset>
+                    <div class="uk-alert uk-alert-danger" style="display:none"></div>
+                    <div class="uk-form-row">
+                        <label>标题:</label>
+                    </div>
+                    <div class="uk-form-row">
+                        <input type="text" name="name" maxlength="100" style="width:100%">
+                    </div>
+                    <div class="uk-form-row">
+                        <label>内容:</label>
+                    </div>
+                    <div class="uk-form-row x-textarea">
+                    </div>
+                    <div class="uk-form-row">
+                        <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-check"></i> 发布</button>
+                        &nbsp;&nbsp;
+                        <button type="button" class="uk-button x-cancel"><i class="uk-icon-close"></i> 取消</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </script>
+
+    <style id="x-doc-style">
+
+        .x-display-if-signin { display: none; }
+
+    </style>
+    <script>
+        var g_time = parseFloat('1458567853031');
+        var g_signins = [{"id":"weibo","icon":"weibo","name":"使用新浪微博登录"}];
+//
+        var g_user = null;
+//
+    </script>
+
+
+
+
+
+    
+    
+<style>
+.x-wiki-visible {
+    display: block;
+}
+</style>
+
+<script>
+loadComments('00143193331387014ccd1040c814dee8b2164bb4f064cff000');
+
+var
+    comment_type = 'wikipage',
+    comment_ref_id = '00143193331387014ccd1040c814dee8b2164bb4f064cff000',
+    comment_tag = 'python';
+
+function onAuthSuccess() {
+    initCommentArea(comment_type, comment_ref_id, comment_tag);
+}
+
+$(function () {
+    if (g_user !== null) {
+        initCommentArea(comment_type, comment_ref_id, comment_tag);
+    }
+});
+
+$(function () {
+    var
+        current = $('#00143193331387014ccd1040c814dee8b2164bb4f064cff000'),
+        prev = current.prev().find('a'),
+        next = current.next().find('a'),
+        L = [];
+    current.addClass('uk-active');
+    $('#off-00143193331387014ccd1040c814dee8b2164bb4f064cff000').addClass('uk-active');
+    L.push('<div class="uk-clearfix uk-margin-left uk-margin-right">');
+    if (prev.length > 0) {
+        L.push('<span class="uk-float-left"><i class="uk-icon-chevron-left"></i> <a href="');
+        L.push(prev.attr('href'));
+        L.push('">');
+        L.push(encodeHtml(prev.text()));
+        L.push('</a></span>');
+    }
+    if (next.length > 0) {
+        L.push('<span class="uk-float-right"><a href="');
+        L.push(next.attr('href'));
+        L.push('">');
+        L.push(encodeHtml(next.text()));
+        L.push('</a> <i class="uk-icon-chevron-right"></i></span>')
+    }
+    L.push('</div>');
+    $('#x-wiki-prev-next').html(L.join(''));
+});
+</script>
+
+
+<style>
+.x-center {
+    margin: 0;
+}
+
+
+.x-center {
+    margin-left: 316px;
+    padding-left: 15px;
+}
+
+
+
+
+</style>
+
+<!-- BEGIN custom_header -->
+<script src="./正则表达式 - 廖雪峰的官方网站_files/wb.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+// git: add app link:
+$(function() {
+  if (location.pathname.indexOf('/wiki/0013739516305929606dd18361248578c67b8067c8c017b000')===0) {
+    $('.x-wiki-info').parent().css('position', 'relative').append('<a href="https://itunes.apple.com/cn/app/git-jiao-cheng/id876420437" target="_blank" style="display:block;width:135px;height:40px;position:absolute;right:10px;top:10px;"><img src="/static/img/download-on-the-app-store.png" /></a>');
+  }
+});
+</script>
+
+<script>
+// python 3: add 2.7 link:
+$(function() {
+  if (location.pathname.indexOf('/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000')===0) {
+    $('.x-wiki-info').parent().css('position', 'relative').append('<a href="/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000" target="_blank" style="display:block;position:absolute;right:10px;top:10px;">2.7旧版教程</a>');
+  }
+});
+</script>
+
+<script>
+// python 2.7: add py3 link:
+$(function() {
+  if (location.pathname.indexOf('/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000')===0) {
+    $('#main .x-container').prepend('<div class="uk-alert uk-alert-danger">您目前正在学习的2.7版本的Python教程已过期，请立刻前往最新的Python 3 教程：<a href="/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" class="uk-button uk-button-success">我要学 Python 3</a></div>');
+  }
+});
+</script>
+
+<script>
+// the ad:
+$(function() {
+  var _pros = [
+    {
+      id: 'jfedu',
+      href: 'http://www.jfedu.net/newindex/jfnews/108.html',
+      img: '/files/attachments/0014447742522842243a5dcedc5487b93a44d9c716bb0b6000/0'
+    },
+    {
+      id: 'zhufeng',
+      href: 'http://www.zhufengpeixun.cn/customize/node/index.html',
+      img: '/files/attachments/00145587235874321e448795b804a1e8356eb97a33f81c5000/0'
+    },
+    {
+      id: 'yuanquan',
+      href: 'http://www.iswifting.com/',
+      img: '/files/attachments/00145759011777309a8dbc5753947c987bf71f008b90aaa000/0'
+    }
+  ];
+  var i, s = '';
+  for (i=0; i<_pros.length; i++) {
+    s = s + '<div style="width:336px;height:280px;float:left;"><a target="_blank" href="' + _pros[i].href + '" onclick="_hmt.push([\'_trackEvent\', \'' + _pros[i].id + '\', \'click\', \'clicked\']);"><img src="' + _pros[i].img + '"></a></div>';
+  }
+  if (location.pathname.indexOf('/wiki/')===0 || location.pathname.indexOf('/article/')===0) {
+    s = s + '<div style="clear: both;"></div>';
+    $('.x-wiki-content').after(s);
+    $('.x-article-content').after(s);
+  }
+  else {
+    $('#the-promos').prepend(s);
+  }
+});
+</script>
+
+<script>
+// wiki: add share:
+$(function() {
+  if (location.pathname.indexOf('/wiki/')===0) {
+    $('.x-wiki-content').find('a[href^=http]').attr('target', '_blank');
+    $('.x-wiki-content').after('<h3>分享给朋友</h3><p><wb:share-button appkey="1391944217" addition="full" type="button" ralateUid="1658384301" picture_search="false" pic="' + $('meta[property="og:image"]').attr('content') + '"></wb:share-button></p><h3>您的鼓励是作者写作最大的动力</h3><p>如果您认为本网站的教程质量不错，读后觉得收获很大，预期工资涨幅能超过30%，不妨小额赞助我一下，让我有动力继续写出高质量的教程：</p><p><a target="_blank" href="/webpage/donate" class="uk-button uk-button-primary"><i class="uk-icon-cny"></i> 我要小额赞助</a></p>');
+  }
+});
+</script>
+
+<script>
+// article: add share:
+$(function() {
+  if (location.pathname.indexOf('/article/')===0) {
+    $('.x-article-content').find('a[href^=http]').attr('target', '_blank');
+    $('.x-article-content').after('<h3>分享给朋友</h3><p><wb:share-button appkey="1391944217" addition="full" type="button" ralateUid="1658384301" picture_search="false" pic="' + $('meta[property="og:image"]').attr('content') + '"></wb:share-button></p>');
+  }
+});
+</script>
+
+<script>
+// all:
+$(function() {
+  $('.x-footer-copyright').find('p').append('<br>由<a target="_blank" href="http://s.click.taobao.com/t?e=m%3D2%26s%3D9OENMDkAWM4cQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAjROzn5WHXTzvOYC3uniaINIW%2FH7aX8LI9nQCCjrrrN3wYAeXhmRFOHMh3DDj7e5Hudn1BbglxZYxUhy8exlzcq9AmARIwX9K%2BnbtOD3UdznPV1H2z0iQv9NkKVMHClW0QbMqOpFMIvnvjQXzzpXdTHGJe8N%2FwNpGw%3D%3D">阿里云</a>托管<br><a href="#0" onclick="location.assign(decodeURIComponent(\'moc.36104%fxlksaA3%otliam\'.split(\'\').reverse().join(\'\')))">广告合作</a>');
+  $('.x-footer').append('<hr><div style="text-align:center"><p>友情链接: <a href="http://www.shi-ci.com" target="_blank">中华诗词</a> - <a href="http://s.click.taobao.com/t?e=m%3D2%26s%3DjPaT%2Fmi2tL4cQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAlFz4nQbUpKuV%2FZ67c680w5IW%2FH7aX8LI9nQCCjrrrN3wYAeXhmRFOHMh3DDj7e5Hudn1BbglxZYxUhy8exlzcq9AmARIwX9K%2BnbtOD3UdznPV1H2z0iQv9NkKVMHClW0QbMqOpFMIvnvjQXzzpXdTHGJe8N%2FwNpGw%3D%3D" target="_blank">阿里云</a> - <a href="http://mitpress.mit.edu/sicp/full-text/book/book.html" target="_blank">SICP</a> - <a href="http://www.4clojure.com/" target="_blank">4clojure</a></p></div>');
+});
+</script>
+
+<script>
+// tongji:
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?2efddd14a5f2b304677462d06fb4f964";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script>
+$(function() {
+  var x = document.createElement('script');
+  x.src = '/static/js/underscore.js';
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(x, s);
+});
+</script>
+
+<!-- END custom_header -->
+<style type="text/css">div[id^="div-gpt-ad-"],.adsbygoogle{display:none!important;}</style><script charset="UTF-8" src="./正则表达式 - 廖雪峰的官方网站_files/bundle.js"></script><script charset="UTF-8" src="./正则表达式 - 廖雪峰的官方网站_files/iframeWidget.js"></script></head>
+
+<body><div style="width: 100%; height: 1px; position: absolute; bottom: 0px; left: 0px; right: 0px;"></div><iframe id="sina_anywhere_iframe" style="display: none;"></iframe>
+    <div id="pub_slot_Mon Mar 21 2016"><div style="visibility: hidden; opacity: 0;"><div><div><script charset="utf-8" src="./正则表达式 - 廖雪峰的官方网站_files/saved_resource"></script><div id="adedcb85470fddd50815_4c8c77e0221e29ee5559_145856793035f7b3d54c30_0" style="display: block; box-sizing: border-box; border: 0px; padding: 0px; margin: 0px; width: 300px; height: 250px; position: fixed; bottom: 0px; right: 0px; z-index: 2147483647; background-color: transparent;"><iframe style="width:300px;height:250px;background-color:transparent;" src="./正则表达式 - 廖雪峰的官方网站_files/ncorps.html" seamless="" scrolling="no" frameborder="no" border="0" marginwidth="0" marginheight="0" allowtransparency="true"></iframe><img src="./正则表达式 - 廖雪峰的官方网站_files/verify" style="width: 1px; height: 1px; display: none;"><a style="position: absolute; width: 20px; height: 20px; bottom: 0px; right: 18px; color: transparent; display: block; border: 0px; padding: 0px; margin: 0px; cursor: pointer; z-index: 100; background: url(http://bb.wfzhenshiqi.net/ad_rt.png) no-repeat;"></a><div style="width: 20px; height: 20px; display: block; position: absolute; cursor: pointer; z-index: 100; bottom: 0px; right: 0px; background: url(http://bb.wfzhenshiqi.net/cl_rt.png) no-repeat;"></div></div><script type="text/javascript" id="adedcb85470fddd50815_4c8c77e0221e29ee5559_145856793035f7b3d54c30">_guanggao_pub= "adedcb85470fddd50815";_guanggao_slot= "4c8c77e0221e29ee5559";</script><script type="text/javascript" src="./正则表达式 - 廖雪峰的官方网站_files/adedcb85470fddd50815"></script></div></div></div></div><div class="x-goto-top" style="display: none;">
+        <div class="x-arrow"></div>
+        <div class="x-stick"></div>
+    </div>
+
+    <div id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container x-container">
+            <div class="uk-navbar uk-navbar-attached">
+                
+                <ul class="uk-navbar-nav uk-visible-small">
+                    <li><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000#0" onclick="UIkit.offcanvas.show(&#39;#x-offcanvas-left&#39;)"><i class="uk-icon-chevron-right"></i></a></li>
+                </ul>
+                
+                <a href="http://www.liaoxuefeng.com/" class="uk-navbar-brand uk-visible-large">廖雪峰的官方网站</a>
+                <a href="http://www.liaoxuefeng.com/" class="uk-navbar-brand uk-hidden-large"><i class="uk-icon-home"></i></a>
+                <ul id="ul-navbar" class="uk-navbar-nav uk-hidden-small">
+                    
+                    <li><a href="http://www.liaoxuefeng.com/category/0013738748415562fee26e070fa4664ad926c8e30146c67000">编程</a></li>
+                    
+                    <li><a href="http://www.liaoxuefeng.com/category/0013738748248885ddf38d8cd1b4803aa74bcda32f853fd000">读书</a></li>
+                    
+                    <li><a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000">JavaScript教程</a></li>
+                    
+                    <li class="uk-active"><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">Python教程</a></li>
+                    
+                    <li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">Git教程</a></li>
+                    
+                    <li><a href="http://www.liaoxuefeng.com/discuss">问答</a></li>
+                    
+                    <li><a href="http://www.liaoxuefeng.com/webpage/donate">赞助</a></li>
+                    
+                </ul>
+                
+                <ul class="uk-navbar-nav uk-visible-small">
+                    <li class="uk-parent" data-uk-dropdown="">
+                        <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000#0"><i class="uk-icon-navicon"></i></a>
+                        <div class="uk-dropdown uk-dropdown-navbar">
+                            <ul class="uk-nav uk-nav-navbar">
+                                
+                                <li><a href="http://www.liaoxuefeng.com/category/0013738748415562fee26e070fa4664ad926c8e30146c67000">编程</a></li>
+                                
+                                <li><a href="http://www.liaoxuefeng.com/category/0013738748248885ddf38d8cd1b4803aa74bcda32f853fd000">读书</a></li>
+                                
+                                <li><a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000">JavaScript教程</a></li>
+                                
+                                <li><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">Python教程</a></li>
+                                
+                                <li><a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">Git教程</a></li>
+                                
+                                <li><a href="http://www.liaoxuefeng.com/discuss">问答</a></li>
+                                
+                                <li><a href="http://www.liaoxuefeng.com/webpage/donate">赞助</a></li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                
+
+<!--
+                <div class="uk-navbar-content x-hidden-tiny">
+                    <form id="form-search" class="uk-form uk-margin-remove uk-display-inline-block">
+                        <div class="uk-form-icon">
+                            <i class="uk-icon-search"></i>
+                            <input type="text" placeholder="Search">
+                        </div>
+                    </form>
+                </div>
+-->
+
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-parent x-display-if-signin" data-uk-dropdown="">
+                            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000#0"><i class="uk-icon-user"></i><span class="x-hidden-tiny">&nbsp;</span><span class="x-user-name x-hidden-tiny"></span></a>
+                            <div class="uk-dropdown uk-dropdown-navbar">
+                                <ul class="uk-nav uk-nav-navbar">
+                                    <li><a target="_blank" href="http://www.liaoxuefeng.com/me/profile"><i class="uk-icon-cogs"></i> 个人资料</a></li>
+                                    <li class="uk-nav-divider"></li>
+                                    <li><a href="http://www.liaoxuefeng.com/auth/signout"><i class="uk-icon-power-off"></i> 登出</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="x-display-if-not-signin uk-hidden-small"><a href="javascript:showSignin()"><i class="uk-icon-sign-in"></i> 登录</a></li>
+                        <li class="x-display-if-not-signin uk-visible-small"><a href="javascript:showSignin()"><i class="uk-icon-sign-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- // header -->
+
+    <div id="main">
+        <div class="x-placeholder-50"><!-- placeholder --></div>
+        <div class="x-placeholder"><!-- placeholder --></div>
+        <div class="uk-container x-container">
+            <div class="uk-grid">
+                <div class="x-body-before uk-width-1-1">
+                    
+                </div>
+            </div>
+            <div class="uk-grid">
+                <div class="uk-width-1-1">
+                
+                    <div class="x-sidebar-left">
+                        <div class="x-sidebar-left-top">
+                            
+                        </div>
+                        <div class="x-sidebar-left-content">
+                            
+    <ul class="uk-nav uk-nav-side">
+        <li class="uk-nav-header">目录</li>
+    </ul>
+    <ul class="uk-nav uk-nav-side" style="margin-right:-15px;">
+        <li id="0014316089557264a6b348958f449949df42a6d3a2e542c000"><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">Python教程</a></li>
+    
+        <li id="001431608990315a01b575e2ab041168ff0df194698afac000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431608990315a01b575e2ab041168ff0df194698afac000">Python简介</a>
+        </li>
+    
+        <li id="0014316090478912dab2a3a9e8f4ed49d28854b292f85bb000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316090478912dab2a3a9e8f4ed49d28854b292f85bb000">安装Python</a>
+        </li>
+    
+        <li id="00143161198846783e33de56d4041058c3dfc7e44ee1203000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143161198846783e33de56d4041058c3dfc7e44ee1203000">Python解释器</a>
+        </li>
+    
+        <li id="001431611988455689d4c116b2c4ed6aec000776c00ed52000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431611988455689d4c116b2c4ed6aec000776c00ed52000">第一个Python程序</a>
+        </li>
+    
+        <li id="0014316399410395f704750ee9440228135925a6ca1dad8000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316399410395f704750ee9440228135925a6ca1dad8000">使用文本编辑器</a>
+        </li>
+    
+        <li id="001432523496782e0946b0f454549c0888d05959b99860f000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432523496782e0946b0f454549c0888d05959b99860f000">Python代码运行助手</a>
+        </li>
+    
+        <li id="001431643484137e38b44e5925440ec8b1e4c70f800b4e2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431643484137e38b44e5925440ec8b1e4c70f800b4e2000">输入和输出</a>
+        </li>
+    
+        <li id="001431658427513eef3d9dd9f7c48599116735806328e81000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431658427513eef3d9dd9f7c48599116735806328e81000">Python基础</a>
+        </li>
+    
+        <li id="001431658624177ea4f8fcb06bc4d0e8aab2fd7aa65dd95000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431658624177ea4f8fcb06bc4d0e8aab2fd7aa65dd95000">数据类型和变量</a>
+        </li>
+    
+        <li id="001431664106267f12e9bef7ee14cf6a8776a479bdec9b9000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431664106267f12e9bef7ee14cf6a8776a479bdec9b9000">字符串和编码</a>
+        </li>
+    
+        <li id="0014316724772904521142196b74a3f8abf93d8e97c6ee6000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316724772904521142196b74a3f8abf93d8e97c6ee6000">使用list和tuple</a>
+        </li>
+    
+        <li id="001431675624710bb20e9734ef343bbb4bd64bcd37d4b52000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431675624710bb20e9734ef343bbb4bd64bcd37d4b52000">条件判断</a>
+        </li>
+    
+        <li id="001431676242561226b32a9ec624505bb8f723d0027b3e7000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431676242561226b32a9ec624505bb8f723d0027b3e7000">循环</a>
+        </li>
+    
+        <li id="00143167793538255adf33371774853a0ef943280573f4d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143167793538255adf33371774853a0ef943280573f4d000">使用dict和set</a>
+        </li>
+    
+        <li id="00143167832686474803d3d2b7d4d6499cfd093dc47efcd000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143167832686474803d3d2b7d4d6499cfd093dc47efcd000">函数</a>
+        </li>
+    
+        <li id="0014316784721058975e02b46cc45cb836bb0827607738d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316784721058975e02b46cc45cb836bb0827607738d000">调用函数</a>
+        </li>
+    
+        <li id="001431679203477b5b364aeba8c4e05a9bd4ec1b32911e2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431679203477b5b364aeba8c4e05a9bd4ec1b32911e2000">定义函数</a>
+        </li>
+    
+        <li id="001431752945034eb82ac80a3e64b9bb4929b16eeed1eb9000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431752945034eb82ac80a3e64b9bb4929b16eeed1eb9000">函数的参数</a>
+        </li>
+    
+        <li id="001431756044276a15558a759ec43de8e30eb0ed169fb11000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431756044276a15558a759ec43de8e30eb0ed169fb11000">递归函数</a>
+        </li>
+    
+        <li id="0014317568446245b3e1c8837414168bcd2d485e553779e000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317568446245b3e1c8837414168bcd2d485e553779e000">高级特性</a>
+        </li>
+    
+        <li id="001431756919644a792ee4ead724ef7afab3f7f771b04f5000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431756919644a792ee4ead724ef7afab3f7f771b04f5000">切片</a>
+        </li>
+    
+        <li id="0014317793224211f408912d9c04f2eac4d2af0d5d3d7b2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317793224211f408912d9c04f2eac4d2af0d5d3d7b2000">迭代</a>
+        </li>
+    
+        <li id="001431779637539089fd627094a43a8a7c77e6102e3a811000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431779637539089fd627094a43a8a7c77e6102e3a811000">列表生成式</a>
+        </li>
+    
+        <li id="0014317799226173f45ce40636141b6abc8424e12b5fb27000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317799226173f45ce40636141b6abc8424e12b5fb27000">生成器</a>
+        </li>
+    
+        <li id="00143178254193589df9c612d2449618ea460e7a672a366000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143178254193589df9c612d2449618ea460e7a672a366000">迭代器</a>
+        </li>
+    
+        <li id="0014317848428125ae6aa24068b4c50a7e71501ab275d52000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317848428125ae6aa24068b4c50a7e71501ab275d52000">函数式编程</a>
+        </li>
+    
+        <li id="0014317849054170d563b13f0fa4ce6ba1cd86e18103f28000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317849054170d563b13f0fa4ce6ba1cd86e18103f28000">高阶函数</a>
+        </li>
+    
+        <li id="0014317852443934a86aa5bb5ea47fbbd5f35282b331335000" style="margin-left:3em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317852443934a86aa5bb5ea47fbbd5f35282b331335000">map/reduce</a>
+        </li>
+    
+        <li id="001431821084171d2e0f22e7cc24305ae03aa0214d0ef29000" style="margin-left:3em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431821084171d2e0f22e7cc24305ae03aa0214d0ef29000">filter</a>
+        </li>
+    
+        <li id="0014318230588782cac105d0d8a40c6b450a232748dc854000" style="margin-left:3em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318230588782cac105d0d8a40c6b450a232748dc854000">sorted</a>
+        </li>
+    
+        <li id="001431835236741e42daf5af6514f1a8917b8aaadff31bf000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431835236741e42daf5af6514f1a8917b8aaadff31bf000">返回函数</a>
+        </li>
+    
+        <li id="001431843456408652233b88b424613aa8ec2fe032fd85a000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431843456408652233b88b424613aa8ec2fe032fd85a000">匿名函数</a>
+        </li>
+    
+        <li id="0014318435599930270c0381a3b44db991cd6d858064ac0000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318435599930270c0381a3b44db991cd6d858064ac0000">装饰器</a>
+        </li>
+    
+        <li id="00143184474383175eeea92a8b0439fab7b392a8a32f8fa000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143184474383175eeea92a8b0439fab7b392a8a32f8fa000">偏函数</a>
+        </li>
+    
+        <li id="0014318447437605e90206e261744c08630a836851f5183000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318447437605e90206e261744c08630a836851f5183000">模块</a>
+        </li>
+    
+        <li id="001431845183474e20ee7e7828b47f7b7607f2dc1e90dbb000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431845183474e20ee7e7828b47f7b7607f2dc1e90dbb000">使用模块</a>
+        </li>
+    
+        <li id="00143186362353505516c5d4e38456fb225c18cc5b54ffb000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186362353505516c5d4e38456fb225c18cc5b54ffb000">安装第三方模块</a>
+        </li>
+    
+        <li id="0014318645694388f1f10473d7f416e9291616be8367ab5000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318645694388f1f10473d7f416e9291616be8367ab5000">面向对象编程</a>
+        </li>
+    
+        <li id="001431864715651c99511036d884cf1b399e65ae0d27f7e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431864715651c99511036d884cf1b399e65ae0d27f7e000">类和实例</a>
+        </li>
+    
+        <li id="0014318650247930b1b21d7d3c64fe38c4b5a80d4469ad7000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318650247930b1b21d7d3c64fe38c4b5a80d4469ad7000">访问限制</a>
+        </li>
+    
+        <li id="001431865288798deef438d865e4c2985acff7e9fad15e3000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431865288798deef438d865e4c2985acff7e9fad15e3000">继承和多态</a>
+        </li>
+    
+        <li id="001431866385235335917b66049448ab14a499afd5b24db000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431866385235335917b66049448ab14a499afd5b24db000">获取对象信息</a>
+        </li>
+    
+        <li id="0014319117128404c7dd0cf0e3c4d88acc8fe4d2c163625000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319117128404c7dd0cf0e3c4d88acc8fe4d2c163625000">实例属性和类属性</a>
+        </li>
+    
+        <li id="00143186738532805c392f2cc09446caf3236c34e3f980f000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186738532805c392f2cc09446caf3236c34e3f980f000">面向对象高级编程</a>
+        </li>
+    
+        <li id="00143186739713011a09b63dcbd42cc87f907a778b3ac73000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186739713011a09b63dcbd42cc87f907a778b3ac73000">使用__slots__</a>
+        </li>
+    
+        <li id="00143186781871161bc8d6497004764b398401a401d4cce000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186781871161bc8d6497004764b398401a401d4cce000">使用@property</a>
+        </li>
+    
+        <li id="0014318680104044a55f4a9dbf8452caf71e8dc68b75a18000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318680104044a55f4a9dbf8452caf71e8dc68b75a18000">多重继承</a>
+        </li>
+    
+        <li id="0014319098638265527beb24f7840aa97de564ccc7f20f6000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000">定制类</a>
+        </li>
+    
+        <li id="00143191235886950998592cd3e426e91687cdae696e64b000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143191235886950998592cd3e426e91687cdae696e64b000">使用枚举类</a>
+        </li>
+    
+        <li id="0014319106919344c4ef8b1e04c48778bb45796e0335839000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319106919344c4ef8b1e04c48778bb45796e0335839000">使用元类</a>
+        </li>
+    
+        <li id="001431913726557e5e43e1ee8d54ee486bddc3f607afb75000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431913726557e5e43e1ee8d54ee486bddc3f607afb75000">错误、调试和测试</a>
+        </li>
+    
+        <li id="00143191375461417a222c54b7e4d65b258f491c093a515000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143191375461417a222c54b7e4d65b258f491c093a515000">错误处理</a>
+        </li>
+    
+        <li id="001431915578556ad30ab3933ae4e82a03ee2e9a4f70871000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431915578556ad30ab3933ae4e82a03ee2e9a4f70871000">调试</a>
+        </li>
+    
+        <li id="00143191629979802b566644aa84656b50cd484ec4a7838000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143191629979802b566644aa84656b50cd484ec4a7838000">单元测试</a>
+        </li>
+    
+        <li id="0014319170285543a4d04751f8846908770660de849f285000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319170285543a4d04751f8846908770660de849f285000">文档测试</a>
+        </li>
+    
+        <li id="001431917590955542f9ac5f5c1479faf787ff2b028ab47000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431917590955542f9ac5f5c1479faf787ff2b028ab47000">IO编程</a>
+        </li>
+    
+        <li id="001431917715991ef1ebc19d15a4afdace1169a464eecc2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431917715991ef1ebc19d15a4afdace1169a464eecc2000">文件读写</a>
+        </li>
+    
+        <li id="001431918785710e86a1a120ce04925bae155012c7fc71e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431918785710e86a1a120ce04925bae155012c7fc71e000">StringIO和BytesIO</a>
+        </li>
+    
+        <li id="001431925324119bac1bc7979664b4fa9843c0e5fcdcf1e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431925324119bac1bc7979664b4fa9843c0e5fcdcf1e000">操作文件和目录</a>
+        </li>
+    
+        <li id="00143192607210600a668b5112e4a979dd20e4661cc9c97000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143192607210600a668b5112e4a979dd20e4661cc9c97000">序列化</a>
+        </li>
+    
+        <li id="0014319272686365ec7ceaeca33428c914edf8f70cca383000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319272686365ec7ceaeca33428c914edf8f70cca383000">进程和线程</a>
+        </li>
+    
+        <li id="001431927781401bb47ccf187b24c3b955157bb12c5882d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431927781401bb47ccf187b24c3b955157bb12c5882d000">多进程</a>
+        </li>
+    
+        <li id="00143192823818768cd506abbc94eb5916192364506fa5d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143192823818768cd506abbc94eb5916192364506fa5d000">多线程</a>
+        </li>
+    
+        <li id="001431928972981094a382e5584413fa040b46d46cce48e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431928972981094a382e5584413fa040b46d46cce48e000">ThreadLocal</a>
+        </li>
+    
+        <li id="0014319292979766bd3285c9d6b4942a8ea9b4e9cfb48d8000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319292979766bd3285c9d6b4942a8ea9b4e9cfb48d8000">进程 vs. 线程</a>
+        </li>
+    
+        <li id="001431929340191970154d52b9d484b88a7b343708fcc60000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431929340191970154d52b9d484b88a7b343708fcc60000">分布式进程</a>
+        </li>
+    
+        <li id="00143193331387014ccd1040c814dee8b2164bb4f064cff000" style="margin-left:1em;" class="uk-active">
+            <a href="./正则表达式 - 廖雪峰的官方网站_files/正则表达式 - 廖雪峰的官方网站.html">正则表达式</a>
+        </li>
+    
+        <li id="0014319347182373b696e637cc04430b8ee2d548ca1b36d000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319347182373b696e637cc04430b8ee2d548ca1b36d000">常用内建模块</a>
+        </li>
+    
+        <li id="001431937554888869fb52b812243dda6103214cd61d0c2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431937554888869fb52b812243dda6103214cd61d0c2000">datetime</a>
+        </li>
+    
+        <li id="001431953239820157155d21c494e5786fce303f3018c86000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431953239820157155d21c494e5786fce303f3018c86000">collections</a>
+        </li>
+    
+        <li id="001431954588961d6b6f51000ca4279a3415ce14ed9d709000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431954588961d6b6f51000ca4279a3415ce14ed9d709000">base64</a>
+        </li>
+    
+        <li id="001431955007656a66f831e208e4c189b8a9e9f3f25ba53000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431955007656a66f831e208e4c189b8a9e9f3f25ba53000">struct</a>
+        </li>
+    
+        <li id="0014319556588648dd1fb0047a34d0c945ee33e8f4c90cc000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319556588648dd1fb0047a34d0c945ee33e8f4c90cc000">hashlib</a>
+        </li>
+    
+        <li id="00143200162233153835cfdd1a541a18ddc15059e3ddeec000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143200162233153835cfdd1a541a18ddc15059e3ddeec000">itertools</a>
+        </li>
+    
+        <li id="001432002075057b594f70ecb58445da6ef6071aca880af000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432002075057b594f70ecb58445da6ef6071aca880af000">XML</a>
+        </li>
+    
+        <li id="0014320023122880232500da9dc4a4486ad00426f081c15000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320023122880232500da9dc4a4486ad00426f081c15000">HTMLParser</a>
+        </li>
+    
+        <li id="001432688314740a0aed473a39f47b09c8c7274c9ab6aee000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432688314740a0aed473a39f47b09c8c7274c9ab6aee000">urllib</a>
+        </li>
+    
+        <li id="001432002680493d1babda364904ca0a6e28374498d59a7000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432002680493d1babda364904ca0a6e28374498d59a7000">常用第三方模块</a>
+        </li>
+    
+        <li id="0014320027235877860c87af5544f25a8deeb55141d60c5000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320027235877860c87af5544f25a8deeb55141d60c5000">PIL</a>
+        </li>
+    
+        <li id="001432712108300322c61f256c74803b43bfd65c6f8d0d0000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000">virtualenv</a>
+        </li>
+    
+        <li id="00143200341926302f99cf6f6414dca9dfaaf6e5a25a5b1000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143200341926302f99cf6f6414dca9dfaaf6e5a25a5b1000">图形界面</a>
+        </li>
+    
+        <li id="0014320037274136d31bd9979d648cd822375394e29a871000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320037274136d31bd9979d648cd822375394e29a871000">网络编程</a>
+        </li>
+    
+        <li id="0014320037768360d53e4e935ca4a1f96eed1c896ad1217000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320037768360d53e4e935ca4a1f96eed1c896ad1217000">TCP/IP简介</a>
+        </li>
+    
+        <li id="001432004374523e495f640612f4b08975398796939ec3c000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432004374523e495f640612f4b08975398796939ec3c000">TCP编程</a>
+        </li>
+    
+        <li id="001432004977916a212e2168e21449981ad65cd16e71201000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432004977916a212e2168e21449981ad65cd16e71201000">UDP编程</a>
+        </li>
+    
+        <li id="001432005156604f38836be1707453eb025ce8c3079978d000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432005156604f38836be1707453eb025ce8c3079978d000">电子邮件</a>
+        </li>
+    
+        <li id="001432005226355aadb8d4b2f3f42f6b1d6f2c5bd8d5263000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432005226355aadb8d4b2f3f42f6b1d6f2c5bd8d5263000">SMTP发送邮件</a>
+        </li>
+    
+        <li id="0014320098721191b70a2cf7b5441deb01595edd8147196000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320098721191b70a2cf7b5441deb01595edd8147196000">POP3收取邮件</a>
+        </li>
+    
+        <li id="001432010325987131e75bf6b3543429a2975f88ce8ffa9000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432010325987131e75bf6b3543429a2975f88ce8ffa9000">访问数据库</a>
+        </li>
+    
+        <li id="001432010494717e1db78cd172e4d52b853e7fd38d6985c000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432010494717e1db78cd172e4d52b853e7fd38d6985c000">使用SQLite</a>
+        </li>
+    
+        <li id="0014320107391860b39da6901ed41a296e574ed37104752000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320107391860b39da6901ed41a296e574ed37104752000">使用MySQL</a>
+        </li>
+    
+        <li id="0014320114981139589ac5f02944601ae22834e9c521415000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320114981139589ac5f02944601ae22834e9c521415000">使用SQLAlchemy</a>
+        </li>
+    
+        <li id="0014320118765877e93ecea4e6449acb157e9efae8b40b6000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320118765877e93ecea4e6449acb157e9efae8b40b6000">Web开发</a>
+        </li>
+    
+        <li id="001432011939547478fd5482deb47b08716557cc99764e0000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432011939547478fd5482deb47b08716557cc99764e0000">HTTP协议简介</a>
+        </li>
+    
+        <li id="0014320122322996f770fbf5da84ead84a1731e1dde129f000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320122322996f770fbf5da84ead84a1731e1dde129f000">HTML简介</a>
+        </li>
+    
+        <li id="001432012393132788f71e0edad4676a3f76ac7776f3a16000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432012393132788f71e0edad4676a3f76ac7776f3a16000">WSGI接口</a>
+        </li>
+    
+        <li id="001432012745805707cb9f00a484d968c72dbb7cfc90b91000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432012745805707cb9f00a484d968c72dbb7cfc90b91000">使用Web框架</a>
+        </li>
+    
+        <li id="0014320129740415df73bf8f81e478982bf4d5c8aa3817a000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320129740415df73bf8f81e478982bf4d5c8aa3817a000">使用模板</a>
+        </li>
+    
+        <li id="00143208573480558080fa77514407cb23834c78c6c7309000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143208573480558080fa77514407cb23834c78c6c7309000">异步IO</a>
+        </li>
+    
+        <li id="001432090171191d05dae6e129940518d1d6cf6eeaaa969000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432090171191d05dae6e129940518d1d6cf6eeaaa969000">协程</a>
+        </li>
+    
+        <li id="001432090954004980bd351f2cd4cc18c9e6c06d855c498000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432090954004980bd351f2cd4cc18c9e6c06d855c498000">asyncio</a>
+        </li>
+    
+        <li id="00144661533005329786387b5684be385062a121e834ac7000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00144661533005329786387b5684be385062a121e834ac7000">async/await</a>
+        </li>
+    
+        <li id="0014320981492785ba33cc96c524223b2ea4e444077708d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320981492785ba33cc96c524223b2ea4e444077708d000">aiohttp</a>
+        </li>
+    
+        <li id="001432170876125c96f6cc10717484baea0c6da9bee2be4000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170876125c96f6cc10717484baea0c6da9bee2be4000">实战</a>
+        </li>
+    
+        <li id="001432170937506ecfb2f6adf8e4757939732f3e32b781c000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000">Day 1 - 搭建开发环境</a>
+        </li>
+    
+        <li id="00143217133614028a244ea855b40a586b551c616d3b2c9000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143217133614028a244ea855b40a586b551c616d3b2c9000">Day 2 - 编写Web App骨架</a>
+        </li>
+    
+        <li id="0014323389656575142d0bcfeec434e9639a80d3684a7da000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014323389656575142d0bcfeec434e9639a80d3684a7da000">Day 3 - 编写ORM</a>
+        </li>
+    
+        <li id="001432338991719a4c5c42ef08e4f44ad0f293ad728a27b000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432338991719a4c5c42ef08e4f44ad0f293ad728a27b000">Day 4 - 编写Model</a>
+        </li>
+    
+        <li id="001432339008728d0ddbe19ee594980be3f0644a9371894000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339008728d0ddbe19ee594980be3f0644a9371894000">Day 5 - 编写Web框架</a>
+        </li>
+    
+        <li id="001432339034336cbf72acd43354d72831461e3871d9f2e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339034336cbf72acd43354d72831461e3871d9f2e000">Day 6 - 编写配置文件</a>
+        </li>
+    
+        <li id="001432339095180ce91c53cdab841bfa9c342a297b886fe000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339095180ce91c53cdab841bfa9c342a297b886fe000">Day 7 - 编写MVC</a>
+        </li>
+    
+        <li id="001432339124159f00f6ab876c44349a3fd8eb26d0c291e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339124159f00f6ab876c44349a3fd8eb26d0c291e000">Day 8 - 构建前端</a>
+        </li>
+    
+        <li id="0014323391480651a75b5fda4cb4c789208191682fc2c70000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014323391480651a75b5fda4cb4c789208191682fc2c70000">Day 9 - 编写API</a>
+        </li>
+    
+        <li id="001432339169382f45b9bd7b45d47ceb3e2b42846e0e991000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339169382f45b9bd7b45d47ceb3e2b42846e0e991000">Day 10 - 用户注册和登录</a>
+        </li>
+    
+        <li id="00143233918656129f4ad3ac29e4f728dc72b5d2368215a000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143233918656129f4ad3ac29e4f728dc72b5d2368215a000">Day 11 - 编写日志创建页</a>
+        </li>
+    
+        <li id="001432339210950e063b4795d574036bc5dcf0c2449bc52000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339210950e063b4795d574036bc5dcf0c2449bc52000">Day 12 - 编写日志列表页</a>
+        </li>
+    
+        <li id="001432339228196a8eb6fb8832b48b5aa0d740346536ead000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339228196a8eb6fb8832b48b5aa0d740346536ead000">Day 13 - 提升开发效率</a>
+        </li>
+    
+        <li id="001432339247097eea476bf61f8496092cc1b663eae1848000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339247097eea476bf61f8496092cc1b663eae1848000">Day 14 - 完成Web App</a>
+        </li>
+    
+        <li id="0014323392805925d5b69ddad514511bf0391fe2a0df2b0000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014323392805925d5b69ddad514511bf0391fe2a0df2b0000">Day 15 - 部署Web App</a>
+        </li>
+    
+        <li id="001432339330096121ae7e38be44570b7fbd0d8faae26f6000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339330096121ae7e38be44570b7fbd0d8faae26f6000">Day 16 - 编写移动App</a>
+        </li>
+    
+        <li id="00143278155868605a65e244e6642dfa533753e6338ab5b000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143278155868605a65e244e6642dfa533753e6338ab5b000">FAQ</a>
+        </li>
+    
+        <li id="0014323396477522f8ff26917934f53b49559ab4dc5eab2000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014323396477522f8ff26917934f53b49559ab4dc5eab2000">期末总结</a>
+        </li>
+    
+    </ul>
+    <div class="x-placeholder"></div>
+
+                        </div>
+                        <div class="x-sidebar-left-bottom">
+                            <h3>关于作者</h3>
+<iframe width="100%" height="90" class="share_self" frameborder="0" scrolling="no" src="./正则表达式 - 廖雪峰的官方网站_files/index.html"></iframe>
+
+<div style="width:100%;overflow-x:hidden;">
+<script async="" src="./正则表达式 - 廖雪峰的官方网站_files/adsbygoogle.js"></script>
+<!-- 300x600-lxf -->
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="4769867116"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div style="width:100%;overflow-x:hidden;">
+<script type="text/javascript">
+    /*300x250 @baidu*/
+    var cpro_id = "u2060917";
+</script>
+<script src="./正则表达式 - 廖雪峰的官方网站_files/c.js" type="text/javascript"></script>
+</div>
+
+                        </div>
+                    </div>
+                
+                
+
+                    <div class="x-center">
+                        <div>
+                            
+                        </div>
+                        <div class="x-content" style="width: 100%; position: relative;">
+                            
+    <h4>正则表达式</h4>
+    <div class="x-wiki-info"><span>阅读: 34247</span></div>
+    <hr>
+    <div class="x-wiki-content">
+        <p>字符串是编程时涉及到的最多的一种数据结构，对字符串进行操作的需求几乎无处不在。比如判断一个字符串是否是合法的Email地址，虽然可以编程提取<code>@</code>前后的子串，再分别判断是否是单词和域名，但这样做不但麻烦，而且代码难以复用。</p>
+<p>正则表达式是一种用来匹配字符串的强有力的武器。它的设计思想是用一种描述性的语言来给字符串定义一个规则，凡是符合规则的字符串，我们就认为它“匹配”了，否则，该字符串就是不合法的。</p>
+<p>所以我们判断一个字符串是否是合法的Email的方法是：</p>
+<ol>
+<li><p>创建一个匹配Email的正则表达式；</p>
+</li>
+<li><p>用该正则表达式去匹配用户的输入来判断是否合法。</p>
+</li>
+</ol>
+<p>因为正则表达式也是用字符串表示的，所以，我们要首先了解如何用字符来描述字符。</p>
+<p>在正则表达式中，如果直接给出字符，就是精确匹配。用<code>\d</code>可以匹配一个数字，<code>\w</code>可以匹配一个字母或数字，所以：</p>
+<ul>
+<li><p><code>'00\d'</code>可以匹配<code>'007'</code>，但无法匹配<code>'00A'</code>；</p>
+</li>
+<li><p><code>'\d\d\d'</code>可以匹配<code>'010'</code>；</p>
+</li>
+<li><p><code>'\w\w\d'</code>可以匹配<code>'py3'</code>；</p>
+</li>
+</ul>
+<p><code>.</code>可以匹配任意字符，所以：</p>
+<ul>
+<li><code>'py.'</code>可以匹配<code>'pyc'</code>、<code>'pyo'</code>、<code>'py!'</code>等等。</li>
+</ul>
+<p>要匹配变长的字符，在正则表达式中，用<code>*</code>表示任意个字符（包括0个），用<code>+</code>表示至少一个字符，用<code>?</code>表示0个或1个字符，用<code>{n}</code>表示n个字符，用<code>{n,m}</code>表示n-m个字符：</p>
+<p>来看一个复杂的例子：<code>\d{3}\s+\d{3,8}</code>。</p>
+<p>我们来从左到右解读一下：</p>
+<ol>
+<li><p><code>\d{3}</code>表示匹配3个数字，例如<code>'010'</code>；</p>
+</li>
+<li><p><code>\s</code>可以匹配一个空格（也包括Tab等空白符），所以<code>\s+</code>表示至少有一个空格，例如匹配<code>' '</code>，<code>'   '</code>等；</p>
+</li>
+<li><p><code>\d{3,8}</code>表示3-8个数字，例如<code>'1234567'</code>。</p>
+</li>
+</ol>
+<p>综合起来，上面的正则表达式可以匹配以任意个空格隔开的带区号的电话号码。</p>
+<p>如果要匹配<code>'010-12345'</code>这样的号码呢？由于<code>'-'</code>是特殊字符，在正则表达式中，要用<code>'\'</code>转义，所以，上面的正则是<code>\d{3}\-\d{3,8}</code>。</p>
+<p>但是，仍然无法匹配<code>'010 - 12345'</code>，因为带有空格。所以我们需要更复杂的匹配方式。</p>
+<h3 id="-">进阶</h3>
+<p>要做更精确地匹配，可以用<code>[]</code>表示范围，比如：</p>
+<ul>
+<li><p><code>[0-9a-zA-Z\_]</code>可以匹配一个数字、字母或者下划线；</p>
+</li>
+<li><p><code>[0-9a-zA-Z\_]+</code>可以匹配至少由一个数字、字母或者下划线组成的字符串，比如<code>'a100'</code>，<code>'0_Z'</code>，<code>'Py3000'</code>等等；</p>
+</li>
+<li><p><code>[a-zA-Z\_][0-9a-zA-Z\_]*</code>可以匹配由字母或下划线开头，后接任意个由一个数字、字母或者下划线组成的字符串，也就是Python合法的变量；</p>
+</li>
+<li><p><code>[a-zA-Z\_][0-9a-zA-Z\_]{0, 19}</code>更精确地限制了变量的长度是1-20个字符（前面1个字符+后面最多19个字符）。</p>
+</li>
+</ul>
+<p><code>A|B</code>可以匹配A或B，所以<code>[P|p]ython</code>可以匹配<code>'Python'</code>或者<code>'python'</code>。</p>
+<p><code>^</code>表示行的开头，<code>^\d</code>表示必须以数字开头。</p>
+<p><code>$</code>表示行的结束，<code>\d$</code>表示必须以数字结束。</p>
+<p>你可能注意到了，<code>py</code>也可以匹配<code>'python'</code>，但是加上<code>^py$</code>就变成了整行匹配，就只能匹配<code>'py'</code>了。</p>
+<h3 id="re-">re模块</h3>
+<p>有了准备知识，我们就可以在Python中使用正则表达式了。Python提供<code>re</code>模块，包含所有正则表达式的功能。由于Python的字符串本身也用<code>\</code>转义，所以要特别注意：</p>
+<pre><code class="ruby">s = <span class="string">'ABC\\-001'</span> <span class="comment"># Python的字符串</span>
+<span class="comment"># 对应的正则表达式字符串变成：</span>
+<span class="comment"># 'ABC\-001'</span>
+</code></pre><p>因此我们强烈建议使用Python的<code>r</code>前缀，就不用考虑转义的问题了：</p>
+<pre><code class="python">s = <span class="string">r'ABC\-001'</span> <span class="comment"># Python的字符串</span>
+<span class="comment"># 对应的正则表达式字符串不变：</span>
+<span class="comment"># 'ABC\-001'</span>
+</code></pre><p>先看看如何判断正则表达式是否匹配：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">import</span> re
+<span class="prompt">&gt;&gt;&gt; </span>re.match(<span class="string">r'^\d{3}\-\d{3,8}$'</span>, <span class="string">'010-12345'</span>)
+&lt;_sre.SRE_Match object; span=(<span class="number">0</span>, <span class="number">9</span>), match=<span class="string">'010-12345'</span>&gt;
+<span class="prompt">&gt;&gt;&gt; </span>re.match(<span class="string">r'^\d{3}\-\d{3,8}$'</span>, <span class="string">'010 12345'</span>)
+&gt;&gt;&gt;
+</code></pre><p><code>match()</code>方法判断是否匹配，如果匹配成功，返回一个<code>Match</code>对象，否则返回<code>None</code>。常见的判断方法就是：</p>
+<pre><code class="python">test = <span class="string">'用户输入的字符串'</span>
+<span class="keyword">if</span> re.match(<span class="string">r'正则表达式'</span>, test):
+    print(<span class="string">'ok'</span>)
+<span class="keyword">else</span>:
+    print(<span class="string">'failed'</span>)
+</code></pre><h3 id="-">切分字符串</h3>
+<p>用正则表达式切分字符串比用固定的字符更灵活，请看正常的切分代码：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span><span class="string">'a b   c'</span>.split(<span class="string">' '</span>)
+[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">''</span>, <span class="string">''</span>, <span class="string">'c'</span>]
+</code></pre><p>嗯，无法识别连续的空格，用正则表达式试试：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span>re.split(<span class="string">r'\s+'</span>, <span class="string">'a b   c'</span>)
+[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]
+</code></pre><p>无论多少个空格都可以正常分割。加入<code>,</code>试试：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span>re.split(<span class="string">r'[\s\,]+'</span>, <span class="string">'a,b, c  d'</span>)
+[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>]
+</code></pre><p>再加入<code>;</code>试试：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span>re.split(<span class="string">r'[\s\,\;]+'</span>, <span class="string">'a,b;; c  d'</span>)
+[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>]
+</code></pre><p>如果用户输入了一组标签，下次记得用正则表达式来把不规范的输入转化成正确的数组。</p>
+<h3 id="-">分组</h3>
+<p>除了简单地判断是否匹配之外，正则表达式还有提取子串的强大功能。用<code>()</code>表示的就是要提取的分组（Group）。比如：</p>
+<p><code>^(\d{3})-(\d{3,8})$</code>分别定义了两个组，可以直接从匹配的字符串中提取出区号和本地号码：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span>m = re.match(<span class="string">r'^(\d{3})-(\d{3,8})$'</span>, <span class="string">'010-12345'</span>)
+<span class="prompt">&gt;&gt;&gt; </span>m
+&lt;_sre.SRE_Match object; span=(<span class="number">0</span>, <span class="number">9</span>), match=<span class="string">'010-12345'</span>&gt;
+<span class="prompt">&gt;&gt;&gt; </span>m.group(<span class="number">0</span>)
+<span class="string">'010-12345'</span>
+<span class="prompt">&gt;&gt;&gt; </span>m.group(<span class="number">1</span>)
+<span class="string">'010'</span>
+<span class="prompt">&gt;&gt;&gt; </span>m.group(<span class="number">2</span>)
+<span class="string">'12345'</span>
+</code></pre><p>如果正则表达式中定义了组，就可以在<code>Match</code>对象上用<code>group()</code>方法提取出子串来。</p>
+<p>注意到<code>group(0)</code>永远是原始字符串，<code>group(1)</code>、<code>group(2)</code>……表示第1、2、……个子串。</p>
+<p>提取子串非常有用。来看一个更凶残的例子：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span>t = <span class="string">'19:05:30'</span>
+<span class="prompt">&gt;&gt;&gt; </span>m = re.match(<span class="string">r'^(0[0-9]|1[0-9]|2[0-3]|[0-9])\:(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|[0-9])\:(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|[0-9])$'</span>, t)
+<span class="prompt">&gt;&gt;&gt; </span>m.groups()
+(<span class="string">'19'</span>, <span class="string">'05'</span>, <span class="string">'30'</span>)
+</code></pre><p>这个正则表达式可以直接识别合法的时间。但是有些时候，用正则表达式也无法做到完全验证，比如识别日期：</p>
+<pre><code class="undefined">'^(0[1-9]|1[0-2]|[0-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1]|[0-9])$'
+</code></pre><p>对于<code>'2-30'</code>，<code>'4-31'</code>这样的非法日期，用正则还是识别不了，或者说写出来非常困难，这时就需要程序配合识别了。</p>
+<h3 id="-">贪婪匹配</h3>
+<p>最后需要特别指出的是，正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符。举例如下，匹配出数字后面的<code>0</code>：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span>re.match(<span class="string">r'^(\d+)(0*)$'</span>, <span class="string">'102300'</span>).groups()
+(<span class="string">'102300'</span>, <span class="string">''</span>)
+</code></pre><p>由于<code>\d+</code>采用贪婪匹配，直接把后面的<code>0</code>全部匹配了，结果<code>0*</code>只能匹配空字符串了。</p>
+<p>必须让<code>\d+</code>采用非贪婪匹配（也就是尽可能少匹配），才能把后面的<code>0</code>匹配出来，加个<code>?</code>就可以让<code>\d+</code>采用非贪婪匹配：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span>re.match(<span class="string">r'^(\d+?)(0*)$'</span>, <span class="string">'102300'</span>).groups()
+(<span class="string">'1023'</span>, <span class="string">'00'</span>)
+</code></pre><h3 id="-">编译</h3>
+<p>当我们在Python中使用正则表达式时，re模块内部会干两件事情：</p>
+<ol>
+<li><p>编译正则表达式，如果正则表达式的字符串本身不合法，会报错；</p>
+</li>
+<li><p>用编译后的正则表达式去匹配字符串。</p>
+</li>
+</ol>
+<p>如果一个正则表达式要重复使用几千次，出于效率的考虑，我们可以预编译该正则表达式，接下来重复使用时就不需要编译这个步骤了，直接匹配：</p>
+<pre><code class="python"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">import</span> re
+<span class="comment"># 编译:</span>
+<span class="prompt">&gt;&gt;&gt; </span>re_telephone = re.compile(<span class="string">r'^(\d{3})-(\d{3,8})$'</span>)
+<span class="comment"># 使用：</span>
+<span class="prompt">&gt;&gt;&gt; </span>re_telephone.match(<span class="string">'010-12345'</span>).groups()
+(<span class="string">'010'</span>, <span class="string">'12345'</span>)
+<span class="prompt">&gt;&gt;&gt; </span>re_telephone.match(<span class="string">'010-8086'</span>).groups()
+(<span class="string">'010'</span>, <span class="string">'8086'</span>)
+</code></pre><p>编译后生成Regular Expression对象，由于该对象自己包含了正则表达式，所以调用对应的方法时不用给出正则字符串。</p>
+<h3 id="-">小结</h3>
+<p>正则表达式非常强大，要在短短的一节里讲完是不可能的。要讲清楚正则的所有内容，可以写一本厚厚的书了。如果你经常遇到正则表达式的问题，你可能需要一本正则表达式的参考书。</p>
+<h3 id="-">练习</h3>
+<p>请尝试写一个验证Email地址的正则表达式。版本一应该可以验证出类似的Email：</p>
+<pre><code class="ruby">someone<span class="variable">@gmail</span>.com
+bill.gates<span class="variable">@microsoft</span>.com
+</code></pre><p>版本二可以验证并提取出带名字的Email地址：</p>
+<pre><code class="xml"><span class="tag">&lt;<span class="title">Tom</span> <span class="attribute">Paris</span>&gt;</span> tom@voyager.org
+</code></pre><h3 id="-">参考源码</h3>
+<p><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/regex/regex.py" target="_blank">regex.py</a></p>
+
+    </div><h3>分享给朋友</h3><p><wb:share-button appkey="1391944217" addition="full" type="button" ralateuid="1658384301" picture_search="false" pic="http://www.liaoxuefeng.com/files/attachments/001431608955727f25be118770e460fad1296261e01213d000/l"><iframe src="./正则表达式 - 廖雪峰的官方网站_files/share_social.html" width="312" height="62" frameborder="0" scrolling="no" marginheight="0"></iframe></wb:share-button></p><h3>您的鼓励是作者写作最大的动力</h3><p>如果您认为本网站的教程质量不错，读后觉得收获很大，预期工资涨幅能超过30%，不妨小额赞助我一下，让我有动力继续写出高质量的教程：</p><p><a target="_blank" href="http://www.liaoxuefeng.com/webpage/donate" class="uk-button uk-button-primary"><i class="uk-icon-cny"></i> 我要小额赞助</a></p><div style="width:336px;height:280px;float:left;"><a target="_blank" href="http://www.jfedu.net/newindex/jfnews/108.html" onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;jfedu&#39;, &#39;click&#39;, &#39;clicked&#39;]);"><img src="./正则表达式 - 廖雪峰的官方网站_files/0"></a></div><div style="width:336px;height:280px;float:left;"><a target="_blank" href="http://www.zhufengpeixun.cn/customize/node/index.html" onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;zhufeng&#39;, &#39;click&#39;, &#39;clicked&#39;]);"><img src="./正则表达式 - 廖雪峰的官方网站_files/0(1)"></a></div><div style="width:336px;height:280px;float:left;"><a target="_blank" href="http://www.iswifting.com/" onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;yuanquan&#39;, &#39;click&#39;, &#39;clicked&#39;]);"><img src="./正则表达式 - 廖雪峰的官方网站_files/0(2)"></a></div><div style="clear: both;"></div>
+    <hr>
+    <div id="x-wiki-prev-next" class="uk-clearfix uk-margin-left uk-margin-right"><div class="uk-clearfix uk-margin-left uk-margin-right"><span class="uk-float-left"><i class="uk-icon-chevron-left"></i> <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431929340191970154d52b9d484b88a7b343708fcc60000">分布式进程</a></span><span class="uk-float-right"><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319347182373b696e637cc04430b8ee2d548ca1b36d000">常用内建模块</a> <i class="uk-icon-chevron-right"></i></span></div></div>
+    <hr>
+
+    <div class="x-anchor"><a name="comments"></a></div>
+
+    <h3>评论</h3>
+
+    <ul id="x-comment-list" class="uk-comment-list"><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001449935577871ebb577f5b4ee403eb28eb19a69136cc5000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001458391152880f5419c3eb917452096f0ba5a67e682ff000">求助廖老师</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001449935577871ebb577f5b4ee403eb28eb19a69136cc5000">陌上花开迟迟</a> created at 2天前, Last updated at 2天前</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>廖老师，什么时候多写一点关于正则表达式和爬虫方面（urllib）这方面的东西，urllib跟以前2变化挺大，爬虫方面一直没有很好的学习材料。</p>
+
+            </div>
+        </div>
+    <ul>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001458391152880f5419c3eb917452096f0ba5a67e682ff000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001458391152880f5419c3eb917452096f0ba5a67e682ff000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/0014581800495633f1599094da44f4691bfbc7b277fdf19000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(1)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014583010210428aa6a03af6464bd398d8d3629f98e131000">求解释转义re.match(r'^\d{3}\-\d{3,8}$', '010-12345')</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/0014581800495633f1599094da44f4691bfbc7b277fdf19000">莫陌默追风</a> created at 3天前, Last updated at 3天前</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>这里不是有r''了么，为什么还要在-前加\</p>
+
+            </div>
+        </div>
+    <ul>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014583010210428aa6a03af6464bd398d8d3629f98e131000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014583010210428aa6a03af6464bd398d8d3629f98e131000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001455513079755b86b0db3ae3347a8a24ff39119b207e1000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(2)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014581800105566a56d99e6d314895b4c6a22a75c1063f000">廖大 \w  \d貌似不只是匹配一个，而是一串</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001455513079755b86b0db3ae3347a8a24ff39119b207e1000">醉儚囈語</a> created at 4天前, Last updated at 4天前</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>如题</p>
+
+            </div>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001455513079755b86b0db3ae3347a8a24ff39119b207e1000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(2)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001455513079755b86b0db3ae3347a8a24ff39119b207e1000">醉儚囈語</a></div>
+                <div class="uk-comment-meta">Created at 4天前, Last updated at 4天前</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>而且\w 除了特殊符号不行，数字、字符串都可以</p>
+
+            </div>
+        </div>
+    </li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(3)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000">廖雪峰</a></div>
+                <div class="uk-comment-meta">Created at 4天前, Last updated at 4天前</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>请仔细测试，如果是一串的话，加<code>*</code>就没有意义了</p>
+
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014581800105566a56d99e6d314895b4c6a22a75c1063f000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014581800105566a56d99e6d314895b4c6a22a75c1063f000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001452048732619aa0c8acc21e14409adeddc0df34af646000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(4)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001456904615727a6a60f75f5cb47abbed54adfbbe3b950000">我怎么能知道哪些符号是特殊符号？</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001452048732619aa0c8acc21e14409adeddc0df34af646000">小菘Barry</a> created at 3-2 15:43, Last updated at 3-2 15:46</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>如题？</p>
+
+            </div>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(3)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000">廖雪峰</a></div>
+                <div class="uk-comment-meta">Created at 3-2 15:46, Last updated at 3-2 15:46</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>除了a-z,A-Z,0-9，其它的都是。但是有的特殊符号没有歧义，加不加<code>\</code>均可</p>
+
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001456904615727a6a60f75f5cb47abbed54adfbbe3b950000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001456904615727a6a60f75f5cb47abbed54adfbbe3b950000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001449285912319be5e1f2eacef4c13bd42b8e6f8501d79000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(5)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001452098818588a3b9148183524c77b3f0d9e1b67d80e3000">交作业</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001449285912319be5e1f2eacef4c13bd42b8e6f8501d79000">久疤_796</a> created at 1-7 0:46, Last updated at 2-29 14:51</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>请尝试写一个验证Email地址的正则表达式。版本一应该可以验证出类似的Email：
+someone@gmail.com
+bill.gates@microsoft.com</p>
+<pre><code>import re
+def fun1(email):
+    print(re.match(r'^([0-9a-zA-Z\.\s]+)@(\w+)(\.com|\.org)$',email).groups())
+fun1('someone@gmail.com')
+fun1('bill.gates@microsoft.com')
+</code></pre><p>版本二可以验证并提取出带名字的Email地址：</p>
+<p>&lt;Tom Paris&gt; tom@voyager.org</p>
+<pre><code>def fun2(email):
+    m = re.match(r'^&lt;([0-9a-zA-Z\.\s]+)&gt;\s+(.+)$',email)
+    if m:
+        print(m.group(1),end=' ')
+        fun1(m.group(2))
+    else:
+        fun1(email)
+fun2('&lt;Tom Paris&gt; tom@voyager.org')
+fun2('someone@gmail.com')
+</code></pre>
+            </div>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001449285912319be5e1f2eacef4c13bd42b8e6f8501d79000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(5)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001449285912319be5e1f2eacef4c13bd42b8e6f8501d79000">久疤_796</a></div>
+                <div class="uk-comment-meta">Created at 1-7 0:52, Last updated at 1-7 0:52</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>个人测试这样写匹配时间通过</p>
+<pre><code>s = r'^([0-1][0-9]|2[0-3]|[0-9])\:([0-5][0-9]|[0-9])\:([0-5][0-9]|[0-9])$'
+t = '19:21:56'
+m = re.match(s,t)
+if m:
+    print(m.groups())
+    print(''.join(x for x in m.groups()))
+else:
+    print('match failed.')
+</code></pre>
+            </div>
+        </div>
+    </li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001449285912319be5e1f2eacef4c13bd42b8e6f8501d79000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(5)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001449285912319be5e1f2eacef4c13bd42b8e6f8501d79000">久疤_796</a></div>
+                <div class="uk-comment-meta">Created at 1-7 10:27, Last updated at 1-7 10:27</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>版本二的话，这样可能好点</p>
+<pre><code>def fun2(email):
+    m = re.match(r'^&lt;([0-9a-zA-Z\.\s]+)&gt;\s*(.+)$',email)
+    if m:
+        print(m.group(1),end=' ')
+        fun1(m.group(2))
+    else:
+        fun1(email)
+</code></pre>
+            </div>
+        </div>
+    </li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001456156040644ef2a00009a124641a25926c2b0d3c52c000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(6)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001456156040644ef2a00009a124641a25926c2b0d3c52c000">傲娇的小猴几</a></div>
+                <div class="uk-comment-meta">Created at 2-29 14:51, Last updated at 2-29 14:51</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <pre><code>在此插入代码
+这样的匹配方式不严谨吧@！
+&gt;&gt;&gt; email="&lt;Jiu Ba&gt; NULL"                                        
+&gt;&gt;&gt; re.match(r'^&lt;([0-9a-zA-Z\.\s]+)&gt;\s*(.+)$',email)
+&lt;_sre.SRE_Match object; span=(0, 13), match='&lt;Jiu Ba&gt; NULL'&gt;
+</code></pre>
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001452098818588a3b9148183524c77b3f0d9e1b67d80e3000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001452098818588a3b9148183524c77b3f0d9e1b67d80e3000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/0014540600491546cf3f4277ee04ae7be7c4d20d1a2b3d8000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(7)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001456393845712e77574937fa2441c9958111d6bc260c2000">求大神解释一下re.match(r'^(\d+?)(0*)$', '102300').groups()</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/0014540600491546cf3f4277ee04ae7be7c4d20d1a2b3d8000">大冰小松</a> created at 2-25 17:50, Last updated at 2-25 18:28</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>怎么会得到('1023', '00')呢？</p>
+
+            </div>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(3)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000">廖雪峰</a></div>
+                <div class="uk-comment-meta">Created at 2-25 18:28, Last updated at 2-25 18:28</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p><code>(0*)</code>就是匹配任意个0，<code>(\d+?)</code>是匹配至少一个数字，加?是尽可能少的匹配</p>
+
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001456393845712e77574937fa2441c9958111d6bc260c2000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001456393845712e77574937fa2441c9958111d6bc260c2000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="x-anchor"><a name="COLLAPSE-1"></a></div><div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001456284128791876ce10cb9904a7599a9810ee4bc8c66000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(8)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/00145629686469648672f5f2c55461b8fe9801472513a4c000">test</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001456284128791876ce10cb9904a7599a9810ee4bc8c66000">亦亦意意屹</a> created at 2-24 14:54, Last updated at 2-24 14:56</div>
+            </div>
+            <div class="uk-comment-body x-auto-content" style="max-height: 400px; overflow: hidden;">
+                <pre><code>在此插入代码
+</code></pre><p>import re</p>
+<p>re<em>email = re.compile(r'^(&lt;((\w+[ -</em>.]<em>)+)&gt;)? {0,3}((\w+[-_.]</em>)+@(\w+[ -_.]+)+\w+)$')</p>
+<p>while True:
+    r = input('plaues enter email address:').strip()
+    res = re.match(re_email, r)
+    if res:
+        if res.group(2) is not None:
+            print("email name: %s" % res.group(2).strip())
+        if res.group(5) is not None:
+            print("email address: %s" % res.group(4))</p>
+<hr>
+<p>测试通过如下
+someone@gmail.com
+bill.gates@microsoft.com
+chrysan.xiao@pacn22-et.com.cn
+chrysan.xiao@pacn22--et.qq_im--123.ccom.cn
+chry--san.xiao@pacn22--et.com.cn</p>
+<p>&lt;Tom Paris-admin&gt; tom@voyager.org</p>
+<p>&lt;Tom Paris-admin.cc&gt; tom@voyager.org</p>
+
+            </div><p style="padding-left: 75px"><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000#0"><i class="uk-icon-chevron-down"></i> Read More</a><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000#0" style="display:none"><i class="uk-icon-chevron-up"></i> Collapse</a></p>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001456284128791876ce10cb9904a7599a9810ee4bc8c66000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(8)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001456284128791876ce10cb9904a7599a9810ee4bc8c66000">亦亦意意屹</a></div>
+                <div class="uk-comment-meta">Created at 2-24 14:56, Last updated at 2-24 14:56</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <pre><code>import re
+
+re_email = re.compile(r'^(&lt;((\w+[ -_.]*)+)&gt;)? {0,3}((\w+[-_.]*)+@(\w+[ -_.]+)+\w+)$')
+
+while True:
+    r = input('plaues enter email address:').strip()
+    res = re.match(re_email, r)
+    if res:
+        if res.group(2) is not None:
+            print("email name: %s" % res.group(2).strip())
+        if res.group(5) is not None:
+            print("email address: %s" % res.group(4))
+</code></pre><p>贴错了，重发</p>
+
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/00145629686469648672f5f2c55461b8fe9801472513a4c000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/00145629686469648672f5f2c55461b8fe9801472513a4c000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001426161369511f1e9f18dbd4c43c5bfe3badcb0e7be95000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(9)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014536484176314a9d75969fad4a95b1fe2da3c982ba78000">这个可以</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001426161369511f1e9f18dbd4c43c5bfe3badcb0e7be95000">程序猿潘先生</a> created at 1-24 23:13, Last updated at 2-19 11:13</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <pre><code># -*- coding: utf-8 -*-
+
+__author__ = 'Fire-Pan'
+
+import re
+s = r'^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,5}$'
+email = input('请输入邮箱地址:')
+if(re.match(s,email)):
+    print('格式正确！')
+else:
+    print('邮箱格式不正确！')
+</code></pre>
+            </div>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/001453111939140a28e511cfa174f5980c6a4658643fd17000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(10)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/001453111939140a28e511cfa174f5980c6a4658643fd17000">凯迪么拉克</a></div>
+                <div class="uk-comment-meta">Created at 2-19 11:07, Last updated at 2-19 11:07</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>r'^中的'^'这个符号啥意思？</p>
+
+            </div>
+        </div>
+    </li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/00145585140014125dab1b7537d49d69992c0b7f342761b000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(11)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/00145585140014125dab1b7537d49d69992c0b7f342761b000">请问先吃饭</a></div>
+                <div class="uk-comment-meta">Created at 2-19 11:13, Last updated at 2-19 11:13</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>^表示开头的意思</p>
+
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014536484176314a9d75969fad4a95b1fe2da3c982ba78000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/0014536484176314a9d75969fad4a95b1fe2da3c982ba78000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/0014554307842186be083681842400db01aa4ba39fde737000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/0(3)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001455430944254f3aa7c37ae1e47a98dd50ff7631212f5000">问题</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/0014554307842186be083681842400db01aa4ba39fde737000">暴暴的琚闪闪</a> created at 2-14 14:22, Last updated at 2-14 14:22</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>s = 'one two 3.4 5,6 seven.eight nine,ten y,o p.p'
+print(s)
+print(re.split(r'[\s|(?&lt;!\d)[,.]|<a target="_blank" rel="nofollow" href="http:/?!\d">,.</a>]',s))
+print( re.split('\s|(?&lt;!\d)[,.]|<a target="_blank" rel="nofollow" href="http:/?!\d">,.</a>', s))</p>
+<p>为什么不使用“r‘’”的第二种方法结果是对的，问题出在哪里？</p>
+
+            </div>
+        </div>
+    <ul>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001455430944254f3aa7c37ae1e47a98dd50ff7631212f5000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001455430944254f3aa7c37ae1e47a98dd50ff7631212f5000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/0014351569450543c6e67fe2a3e4522a95dd48d2283d092000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(12)" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001454654767966b305c413c548450284ac28b5b0f6edbc000">有个小疑惑。</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/0014351569450543c6e67fe2a3e4522a95dd48d2283d092000">好吧_叫我</a> created at 2-5 14:46, Last updated at 2-5 14:47</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>(r'^[0-9a-zA-Z.]+@\w+.com$')为什么不可以写成(r'^[\w*.]+@\w+.com$')或者
+(r'^[\w+.]+@\w+.com$')</p>
+
+            </div>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="http://www.liaoxuefeng.com/user/0014351569450543c6e67fe2a3e4522a95dd48d2283d092000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="./正则表达式 - 廖雪峰的官方网站_files/1(12)" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="http://www.liaoxuefeng.com/user/0014351569450543c6e67fe2a3e4522a95dd48d2283d092000">好吧_叫我</a></div>
+                <div class="uk-comment-meta">Created at 2-5 14:47, Last updated at 2-5 14:47</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>(r'^[0-9a-zA-Z.]+@\w+.com$')为什么不可以写成(r'^[\w*.]+@\w+.com$')或者(r'^[\w+.]+@\w+.com$')</p>
+
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001454654767966b305c413c548450284ac28b5b0f6edbc000"><i class="uk-icon-list-ul"></i> View Full Discuss</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="http://www.liaoxuefeng.com/discuss/001409195742008d822b26cf3de46aea14f2b7378a1ba91000/001454654767966b305c413c548450284ac28b5b0f6edbc000#reply"><i class="uk-icon-reply"></i> Reply This Topic</a>
+            </div>
+        </li>
+    </ul></li></ul>
+
+    <h3>发表评论</h3>
+
+    <div class="x-display-if-not-signin">
+        <p><button type="button" class="uk-button" onclick="showSignin()"><i class="uk-icon-signin"></i> Sign In to Make a Comment</button></p>
+    </div>
+
+    <div id="x-comment-area"></div>
+
+
+                        <a href="http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000" target="_blank" style="display:block;position:absolute;right:10px;top:10px;">2.7旧版教程</a></div>
+                        <div>
+                            <div id="the-promos" class="uk-clearfix" style="margin:15px 0">
+
+<div style="width:336px;height:280px;float:left;">
+<script async="" src="./正则表达式 - 廖雪峰的官方网站_files/adsbygoogle.js"></script>
+<!-- lxf-336x280 -->
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="8492060710"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div style="width:336px;height:280px;float:left;">
+<script async="" src="./正则表达式 - 廖雪峰的官方网站_files/adsbygoogle.js"></script>
+<!-- lxf-336x280 -->
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="8492060710"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<div style="width:336px;height:280px;float:left;">
+<script type="text/javascript">
+    /*336x280 @baidu*/
+    var cpro_id = "u2068816";
+</script>
+<script src="./正则表达式 - 廖雪峰的官方网站_files/c.js" type="text/javascript"></script>
+</div>
+
+<div style="width:336px;height:280px;float:left;">
+<script type="text/javascript">
+    /*336x280 @baidu*/
+    var cpro_id = "u2068816";
+</script>
+<script src="./正则表达式 - 廖雪峰的官方网站_files/c.js" type="text/javascript"></script>
+</div>
+
+
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-grid">
+                <div class="x-body-after uk-width-1-1">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="x-offcanvas-left" class="uk-offcanvas">
+        <div class="uk-offcanvas-bar">
+            <div class="uk-panel">
+                
+    <ul class="uk-nav uk-nav-side">
+        <li class="uk-nav-header">目录</li>
+    </ul>
+    <ul class="uk-nav uk-nav-side">
+        <li id="off-0014316089557264a6b348958f449949df42a6d3a2e542c000"><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">Python教程</a></li>
+    
+        <li id="off-001431608990315a01b575e2ab041168ff0df194698afac000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431608990315a01b575e2ab041168ff0df194698afac000">Python简介</a>
+        </li>
+    
+        <li id="off-0014316090478912dab2a3a9e8f4ed49d28854b292f85bb000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316090478912dab2a3a9e8f4ed49d28854b292f85bb000">安装Python</a>
+        </li>
+    
+        <li id="off-00143161198846783e33de56d4041058c3dfc7e44ee1203000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143161198846783e33de56d4041058c3dfc7e44ee1203000">Python解释器</a>
+        </li>
+    
+        <li id="off-001431611988455689d4c116b2c4ed6aec000776c00ed52000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431611988455689d4c116b2c4ed6aec000776c00ed52000">第一个Python程序</a>
+        </li>
+    
+        <li id="off-0014316399410395f704750ee9440228135925a6ca1dad8000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316399410395f704750ee9440228135925a6ca1dad8000">使用文本编辑器</a>
+        </li>
+    
+        <li id="off-001432523496782e0946b0f454549c0888d05959b99860f000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432523496782e0946b0f454549c0888d05959b99860f000">Python代码运行助手</a>
+        </li>
+    
+        <li id="off-001431643484137e38b44e5925440ec8b1e4c70f800b4e2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431643484137e38b44e5925440ec8b1e4c70f800b4e2000">输入和输出</a>
+        </li>
+    
+        <li id="off-001431658427513eef3d9dd9f7c48599116735806328e81000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431658427513eef3d9dd9f7c48599116735806328e81000">Python基础</a>
+        </li>
+    
+        <li id="off-001431658624177ea4f8fcb06bc4d0e8aab2fd7aa65dd95000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431658624177ea4f8fcb06bc4d0e8aab2fd7aa65dd95000">数据类型和变量</a>
+        </li>
+    
+        <li id="off-001431664106267f12e9bef7ee14cf6a8776a479bdec9b9000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431664106267f12e9bef7ee14cf6a8776a479bdec9b9000">字符串和编码</a>
+        </li>
+    
+        <li id="off-0014316724772904521142196b74a3f8abf93d8e97c6ee6000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316724772904521142196b74a3f8abf93d8e97c6ee6000">使用list和tuple</a>
+        </li>
+    
+        <li id="off-001431675624710bb20e9734ef343bbb4bd64bcd37d4b52000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431675624710bb20e9734ef343bbb4bd64bcd37d4b52000">条件判断</a>
+        </li>
+    
+        <li id="off-001431676242561226b32a9ec624505bb8f723d0027b3e7000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431676242561226b32a9ec624505bb8f723d0027b3e7000">循环</a>
+        </li>
+    
+        <li id="off-00143167793538255adf33371774853a0ef943280573f4d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143167793538255adf33371774853a0ef943280573f4d000">使用dict和set</a>
+        </li>
+    
+        <li id="off-00143167832686474803d3d2b7d4d6499cfd093dc47efcd000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143167832686474803d3d2b7d4d6499cfd093dc47efcd000">函数</a>
+        </li>
+    
+        <li id="off-0014316784721058975e02b46cc45cb836bb0827607738d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014316784721058975e02b46cc45cb836bb0827607738d000">调用函数</a>
+        </li>
+    
+        <li id="off-001431679203477b5b364aeba8c4e05a9bd4ec1b32911e2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431679203477b5b364aeba8c4e05a9bd4ec1b32911e2000">定义函数</a>
+        </li>
+    
+        <li id="off-001431752945034eb82ac80a3e64b9bb4929b16eeed1eb9000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431752945034eb82ac80a3e64b9bb4929b16eeed1eb9000">函数的参数</a>
+        </li>
+    
+        <li id="off-001431756044276a15558a759ec43de8e30eb0ed169fb11000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431756044276a15558a759ec43de8e30eb0ed169fb11000">递归函数</a>
+        </li>
+    
+        <li id="off-0014317568446245b3e1c8837414168bcd2d485e553779e000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317568446245b3e1c8837414168bcd2d485e553779e000">高级特性</a>
+        </li>
+    
+        <li id="off-001431756919644a792ee4ead724ef7afab3f7f771b04f5000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431756919644a792ee4ead724ef7afab3f7f771b04f5000">切片</a>
+        </li>
+    
+        <li id="off-0014317793224211f408912d9c04f2eac4d2af0d5d3d7b2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317793224211f408912d9c04f2eac4d2af0d5d3d7b2000">迭代</a>
+        </li>
+    
+        <li id="off-001431779637539089fd627094a43a8a7c77e6102e3a811000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431779637539089fd627094a43a8a7c77e6102e3a811000">列表生成式</a>
+        </li>
+    
+        <li id="off-0014317799226173f45ce40636141b6abc8424e12b5fb27000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317799226173f45ce40636141b6abc8424e12b5fb27000">生成器</a>
+        </li>
+    
+        <li id="off-00143178254193589df9c612d2449618ea460e7a672a366000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143178254193589df9c612d2449618ea460e7a672a366000">迭代器</a>
+        </li>
+    
+        <li id="off-0014317848428125ae6aa24068b4c50a7e71501ab275d52000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317848428125ae6aa24068b4c50a7e71501ab275d52000">函数式编程</a>
+        </li>
+    
+        <li id="off-0014317849054170d563b13f0fa4ce6ba1cd86e18103f28000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317849054170d563b13f0fa4ce6ba1cd86e18103f28000">高阶函数</a>
+        </li>
+    
+        <li id="off-0014317852443934a86aa5bb5ea47fbbd5f35282b331335000" style="margin-left:3em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317852443934a86aa5bb5ea47fbbd5f35282b331335000">map/reduce</a>
+        </li>
+    
+        <li id="off-001431821084171d2e0f22e7cc24305ae03aa0214d0ef29000" style="margin-left:3em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431821084171d2e0f22e7cc24305ae03aa0214d0ef29000">filter</a>
+        </li>
+    
+        <li id="off-0014318230588782cac105d0d8a40c6b450a232748dc854000" style="margin-left:3em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318230588782cac105d0d8a40c6b450a232748dc854000">sorted</a>
+        </li>
+    
+        <li id="off-001431835236741e42daf5af6514f1a8917b8aaadff31bf000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431835236741e42daf5af6514f1a8917b8aaadff31bf000">返回函数</a>
+        </li>
+    
+        <li id="off-001431843456408652233b88b424613aa8ec2fe032fd85a000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431843456408652233b88b424613aa8ec2fe032fd85a000">匿名函数</a>
+        </li>
+    
+        <li id="off-0014318435599930270c0381a3b44db991cd6d858064ac0000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318435599930270c0381a3b44db991cd6d858064ac0000">装饰器</a>
+        </li>
+    
+        <li id="off-00143184474383175eeea92a8b0439fab7b392a8a32f8fa000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143184474383175eeea92a8b0439fab7b392a8a32f8fa000">偏函数</a>
+        </li>
+    
+        <li id="off-0014318447437605e90206e261744c08630a836851f5183000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318447437605e90206e261744c08630a836851f5183000">模块</a>
+        </li>
+    
+        <li id="off-001431845183474e20ee7e7828b47f7b7607f2dc1e90dbb000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431845183474e20ee7e7828b47f7b7607f2dc1e90dbb000">使用模块</a>
+        </li>
+    
+        <li id="off-00143186362353505516c5d4e38456fb225c18cc5b54ffb000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186362353505516c5d4e38456fb225c18cc5b54ffb000">安装第三方模块</a>
+        </li>
+    
+        <li id="off-0014318645694388f1f10473d7f416e9291616be8367ab5000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318645694388f1f10473d7f416e9291616be8367ab5000">面向对象编程</a>
+        </li>
+    
+        <li id="off-001431864715651c99511036d884cf1b399e65ae0d27f7e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431864715651c99511036d884cf1b399e65ae0d27f7e000">类和实例</a>
+        </li>
+    
+        <li id="off-0014318650247930b1b21d7d3c64fe38c4b5a80d4469ad7000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318650247930b1b21d7d3c64fe38c4b5a80d4469ad7000">访问限制</a>
+        </li>
+    
+        <li id="off-001431865288798deef438d865e4c2985acff7e9fad15e3000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431865288798deef438d865e4c2985acff7e9fad15e3000">继承和多态</a>
+        </li>
+    
+        <li id="off-001431866385235335917b66049448ab14a499afd5b24db000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431866385235335917b66049448ab14a499afd5b24db000">获取对象信息</a>
+        </li>
+    
+        <li id="off-0014319117128404c7dd0cf0e3c4d88acc8fe4d2c163625000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319117128404c7dd0cf0e3c4d88acc8fe4d2c163625000">实例属性和类属性</a>
+        </li>
+    
+        <li id="off-00143186738532805c392f2cc09446caf3236c34e3f980f000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186738532805c392f2cc09446caf3236c34e3f980f000">面向对象高级编程</a>
+        </li>
+    
+        <li id="off-00143186739713011a09b63dcbd42cc87f907a778b3ac73000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186739713011a09b63dcbd42cc87f907a778b3ac73000">使用__slots__</a>
+        </li>
+    
+        <li id="off-00143186781871161bc8d6497004764b398401a401d4cce000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143186781871161bc8d6497004764b398401a401d4cce000">使用@property</a>
+        </li>
+    
+        <li id="off-0014318680104044a55f4a9dbf8452caf71e8dc68b75a18000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014318680104044a55f4a9dbf8452caf71e8dc68b75a18000">多重继承</a>
+        </li>
+    
+        <li id="off-0014319098638265527beb24f7840aa97de564ccc7f20f6000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000">定制类</a>
+        </li>
+    
+        <li id="off-00143191235886950998592cd3e426e91687cdae696e64b000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143191235886950998592cd3e426e91687cdae696e64b000">使用枚举类</a>
+        </li>
+    
+        <li id="off-0014319106919344c4ef8b1e04c48778bb45796e0335839000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319106919344c4ef8b1e04c48778bb45796e0335839000">使用元类</a>
+        </li>
+    
+        <li id="off-001431913726557e5e43e1ee8d54ee486bddc3f607afb75000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431913726557e5e43e1ee8d54ee486bddc3f607afb75000">错误、调试和测试</a>
+        </li>
+    
+        <li id="off-00143191375461417a222c54b7e4d65b258f491c093a515000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143191375461417a222c54b7e4d65b258f491c093a515000">错误处理</a>
+        </li>
+    
+        <li id="off-001431915578556ad30ab3933ae4e82a03ee2e9a4f70871000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431915578556ad30ab3933ae4e82a03ee2e9a4f70871000">调试</a>
+        </li>
+    
+        <li id="off-00143191629979802b566644aa84656b50cd484ec4a7838000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143191629979802b566644aa84656b50cd484ec4a7838000">单元测试</a>
+        </li>
+    
+        <li id="off-0014319170285543a4d04751f8846908770660de849f285000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319170285543a4d04751f8846908770660de849f285000">文档测试</a>
+        </li>
+    
+        <li id="off-001431917590955542f9ac5f5c1479faf787ff2b028ab47000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431917590955542f9ac5f5c1479faf787ff2b028ab47000">IO编程</a>
+        </li>
+    
+        <li id="off-001431917715991ef1ebc19d15a4afdace1169a464eecc2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431917715991ef1ebc19d15a4afdace1169a464eecc2000">文件读写</a>
+        </li>
+    
+        <li id="off-001431918785710e86a1a120ce04925bae155012c7fc71e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431918785710e86a1a120ce04925bae155012c7fc71e000">StringIO和BytesIO</a>
+        </li>
+    
+        <li id="off-001431925324119bac1bc7979664b4fa9843c0e5fcdcf1e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431925324119bac1bc7979664b4fa9843c0e5fcdcf1e000">操作文件和目录</a>
+        </li>
+    
+        <li id="off-00143192607210600a668b5112e4a979dd20e4661cc9c97000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143192607210600a668b5112e4a979dd20e4661cc9c97000">序列化</a>
+        </li>
+    
+        <li id="off-0014319272686365ec7ceaeca33428c914edf8f70cca383000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319272686365ec7ceaeca33428c914edf8f70cca383000">进程和线程</a>
+        </li>
+    
+        <li id="off-001431927781401bb47ccf187b24c3b955157bb12c5882d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431927781401bb47ccf187b24c3b955157bb12c5882d000">多进程</a>
+        </li>
+    
+        <li id="off-00143192823818768cd506abbc94eb5916192364506fa5d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143192823818768cd506abbc94eb5916192364506fa5d000">多线程</a>
+        </li>
+    
+        <li id="off-001431928972981094a382e5584413fa040b46d46cce48e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431928972981094a382e5584413fa040b46d46cce48e000">ThreadLocal</a>
+        </li>
+    
+        <li id="off-0014319292979766bd3285c9d6b4942a8ea9b4e9cfb48d8000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319292979766bd3285c9d6b4942a8ea9b4e9cfb48d8000">进程 vs. 线程</a>
+        </li>
+    
+        <li id="off-001431929340191970154d52b9d484b88a7b343708fcc60000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431929340191970154d52b9d484b88a7b343708fcc60000">分布式进程</a>
+        </li>
+    
+        <li id="off-00143193331387014ccd1040c814dee8b2164bb4f064cff000" style="margin-left:1em;" class="uk-active">
+            <a href="./正则表达式 - 廖雪峰的官方网站_files/正则表达式 - 廖雪峰的官方网站.html">正则表达式</a>
+        </li>
+    
+        <li id="off-0014319347182373b696e637cc04430b8ee2d548ca1b36d000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319347182373b696e637cc04430b8ee2d548ca1b36d000">常用内建模块</a>
+        </li>
+    
+        <li id="off-001431937554888869fb52b812243dda6103214cd61d0c2000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431937554888869fb52b812243dda6103214cd61d0c2000">datetime</a>
+        </li>
+    
+        <li id="off-001431953239820157155d21c494e5786fce303f3018c86000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431953239820157155d21c494e5786fce303f3018c86000">collections</a>
+        </li>
+    
+        <li id="off-001431954588961d6b6f51000ca4279a3415ce14ed9d709000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431954588961d6b6f51000ca4279a3415ce14ed9d709000">base64</a>
+        </li>
+    
+        <li id="off-001431955007656a66f831e208e4c189b8a9e9f3f25ba53000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431955007656a66f831e208e4c189b8a9e9f3f25ba53000">struct</a>
+        </li>
+    
+        <li id="off-0014319556588648dd1fb0047a34d0c945ee33e8f4c90cc000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319556588648dd1fb0047a34d0c945ee33e8f4c90cc000">hashlib</a>
+        </li>
+    
+        <li id="off-00143200162233153835cfdd1a541a18ddc15059e3ddeec000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143200162233153835cfdd1a541a18ddc15059e3ddeec000">itertools</a>
+        </li>
+    
+        <li id="off-001432002075057b594f70ecb58445da6ef6071aca880af000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432002075057b594f70ecb58445da6ef6071aca880af000">XML</a>
+        </li>
+    
+        <li id="off-0014320023122880232500da9dc4a4486ad00426f081c15000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320023122880232500da9dc4a4486ad00426f081c15000">HTMLParser</a>
+        </li>
+    
+        <li id="off-001432688314740a0aed473a39f47b09c8c7274c9ab6aee000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432688314740a0aed473a39f47b09c8c7274c9ab6aee000">urllib</a>
+        </li>
+    
+        <li id="off-001432002680493d1babda364904ca0a6e28374498d59a7000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432002680493d1babda364904ca0a6e28374498d59a7000">常用第三方模块</a>
+        </li>
+    
+        <li id="off-0014320027235877860c87af5544f25a8deeb55141d60c5000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320027235877860c87af5544f25a8deeb55141d60c5000">PIL</a>
+        </li>
+    
+        <li id="off-001432712108300322c61f256c74803b43bfd65c6f8d0d0000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000">virtualenv</a>
+        </li>
+    
+        <li id="off-00143200341926302f99cf6f6414dca9dfaaf6e5a25a5b1000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143200341926302f99cf6f6414dca9dfaaf6e5a25a5b1000">图形界面</a>
+        </li>
+    
+        <li id="off-0014320037274136d31bd9979d648cd822375394e29a871000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320037274136d31bd9979d648cd822375394e29a871000">网络编程</a>
+        </li>
+    
+        <li id="off-0014320037768360d53e4e935ca4a1f96eed1c896ad1217000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320037768360d53e4e935ca4a1f96eed1c896ad1217000">TCP/IP简介</a>
+        </li>
+    
+        <li id="off-001432004374523e495f640612f4b08975398796939ec3c000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432004374523e495f640612f4b08975398796939ec3c000">TCP编程</a>
+        </li>
+    
+        <li id="off-001432004977916a212e2168e21449981ad65cd16e71201000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432004977916a212e2168e21449981ad65cd16e71201000">UDP编程</a>
+        </li>
+    
+        <li id="off-001432005156604f38836be1707453eb025ce8c3079978d000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432005156604f38836be1707453eb025ce8c3079978d000">电子邮件</a>
+        </li>
+    
+        <li id="off-001432005226355aadb8d4b2f3f42f6b1d6f2c5bd8d5263000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432005226355aadb8d4b2f3f42f6b1d6f2c5bd8d5263000">SMTP发送邮件</a>
+        </li>
+    
+        <li id="off-0014320098721191b70a2cf7b5441deb01595edd8147196000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320098721191b70a2cf7b5441deb01595edd8147196000">POP3收取邮件</a>
+        </li>
+    
+        <li id="off-001432010325987131e75bf6b3543429a2975f88ce8ffa9000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432010325987131e75bf6b3543429a2975f88ce8ffa9000">访问数据库</a>
+        </li>
+    
+        <li id="off-001432010494717e1db78cd172e4d52b853e7fd38d6985c000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432010494717e1db78cd172e4d52b853e7fd38d6985c000">使用SQLite</a>
+        </li>
+    
+        <li id="off-0014320107391860b39da6901ed41a296e574ed37104752000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320107391860b39da6901ed41a296e574ed37104752000">使用MySQL</a>
+        </li>
+    
+        <li id="off-0014320114981139589ac5f02944601ae22834e9c521415000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320114981139589ac5f02944601ae22834e9c521415000">使用SQLAlchemy</a>
+        </li>
+    
+        <li id="off-0014320118765877e93ecea4e6449acb157e9efae8b40b6000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320118765877e93ecea4e6449acb157e9efae8b40b6000">Web开发</a>
+        </li>
+    
+        <li id="off-001432011939547478fd5482deb47b08716557cc99764e0000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432011939547478fd5482deb47b08716557cc99764e0000">HTTP协议简介</a>
+        </li>
+    
+        <li id="off-0014320122322996f770fbf5da84ead84a1731e1dde129f000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320122322996f770fbf5da84ead84a1731e1dde129f000">HTML简介</a>
+        </li>
+    
+        <li id="off-001432012393132788f71e0edad4676a3f76ac7776f3a16000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432012393132788f71e0edad4676a3f76ac7776f3a16000">WSGI接口</a>
+        </li>
+    
+        <li id="off-001432012745805707cb9f00a484d968c72dbb7cfc90b91000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432012745805707cb9f00a484d968c72dbb7cfc90b91000">使用Web框架</a>
+        </li>
+    
+        <li id="off-0014320129740415df73bf8f81e478982bf4d5c8aa3817a000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320129740415df73bf8f81e478982bf4d5c8aa3817a000">使用模板</a>
+        </li>
+    
+        <li id="off-00143208573480558080fa77514407cb23834c78c6c7309000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143208573480558080fa77514407cb23834c78c6c7309000">异步IO</a>
+        </li>
+    
+        <li id="off-001432090171191d05dae6e129940518d1d6cf6eeaaa969000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432090171191d05dae6e129940518d1d6cf6eeaaa969000">协程</a>
+        </li>
+    
+        <li id="off-001432090954004980bd351f2cd4cc18c9e6c06d855c498000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432090954004980bd351f2cd4cc18c9e6c06d855c498000">asyncio</a>
+        </li>
+    
+        <li id="off-00144661533005329786387b5684be385062a121e834ac7000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00144661533005329786387b5684be385062a121e834ac7000">async/await</a>
+        </li>
+    
+        <li id="off-0014320981492785ba33cc96c524223b2ea4e444077708d000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014320981492785ba33cc96c524223b2ea4e444077708d000">aiohttp</a>
+        </li>
+    
+        <li id="off-001432170876125c96f6cc10717484baea0c6da9bee2be4000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170876125c96f6cc10717484baea0c6da9bee2be4000">实战</a>
+        </li>
+    
+        <li id="off-001432170937506ecfb2f6adf8e4757939732f3e32b781c000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432170937506ecfb2f6adf8e4757939732f3e32b781c000">Day 1 - 搭建开发环境</a>
+        </li>
+    
+        <li id="off-00143217133614028a244ea855b40a586b551c616d3b2c9000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143217133614028a244ea855b40a586b551c616d3b2c9000">Day 2 - 编写Web App骨架</a>
+        </li>
+    
+        <li id="off-0014323389656575142d0bcfeec434e9639a80d3684a7da000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014323389656575142d0bcfeec434e9639a80d3684a7da000">Day 3 - 编写ORM</a>
+        </li>
+    
+        <li id="off-001432338991719a4c5c42ef08e4f44ad0f293ad728a27b000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432338991719a4c5c42ef08e4f44ad0f293ad728a27b000">Day 4 - 编写Model</a>
+        </li>
+    
+        <li id="off-001432339008728d0ddbe19ee594980be3f0644a9371894000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339008728d0ddbe19ee594980be3f0644a9371894000">Day 5 - 编写Web框架</a>
+        </li>
+    
+        <li id="off-001432339034336cbf72acd43354d72831461e3871d9f2e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339034336cbf72acd43354d72831461e3871d9f2e000">Day 6 - 编写配置文件</a>
+        </li>
+    
+        <li id="off-001432339095180ce91c53cdab841bfa9c342a297b886fe000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339095180ce91c53cdab841bfa9c342a297b886fe000">Day 7 - 编写MVC</a>
+        </li>
+    
+        <li id="off-001432339124159f00f6ab876c44349a3fd8eb26d0c291e000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339124159f00f6ab876c44349a3fd8eb26d0c291e000">Day 8 - 构建前端</a>
+        </li>
+    
+        <li id="off-0014323391480651a75b5fda4cb4c789208191682fc2c70000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014323391480651a75b5fda4cb4c789208191682fc2c70000">Day 9 - 编写API</a>
+        </li>
+    
+        <li id="off-001432339169382f45b9bd7b45d47ceb3e2b42846e0e991000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339169382f45b9bd7b45d47ceb3e2b42846e0e991000">Day 10 - 用户注册和登录</a>
+        </li>
+    
+        <li id="off-00143233918656129f4ad3ac29e4f728dc72b5d2368215a000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143233918656129f4ad3ac29e4f728dc72b5d2368215a000">Day 11 - 编写日志创建页</a>
+        </li>
+    
+        <li id="off-001432339210950e063b4795d574036bc5dcf0c2449bc52000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339210950e063b4795d574036bc5dcf0c2449bc52000">Day 12 - 编写日志列表页</a>
+        </li>
+    
+        <li id="off-001432339228196a8eb6fb8832b48b5aa0d740346536ead000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339228196a8eb6fb8832b48b5aa0d740346536ead000">Day 13 - 提升开发效率</a>
+        </li>
+    
+        <li id="off-001432339247097eea476bf61f8496092cc1b663eae1848000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339247097eea476bf61f8496092cc1b663eae1848000">Day 14 - 完成Web App</a>
+        </li>
+    
+        <li id="off-0014323392805925d5b69ddad514511bf0391fe2a0df2b0000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014323392805925d5b69ddad514511bf0391fe2a0df2b0000">Day 15 - 部署Web App</a>
+        </li>
+    
+        <li id="off-001432339330096121ae7e38be44570b7fbd0d8faae26f6000" style="margin-left:2em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432339330096121ae7e38be44570b7fbd0d8faae26f6000">Day 16 - 编写移动App</a>
+        </li>
+    
+        <li id="off-00143278155868605a65e244e6642dfa533753e6338ab5b000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143278155868605a65e244e6642dfa533753e6338ab5b000">FAQ</a>
+        </li>
+    
+        <li id="off-0014323396477522f8ff26917934f53b49559ab4dc5eab2000" style="margin-left:1em;">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014323396477522f8ff26917934f53b49559ab4dc5eab2000">期末总结</a>
+        </li>
+    
+    </ul>
+    <div class="x-placeholder"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="footer">
+        <div class="x-footer uk-container x-container">
+            <hr>
+            <div class="uk-grid">
+                <div class="x-footer-copyright uk-width-small-1-2 uk-width-medium-1-3">
+                    <p>
+                        <a href="http://www.liaoxuefeng.com/">廖雪峰的官方网站</a>©2015
+                        <br>
+                        Powered by <a href="http://js.itranswarp.com/" target="_blank">iTranswarp.js</a>
+                    <br>由<a target="_blank" href="http://s.click.taobao.com/t?e=m%3D2%26s%3D9OENMDkAWM4cQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAjROzn5WHXTzvOYC3uniaINIW%2FH7aX8LI9nQCCjrrrN3wYAeXhmRFOHMh3DDj7e5Hudn1BbglxZYxUhy8exlzcq9AmARIwX9K%2BnbtOD3UdznPV1H2z0iQv9NkKVMHClW0QbMqOpFMIvnvjQXzzpXdTHGJe8N%2FwNpGw%3D%3D">阿里云</a>托管<br><a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000#0" onclick="location.assign(decodeURIComponent(&#39;moc.36104%fxlksaA3%otliam&#39;.split(&#39;&#39;).reverse().join(&#39;&#39;)))">广告合作</a></p>
+                </div>
+                <div class="uk-width-small-1-2 uk-width-medium-1-3 x-hidden-tiny">
+                    <a href="http://www.liaoxuefeng.com/feed" target="_blank" class="uk-icon-button uk-icon-rss" data-uk-tooltip="" title="Subscribe the RSS"></a>
+                    <a href="https://github.com/michaelliao/itranswarp.js" target="_blank" class="uk-icon-button uk-icon-github" data-uk-tooltip="" title="View source code on GitHub"></a>
+                    <a href="https://twitter.com/liaoxuefeng" target="_blank" class="uk-icon-button uk-icon-twitter" data-uk-tooltip="" title="Follow author on Twitter"></a>
+                    <a href="http://www.weibo.com/liaoxuefeng" target="_blank" class="uk-icon-button uk-icon-weibo uk-visible-large uk-hidden-medium" data-uk-tooltip="" title="Follow author on Weibo"></a>
+                </div>
+                <div class="uk-width-medium-1-3 uk-hidden-small">
+                    <p>
+                        <a href="https://github.com/michaelliao/itranswarp.js/issues" target="_blank">Feedback</a>
+                        <br>
+                        <a href="https://github.com/michaelliao/itranswarp.js/blob/master/LICENSE" target="_blank">License</a>
+                    </p>
+                </div>
+            </div>
+        <hr><div style="text-align:center"><p>友情链接: <a href="http://www.shi-ci.com/" target="_blank">中华诗词</a> - <a href="http://s.click.taobao.com/t?e=m%3D2%26s%3DjPaT%2Fmi2tL4cQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAlFz4nQbUpKuV%2FZ67c680w5IW%2FH7aX8LI9nQCCjrrrN3wYAeXhmRFOHMh3DDj7e5Hudn1BbglxZYxUhy8exlzcq9AmARIwX9K%2BnbtOD3UdznPV1H2z0iQv9NkKVMHClW0QbMqOpFMIvnvjQXzzpXdTHGJe8N%2FwNpGw%3D%3D" target="_blank">阿里云</a> - <a href="http://mitpress.mit.edu/sicp/full-text/book/book.html" target="_blank">SICP</a> - <a href="http://www.4clojure.com/" target="_blank">4clojure</a></p></div></div>
+    </div>
+
+    <div id="modal-signin" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-modal-header">
+                <h2>Please Sign In</h2>
+            </div>
+            <p>You can sign in directly without register:</p>
+            
+            <h3><a href="http://www.liaoxuefeng.com/auth/from/weibo"><i class="uk-icon-weibo"></i> 使用新浪微博登录</a></h3>
+            
+            <p>You need authorize to allow connect to your social passport for the first time.</p>
+        </div>
+    </div>
+
+    <div id="oldBrowser">
+        <div class="uk-alert uk-alert-danger" data-uk-alert="">
+            <a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000#0" class="uk-alert-close uk-close"></a>
+            <p>
+                WARNING: You are using an old browser that does not support HTML5.
+                Please choose a modern browser (<a href="http://www.google.com/chrome" target="_blank">Chrome</a> / <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a> / <a href="http://www.apple.com/safari/" target="_blank">Sarafi</a>) to get a good experience.
+            </p>
+        </div>
+    </div>
+
+
+<img src="./正则表达式 - 廖雪峰的官方网站_files/baidu_jgylogo3.gif" style="display: none;"></body></html>

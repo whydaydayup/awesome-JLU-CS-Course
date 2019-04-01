@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1509524337 source:c:\users\sjw\desktop\¶ş²æÊ÷\main.cpp
+	<iostream>
+	"BinTree.h"
+	"BinTreenode.h"
+	"Stack.h"
+
+1509524020 c:\users\sjw\desktop\¶ş²æÊ÷\bintree.h
+	<iostream>
+	"BinTreenode.h"
+	"Stack.h"
+
+1509520730 c:\users\sjw\desktop\¶ş²æÊ÷\bintreenode.h
+
+1509519572 c:\users\sjw\desktop\¶ş²æÊ÷\stack.h
+

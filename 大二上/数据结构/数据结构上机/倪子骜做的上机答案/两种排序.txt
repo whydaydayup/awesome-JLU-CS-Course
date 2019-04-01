@@ -1,0 +1,115 @@
+#include<iostream>
+using namespace std;
+int Getmax(int m,int n)
+{
+	if(m>n) return m;
+	else return n;
+}
+void Swap(int &m,int &n)
+{
+ int temp=m;
+ m=n;
+ n=temp;
+}
+void Qsort(int *R,int m,int n)
+{
+if(m<n)
+{
+	int i=m;
+	int j=n+1;
+	while(i<j)
+	{
+      while(R[i]<R[m]) i++;
+	  j--;
+	  while(R[j]>R[m]) j--;
+	  if(i<j) Swap(R[i],R[j]);
+	}
+	Swap(R[m],R[j]);
+
+	Qsort(R,m,j-1);
+	Qsort(R,j+1,n);
+}
+}
+void Recreate2(int k,int j,int *R)
+{
+	while(1)
+	{
+     if(2*k>j) break;
+     if(2*k==j)
+     {
+       	if(R[2*k]>R[k]) {Swap(R[2*k],R[k]);k=2*k; }
+        else break;
+     }
+	 else
+	 {
+	   if(R[2*k]>R[2*k+1])
+  	   {
+	     if(R[2*k]>R[k]) {Swap(R[2*k],R[k]); k=2*k; }
+         else break;
+	   }
+       else
+       {
+   	     if(R[2*k+1]>R[k]) {Swap(R[2*k+1],R[k]); k=2*k+1; }
+         else break;
+	   }
+	 }
+    }
+}
+void Recreate(int k,int j,int *R)
+{
+	while(1)
+	{
+
+	 if(2*k>=j) break;
+	 if(2*k+1==j)
+	 {
+		if(R[2*k]>R[k]) {Swap(R[2*k],R[k]); k=2*k;}
+		else break;
+ 	 }
+	 else
+	 {
+	   if(R[2*k]>R[2*k+1])
+  	   {
+	     if(R[2*k]>R[k]) {Swap(R[2*k],R[k]); k=2*k; }
+         else break;
+	   }
+       else
+       {
+   	     if(R[2*k+1]>R[k]) {Swap(R[2*k+1],R[k]); k=2*k+1; }
+         else break;
+	   }
+	 }
+    }
+}
+void Hsort(int *R,int n)
+{
+  for(int i=1;i<=14;i++)
+  for(int i=n/2;i>0;i--)
+  {
+  	Recreate(i,n,R);
+  }
+  cout<<"new build£º";
+  for(int i=1;i<=14;i++) cout<<R[i]<<" ";cout<<endl<<endl;
+  for(int i=1;i<=n;i++)
+  {
+  	Swap(R[1],R[n-i+1]);
+  	cout<<"exchange:";
+  	for(int j=1;j<=14;j++) cout<<R[j]<<" ";cout<<endl;
+  	Recreate(1,n-i+1,R);
+  }
+
+}
+int main()
+{
+	int R1[15]={-1222,1000,27,99,0,8,13,64,86,16,7,10,88,25,90};
+	Qsort(R1,1,14);
+	cout<<"\n\n";
+
+	int R2[15]={-1222,1000,27,99,0,8,13,64,86,16,7,10,88,25,90};
+	Hsort(R2,14);
+	cout<<"\n"<<"right sort:";
+	for(int i=1;i<=14;i++) cout<<R1[i]<<" ";
+	cout<<endl;
+
+}
+

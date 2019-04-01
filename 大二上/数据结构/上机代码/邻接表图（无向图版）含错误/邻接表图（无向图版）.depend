@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1512530463 source:c:\users\sjw\desktop\邻接表图（无向图版）\main.cpp
+	<iostream>
+	<windows.h>
+	"Graph.h"
+	"Edgenode.h"
+	"Vertex.h"
+
+1512532572 c:\users\sjw\desktop\邻接表图（无向图版）\graph.h
+	<iostream>
+	<stack>
+	<queue>
+	<cstdlib>
+	<ctime>
+	"Vertex.h"
+	"Edgenode.h"
+	"Node.h"
+
+1512529003 c:\users\sjw\desktop\邻接表图（无向图版）\vertex.h
+	"Edgenode.h"
+
+1512529003 c:\users\sjw\desktop\邻接表图（无向图版）\edgenode.h
+
+1512529003 c:\users\sjw\desktop\邻接表图（无向图版）\node.h
+

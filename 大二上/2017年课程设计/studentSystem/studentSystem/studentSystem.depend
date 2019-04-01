@@ -1,0 +1,77 @@
+# depslib dependency file v1.0
+1514342783 source:c:\users\sjw\desktop\studentsystem\main.cpp
+	<iostream>
+	<string>
+	<fstream>
+	"StudentList.h"
+
+1514342734 c:\users\sjw\desktop\studentsystem\studentlist.h
+	<iostream>
+	<stack>
+	<queue>
+	<fstream>
+	"Student.h"
+
+1514296305 c:\users\sjw\desktop\studentsystem\student.h
+	<iostream>
+	<string>
+	<stack>
+	<queue>
+	<fstream>
+
+1514345335 source:e:\tools\qq\353194682\filerecv\studentsystem (2)\studentsystem\main.cpp
+	"StudentList.h"
+
+1514345421 e:\tools\qq\353194682\filerecv\studentsystem (2)\studentsystem\studentlist.h
+	<iostream>
+	<stack>
+	<queue>
+	<fstream>
+	<windows.h>
+	"Student.h"
+
+1514296305 e:\tools\qq\353194682\filerecv\studentsystem (2)\studentsystem\student.h
+	<iostream>
+	<string>
+	<stack>
+	<queue>
+	<fstream>
+
+1514356811 source:c:\users\35319\desktop\课程设计\studentsystem\main.cpp
+	"StudentList.h"
+
+1514357904 c:\users\35319\desktop\课程设计\studentsystem\studentlist.h
+	<iostream>
+	<stack>
+	<queue>
+	<fstream>
+	<windows.h>
+	"Student.h"
+	"StudentStuct.h"
+	"Search.h"
+	"Sort.h"
+
+1514296305 c:\users\35319\desktop\课程设计\studentsystem\student.h
+	<iostream>
+	<string>
+	<stack>
+	<queue>
+	<fstream>
+
+1514353780 c:\users\35319\desktop\课程设计\studentsystem\studentstuct.h
+	"Student.h"
+
+1514355909 c:\users\35319\desktop\课程设计\studentsystem\search.h
+	<iostream>
+	<stack>
+	<string>
+	"Student.h"
+	"StudentStuct.h"
+
+1514357230 c:\users\35319\desktop\课程设计\studentsystem\sort.h
+	<iostream>
+	<stack>
+	<string>
+	"Student.h"
+	"StudentStuct.h"
+

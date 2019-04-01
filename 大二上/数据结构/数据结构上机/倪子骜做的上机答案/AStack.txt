@@ -1,0 +1,98 @@
+#include <iostream.h>
+#include <string.h>
+
+class T
+{
+public:
+	T(char a=NULL) {c=a;}
+	void out()
+	{
+		cout<<c<<"  ";
+	}
+	char c;
+
+};
+
+class AStack
+{
+public:
+	int size;
+	T * A;
+	int top;
+
+public:
+
+	AStack(int max=0)
+	{
+		size=max;
+		A=new T[max];
+		top=-1;
+	}
+    
+
+	~AStack() {delete []A;}
+
+
+
+	void output()
+	{
+         for(int i=0;i<size;i++)
+		 {
+			 A[i].out();
+		 }
+
+	}
+
+	 void Push(T & item)
+	 {
+		 if(top==size-1) cout<<"FULL"<<endl;
+		 else
+		 {
+			 top++;
+			 A[top]=item;
+			 cout<<"Ñ¹Èë : "<<item.c<<endl;
+		 }
+	 }
+
+	 void Pop(T & item)
+	 {
+		 if(top==-1) cout<<"Empty"<<endl;
+		 else
+		 {
+			 item=A[top];
+			 top--;
+			 size--;
+		 }
+	 }
+
+	 void Peek(T & item)
+	 {
+		 if(top==-1) cout<<"Empty"<<endl;
+		 else
+		 {
+			 item=A[top];
+		 }
+	 }
+};
+
+int main()
+{
+	AStack a(4);
+	T t1('a');
+	T t2('b');
+	T t3('c');
+	T t4('d');
+	T t5('e');
+	T tt;
+	a.Push(t1);
+	a.Push(t2);
+	a.Push(t3);
+	a.Push(t4);
+	a.Push(t5);
+
+	a.Pop(tt);
+
+
+	a.Peek(tt);
+return 0;
+}

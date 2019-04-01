@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1512401728 source:d:\codeblocksprojects\datastructureexp\ds_expfinal\headerfileexample\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<queue>
+	<stack>
+	<vector>
+	<list>
+	<set>
+	<algorithm>
+

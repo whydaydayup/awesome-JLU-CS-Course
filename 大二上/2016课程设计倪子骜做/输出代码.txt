@@ -1,0 +1,58 @@
+#include <graphics.h>
+#include <iostream>
+#include <conio.h>
+#include <math.h>
+using namespace std;
+double PI = 3.14159265358979323846;
+
+
+void huaxian(int i,int j,int n)
+{
+	int x1,x2,y1,y2;
+	x1=200*cos(i*2*PI/n)+350;
+	y1=200*sin(i*2*PI/n)+300;
+
+	x2=200*cos(j*2*PI/n)+350;
+	y2=200*sin(j*2*PI/n)+300;
+
+	line(x1,y1,x2,y2);				// 画线
+
+}
+
+
+void huadian(int n)
+{
+	char num[2];
+	int i;
+	
+	for(i=1;i<=n;i++)
+	{
+      int x,y;
+	  x=200*cos(i*2*PI/n)+350;
+	  y=200*sin(i*2*PI/n)+300;
+	  circle(x, y, 30);
+	  sprintf(num, "%d", i);
+      outtextxy(x , y , num);
+
+	}
+
+}
+
+void main()
+{
+	
+	int n=10;
+	initgraph(700,600);				// 初始化 640 x 480 的绘图窗口
+	setwritemode(R2_XORPEN);			// 设置 XOR 绘图模式
+    huadian(n);
+
+	
+	setlinecolor(GREEN);					// 设置画线颜色为红色
+	huaxian(1,2,n);
+	getch();
+
+	huaxian(3,4,n);
+
+	getch();
+    closegraph();						// 关闭绘图窗口
+}

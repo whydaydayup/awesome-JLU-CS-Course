@@ -1,0 +1,284 @@
+
+#include <iostream>
+#include <queue>
+#include <stack>
+using namespace std;
+int MaxVertex=100;
+int Max=1000;
+
+
+struct Edge
+  {
+	friend class GraphList;
+	int VerAdj;
+	int cost;
+	Edge * link;
+
+  };
+
+struct Vertex
+  {
+	friend class GraphList;
+	int VerName;
+	Edge * adjacent;
+  };
+
+
+class GraphList
+{
+    public:
+		  int graphsize;
+		  Vertex * head;
+
+		  GraphList(int x=0)
+		  {
+		      graphsize=x;
+		      head=new Vertex[MaxVertex];
+		  }
+
+		  void Create()
+        {
+            int e,from,to,weight,i;
+            for(i=0;i<graphsize;i++)
+            {
+                head[i].VerName=i;
+                head[i].adjacent=NULL;
+            }
+            cout<<"输入边的条数"<<endl;
+            cin>>e;
+            for(i=0;i<e;i++)
+            {
+                cin>>from>>to>>weight;
+                Edge * p=new Edge;
+                p->VerAdj=to;
+                p->cost=weight;
+                p->link=NULL;
+                Edge * q=head[from].adjacent;
+                if(q==NULL)
+                {head[from].adjacent=p;}
+                else
+                {
+                    while(q->link!=NULL) q=q->link;
+                    q->link=p;
+                }
+
+            }
+        }
+
+		  int GetWeight(int  v1,int  v2)
+		  {
+		      if(v1<0||v2<0) return 0;
+		      Edge * p=head[v1].adjacent;
+		      while(p!=NULL)
+              {
+                  if(p->VerAdj==v2) return p->cost;
+                  p=p->link;
+              }
+              return 0;
+		  }
+
+		  void DFS(int v)
+	      {
+	          int  visited[graphsize];
+	          int i;
+	          for(i=0;i<graphsize;i++) visited[i]=0;
+
+	          stack <int> ss;
+
+	          visited[v]=1;
+	          ss.push(v);
+	          while(!ss.empty())
+              {
+                  int x=ss.top();
+                  cout<<"["<<x<<"]  ";
+                  ss.pop();
+                  Edge * p=head[x].adjacent;
+                  while(p!=NULL)
+                  {
+                      if(visited[p->VerAdj]==0)
+                      {
+                          visited[p->VerAdj]=1;
+                          ss.push(p->VerAdj);
+                      }
+                      p=p->link;
+                  }
+              }
+              for(i=0;i<graphsize;i++)
+              {
+                  if(visited[i]==0) cout<<"["<<i<<"]";
+              }
+	      }
+
+
+
+	      void BFS(int v)
+	      {
+	          int  visited[graphsize];
+	          int i;
+	          for(i=0;i<graphsize;i++) visited[i]=0;
+
+	          queue <int >qq;
+
+	          visited[v]=1;
+	          qq.push(v);
+	          while(!qq.empty())
+              {
+                  int x=qq.front();
+                  cout<<"["<<x<<"]  ";
+                  qq.pop();
+                  Edge * p=head[x].adjacent;
+                  while(p!=NULL)
+                  {
+                      if(visited[p->VerAdj]==0)
+                      {
+                          visited[p->VerAdj]=1;
+                          qq.push(p->VerAdj);
+                      }
+                      p=p->link;
+                  }
+              }
+
+        }
+
+	      int GetNeighbor(int v)
+	      {
+	          if(v<0) return -1;
+	          Edge * p=head[v].adjacent;
+	          if(p!=NULL) return p->VerAdj;
+	          else return -1;
+	      }
+
+	      void InsertEdge(int from,int to,int weight)
+	      {
+	          if(from<0||to<0) cout<<"不存在点";
+	          else
+              {
+                  Edge * p=new Edge;
+                  p->VerAdj=to;
+                  p->cost=weight;
+                  p->link=NULL;
+                  Edge *q=head[from].adjacent;
+                  if(q==NULL) head[from].adjacent=p;
+                  else
+                  {
+                      while(q->link!=NULL) q=q->link;
+                      q->link=p;
+                  }
+              }
+
+	      }
+
+	      void DelEdge(int from,int to)
+	      {
+                Edge * p=head[from].adjacent;
+				if(p->VerAdj==to)  head[from].adjacent=p->link;
+				
+				else
+				{
+                while(p->link!=NULL)
+                {
+                      if(p->link->VerAdj==to)
+                      {
+                          Edge * q=p->link;
+                          p->link=q->link;
+                          delete q;
+                      }
+                  }
+				}
+
+          }
+	      }
+	      int * Dshortest(int v)
+	      {
+	          int u,k,i,j;
+	          Edge *p ;
+	          int *path=new int[graphsize-1];
+	          int *dist=new int[graphsize-1];
+	          int *s=new int[graphsize-1];
+	          for(i=0;i<graphsize;i++)
+              {
+                  s[i]=0;
+                  dist[i]=Max;
+                  path[i]=-1;
+              }
+              dist[v]=0;
+              s[v]=1;
+              p=head[v].adjacent;
+              u=v;
+              for(j=0;j<graphsize-1;j++)
+              {
+                  while(p!=NULL)
+                  {
+                      k=p->VerAdj;
+                      if(s[k]!=1&&dist[u]+p->cost<dist[k])
+                      {
+                          dist[k]=dist[u]+p->cost;
+                          path[k]=u;
+                      }
+                      p=p->link;
+                  }
+                  int ldist=Max;
+                  for(i=0;i<graphsize;i++)
+                  {
+                      if(dist[i]>0&&(dist[i]<ldist)&&s[i]==0)
+                      {
+                          ldist=dist[u];
+                          u=i;
+                      }
+                  }
+                  s[u]=1;
+                p=head[u].adjacent;
+
+              }
+
+                  return dist;
+	      }
+  };
+
+
+int main()
+  {
+      int i=0,j=1,m,s=0;
+      cout<<"输入点的个数";
+      cin>>m;
+      GraphList aaa(m);
+      aaa.Create();
+      cout<<aaa.graphsize<<endl;
+
+      cout<<"深度优先起始点："<<endl;
+      cin>>s;
+      aaa.DFS(s);cout << endl;
+
+      cout<<"广度优先起始点: "<<endl;
+      sin>>s;
+      aaa.BFS(s);cout<<endl;
+      cout<<"输入求哪个点最短路径"<<endl;
+      cin>>s;
+      for(i=0;i<aaa.graphsize;i++)
+      {
+          cout<<aaa.Dshortest(s)[i];
+
+      }
+      cout<<endl;
+      int * zhijing[aaa.graphsize];
+      for(i=0;i<aaa.graphsize;i++)
+      {
+          zhijing[i]=aaa.Dshortest(i);
+
+      }
+      int maxzhijing=0;
+      for(i=0;i<aaa.graphsize;i++)
+      {
+          for(j=0;j<aaa.graphsize;j++)
+          {
+                if(zhijing[i][j]<Max&&zhijing[i][j]>=maxzhijing) maxzhijing=zhijing[i][j];
+
+          }
+      }
+
+      cout<<"自由树的直径为"<<maxzhijing;
+
+
+
+ 	 return 0;
+}

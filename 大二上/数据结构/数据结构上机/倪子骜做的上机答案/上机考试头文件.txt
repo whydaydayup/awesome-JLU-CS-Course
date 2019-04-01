@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include<iostream>
+#include <stdlib.h>
+#include <time.h>
+#include <queue>
+#include <stack>
+#include<algorithm>
+using namespace std;
+
+
+int main()
+{
+    int i,j;
+    int Array[14];
+    srand((unsigned) time(NULL));
+    for(j=0;j<=14;j++)
+    {
+        i=rand()%1000;
+        Array[j]=i;
+    }
+    for(j=0;j<=14;j++)
+    {
+        cout<<Array[j]<<" ";
+    }
+
+    return 0;
+}

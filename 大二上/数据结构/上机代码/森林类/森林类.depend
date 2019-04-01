@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1511318313 source:c:\users\sjw\desktop\森林类\main.cpp
+	<iostream>
+	"Forest.h"
+	"Treenode.h"
+	"IterateLastOrderNode.h"
+
+1511318313 c:\users\sjw\desktop\森林类\forest.h
+	"Treenode.h"
+	"IterateLastOrderNode.h"
+	<iostream>
+	<queue>
+	<stack>
+
+1510726742 c:\users\sjw\desktop\森林类\treenode.h
+
+1511318313 c:\users\sjw\desktop\森林类\iteratelastordernode.h
+
